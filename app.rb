@@ -2,6 +2,11 @@
 require 'sinatra'
 require 'haml'
 require 'warden'
+require 'sequel'
+
+Dir.glob('models/*.rb').each do |model|
+	require_relative model
+end
 
 class MoneyTracker < Sinatra::Application
 	use Rack::Session::Cookie
@@ -10,13 +15,18 @@ class MoneyTracker < Sinatra::Application
 		haml :index
 	end
 
+	get '/register' do
+		@user = User.new
+		haml :register
+	end
+
 	get '/login' do
 		haml :login
 	end
 
 	post '/login' do
 		env['warden'].authenticate!
-		redirect '/'
+		redirect '/success'
 	end
 
 	get '/logout' do
@@ -25,14 +35,14 @@ class MoneyTracker < Sinatra::Application
 	end
 
 	post '/unauthenticated' do
-		redirect '/'
+		redirect '/failure'
 	end
 
 	use Warden::Manager do |manager|
 		manager.default_strategies :password
 		manager.failure_app = MoneyTracker
 		manager.serialize_into_session {|user| user.id}
-		manager.serialize_from_session {|id| Datastore.for(:user).find_by_id(id)}
+		manager.serialize_from_session {|id| User.for(:user).find_by_id(id)}
 	end
 
 	Warden::Manager.before_failure do |env,opts|
@@ -41,11 +51,11 @@ class MoneyTracker < Sinatra::Application
 
 	Warden::Strategies.add(:password) do
 		def valid?
-			parms["username"] || params["password"]
+			params["username"] || params["password"]
 		end
 
 		def authenticate!
-			user = Datastore.for(:user).find_by_email(params['email'])
+			user = User[0]
 			if user && user.authenticate(params['password'])
 				success!(user)
 			else
@@ -54,5 +64,3 @@ class MoneyTracker < Sinatra::Application
 		end
 	end
 end
-
-
