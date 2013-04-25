@@ -4,4 +4,4 @@ require 'rubygems'
 require 'sinatra'
 require "#{path}/app"
 
-run Sinatra::Application
+run MoneyTracker
