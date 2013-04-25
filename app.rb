@@ -7,7 +7,7 @@ get '/' do
 	haml :index
 end
 
-get '/auth' do
+get '/login' do
 	haml :login
 end
 
