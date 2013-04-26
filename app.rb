@@ -9,15 +9,24 @@ Dir.glob('models/*.rb').each do |model|
 end
 
 class MoneyTracker < Sinatra::Application
-	use Rack::Session::Cookie
+	use Rack::Session::Cookie, secret: "mycookie"
 
 	get '/' do
 		haml :index
 	end
 
 	get '/register' do
-		@user = User.new
 		haml :register
+	end
+
+	post '/register' do
+		user = User.new
+		user.username = params[:username]
+		user.password = params[:password]
+		user.save
+		redirect '/login'
+		binding.pry
+		redirect '/bueno'
 	end
 
 	get '/login' do
@@ -42,7 +51,7 @@ class MoneyTracker < Sinatra::Application
 		manager.default_strategies :password
 		manager.failure_app = MoneyTracker
 		manager.serialize_into_session {|user| user.id}
-		manager.serialize_from_session {|id| User.for(:user).find_by_id(id)}
+		manager.serialize_from_session {|id| User[id]}
 	end
 
 	Warden::Manager.before_failure do |env,opts|
@@ -51,11 +60,11 @@ class MoneyTracker < Sinatra::Application
 
 	Warden::Strategies.add(:password) do
 		def valid?
-			params["username"] || params["password"]
+			params['username'] || params['password']
 		end
 
 		def authenticate!
-			user = User[0]
+			user = User[:username => params['username']]
 			if user && user.authenticate(params['password'])
 				success!(user)
 			else

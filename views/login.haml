@@ -1,15 +1,7 @@
 .container
 
 	%h1 Login
+	%a{:href => '/register'} Nytt konto
 	%form.form-horizontal{action: '/login', method: 'post'}
-		%p
-			%label.control-label{for: 'email'} Användarnamn
-		%p
-			%input.input-xlarge{id: 'email', name: 'user[username]', type: 'email'}
-
-		%p
-			%label.control-label{for: 'password'} Lösenord
-			%input{type: 'password', id: 'password', name: 'user[password]'}
-
-		%p
-			%input.btn.btn-primary{type: 'submit', value: 'Logga in'}
+		= haml :_form
+		%input.btn.btn-primary{type: 'submit', value: 'Logga in'}

@@ -1,4 +1,6 @@
-DB = Sequel.sqlite
+require 'sequel'
+
+DB = Sequel.connect('sqlite://database.db')
 
 DB.create_table? :users do
 	primary_key :id
@@ -8,7 +10,3 @@ end
 
 class User < Sequel::Model
 end
-
-users = DB[:users]
-
-users.insert(:username => 'packland@kth.se', :password => 'abc')
