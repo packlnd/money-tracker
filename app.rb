@@ -26,7 +26,6 @@ class MoneyTracker < Sinatra::Application
 		user.save
 		redirect '/login'
 		binding.pry
-		redirect '/bueno'
 	end
 
 	get '/login' do
