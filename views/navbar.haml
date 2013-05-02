@@ -9,8 +9,8 @@
 			.nav-collapse
 				%ul.nav
 					- if env['warden'].authenticated?
-						%li
-							%a{:href => '/statistics'}Statistik
+						%l1
+							%a{:href => '/stats'}Statistik
 						%li
 							%a{:href => '/logout'}Logga ut
 					- else 	

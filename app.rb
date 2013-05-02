@@ -3,6 +3,7 @@ require 'sinatra'
 require 'haml'
 require 'warden'
 require 'sequel'
+require 'pry'
 
 Dir.glob('models/*.rb').each do |model|
 	require_relative model
@@ -19,13 +20,26 @@ class MoneyTracker < Sinatra::Application
 		haml :register
 	end
 
+	get '/history' do
+		haml :history
+	end
+
+	post '/upload' do
+		binding.pry
+		File.open('public/files/' + params['myFile'][:filename], 'w') do |f|
+			f.write(params['myFile'][:tempfile].read)
+		end
+	end
+
+	get '/stats' do
+
+	end
+
 	post '/register' do
 		user = User.new
 		user.username = params[:username]
 		user.password = params[:password]
 		user.save
-		redirect '/login'
-		binding.pry
 	end
 
 	get '/login' do
@@ -34,7 +48,7 @@ class MoneyTracker < Sinatra::Application
 
 	post '/login' do
 		env['warden'].authenticate!
-		redirect '/success'
+		redirect '/history'
 	end
 
 	get '/logout' do
@@ -64,7 +78,7 @@ class MoneyTracker < Sinatra::Application
 
 		def authenticate!
 			user = User[:username => params['username']]
-			if user && user.authenticate(params['password'])
+			if user && user.password == params['password']
 				success!(user)
 			else
 				fail!("could not log in")	
