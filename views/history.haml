@@ -5,3 +5,17 @@
 		%form.form-inline{action: '/upload', method: 'post', enctype: 'multipart/form-data'}
 			%input{type: 'file', name: 'myFile'}
 			%input.btn.btn-success{type: 'submit', value: 'Ladda upp'}
+	- binding.pry
+	%table.table-striped
+		%thead
+			%th Kategori
+			%th Datum
+			%th Namn
+			%th
+		%tbody
+			- @transactions = Transaction.all
+			- @transactions.each do |transaction|
+			%tr
+				%td = transaction.category
+				%td = transaction.timestamp
+				%td = transaction.name
