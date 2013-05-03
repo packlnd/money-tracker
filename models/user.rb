@@ -9,4 +9,5 @@ DB.create_table? :users do
 end
 
 class User < Sequel::Model
+	one_to_many :transaction
 end
