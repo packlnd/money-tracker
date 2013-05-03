@@ -5,17 +5,44 @@
 		%form.form-inline{action: '/upload', method: 'post', enctype: 'multipart/form-data'}
 			%input{type: 'file', name: 'myFile'}
 			%input.btn.btn-success{type: 'submit', value: 'Ladda upp'}
-	- binding.pry
-	%table.table-striped
-		%thead
-			%th Kategori
-			%th Datum
-			%th Namn
-			%th
-		%tbody
-			- @transactions = Transaction.all
-			- @transactions.each do |transaction|
-			%tr
-				%td = transaction.category
-				%td = transaction.timestamp
-				%td = transaction.name
+		.container
+			%table.table-striped{:width => '100%'}
+				%thead
+					%th Kategori
+					%th Datum
+					%th Namn
+					%th Summa
+					%th
+				%tbody
+					%tr{:align => 'center'}
+						%td 
+							%span.label Mat
+						%td 2013-05-03
+						%td Bankomat
+						%td -500
+						%td 
+							%a.btn.btn{:href => '/history'} Redigera
+					%tr{:align => 'center'}
+						%td 
+							%span.label.label-warning Mat
+						%td 2013-05-03
+						%td Bankomat
+						%td 500
+						%td 
+							%a.btn.btn{:href => '/history'} Redigera
+					%tr{:align => 'center'}
+						%td 
+							%span.label.label-info Mat
+						%td 2013-05-03
+						%td Bankomat
+						%td 500
+						%td 
+							%a.btn.btn{:href => '/history'} Redigera
+					- @transactions = Transaction.all
+					- @transactions.each do |transaction|
+						%tr
+							%td = transaction.category
+							%td = transaction.timestamp
+							%td = transaction.name
+							%td 
+								%a.btn.btn{:href => '/#{:id}'} Redigera

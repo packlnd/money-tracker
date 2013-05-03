@@ -1,6 +1,6 @@
 require 'sequel'
 
-DB.create_table? :transaction do
+DB.create_table? :transactions do
 	primary_key :id
 	String :name, null: false
 	Integer :category, null: false, default: 0

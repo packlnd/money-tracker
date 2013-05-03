@@ -13,7 +13,11 @@ class MoneyTracker < Sinatra::Application
 	use Rack::Session::Cookie, secret: "mycookie"
 
 	get '/' do
-		haml :index
+		if env['warden'].authenticated?
+			haml :history
+		else
+			haml :index
+		end
 	end
 
 	get '/register' do
@@ -21,11 +25,12 @@ class MoneyTracker < Sinatra::Application
 	end
 
 	get '/history' do
-		haml :history
+		if env['warden'].authenticated?
+			haml :history
+		end
 	end
 
 	post '/upload' do
-		binding.pry
 		File.open('public/files/' + params['myFile'][:filename], 'w') do |f|
 			f.write(params['myFile'][:tempfile].read)
 		end
