@@ -31,7 +31,7 @@ class MoneyTracker < Sinatra::Application
 		end
 	end
 
-	get '/stats' do
+	get '/statistics' do
 
 	end
 

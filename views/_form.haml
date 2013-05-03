@@ -1,5 +1,8 @@
-%label{for: 'username'}Användarnamn
-%input{type: 'username', id: 'username', name: 'username'}
-%br
-%label{for: 'password'}Lösenord
-%input{type: 'password', id: 'password', name: 'password'}
+.control-group
+	%label.control-label{for: 'username'}Användarnamn
+	.controls
+		%input{type: 'text', id: 'username', name: 'username'}
+.control-group
+	%label.control-label{for: 'password'}Lösenord
+	.controls
+		%input{type: 'password', id: 'password', name: 'password'}

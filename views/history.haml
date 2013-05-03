@@ -1,8 +1,7 @@
 .container
 	%h3 
 		Hej #{env['warden'].user.username}!
-	%form{action: '/upload', method: 'post', enctype: 'multipart/form-data'}
-		%label{for: 'filename'}Filnamn
-		%br
-		%input{type: 'file', name: 'myFile'}
-		%input.btn.btn-success{type: 'submit', value: 'Ladda upp'}
+	%center
+		%form.form-inline{action: '/upload', method: 'post', enctype: 'multipart/form-data'}
+			%input{type: 'file', name: 'myFile'}
+			%input.btn.btn-success{type: 'submit', value: 'Ladda upp'}

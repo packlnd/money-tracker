@@ -1,18 +1,15 @@
 .navbar.navbar-fixed-top
 	.navbar-inner
 		.container
-			%a.btn.btn-navbar{ "data-toggle".to_sym => "collapse", "data-target".to_sym => ".nav-collapse"}
-				%span.icon-bar
-				%span.icon-bar
-				%span.icon-bar
 			%a.brand{:href => '/'} Mina utgifter
-			.nav-collapse
-				%ul.nav
-					- if env['warden'].authenticated?
-						%l1
-							%a{:href => '/stats'}Statistik
-						%li
-							%a{:href => '/logout'}Logga ut
-					- else 	
-						%li
-							%a{:href => '/login'}Logga in
+			%ul.nav
+				- if env['warden'].authenticated?
+					%li
+						%a{:href => '/statistics'}Statistik
+					%li
+						%a{:href => '/logout'}Logga ut
+				- else 	
+					%li
+						%a{:href => '/login'}Logga in
+					%li
+						%a{:href => '/register'}Nytt konto
