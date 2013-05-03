@@ -17,8 +17,16 @@
 					- @transactions = Transaction.all
 					- @transactions.each do |transaction|
 						%tr{:align => 'center'}
-							%td = transaction.category
-							%td = transaction.timestamp
-							%td = transaction.name
 							%td 
-								%a.btn.btn{:href => '/#{:id}'} Redigera
+								- if transaction.category == 1
+									.span.label.label-success #{transaction.category}
+								- else
+									.span.label #{transaction.category}
+							- t = transaction.timestamp
+							%td #{t.year.to_s + '-' + t.month.to_s + '-' + t.day.to_s}
+							%td #{transaction.name}
+							%td 
+								.font.color{}
+								#{transaction.sum}
+							%td 
+								%a.btn.btn{:href => '/#{transaction.id}'}Redigera

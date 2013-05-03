@@ -31,13 +31,31 @@ class MoneyTracker < Sinatra::Application
 	end
 
 	post '/upload' do
-		File.open('public/files/' + params['myFile'][:filename], 'w') do |f|
-			f.write(params['myFile'][:tempfile].read)
+		file = File.open(params['myFile'][:tempfile]).each do |line|
+			data = line.delete("\n").split(',')
+			transaction = Transaction.new
+			transaction.timestamp = data[0]
+			transaction.name = data[1]
+			transaction.category = determine_category(data[0], data[1], data[2].to_i)
+			transaction.sum = data[2].to_i
+			transaction.owner = env['warden'].user.username
+			transaction.save
+		end
+		redirect '/history'
+	end
+
+	def determine_category(date, name, sum)
+		if sum > 0
+			return 1
+		else
+			return 0
 		end
 	end
 
 	get '/statistics' do
+		if env['warden'].authenticated?
 
+		end
 	end
 
 	post '/register' do
