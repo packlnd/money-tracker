@@ -36,10 +36,16 @@ class MoneyTracker < Sinatra::Application
 			file = File.open(params['myFile'][:tempfile], :encoding => 'windows-1251:utf-8').each do |line|
 				data = line.encode('UTF-8').delete("\r").delete("\n").split("\t")
 				transaction = Transaction.new
-				transaction.timestamp = data[0].chomp()
-				transaction.name = data[1].chomp()
-				transaction.category = determine_category(data[0].chomp(), data[1].chomp(), data[2].delete(" ").chomp().to_f)
-				transaction.sum = data[2].chomp().delete(" ").gsub!(',','.').to_f
+
+				timestamp = data[0].chomp()
+				name = data[1].chomp()
+				sum = data[2].chomp().delete(" ").gsub!(',','.').to_f
+				category = determine_category(timestamp, name, sum)
+
+				transaction.timestamp = timestamp
+				transaction.name = name
+				transaction.category = category
+				transaction.sum = sum
 				transaction.owner = env['warden'].user.username
 				transaction.save
 			end
