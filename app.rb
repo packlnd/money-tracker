@@ -64,16 +64,18 @@ class MoneyTracker < Sinatra::Application
 	def determine_category(date, name, sum)
 		if sum > 0
 			return 1
+		elsif sum > -100
+			return 2
+		elsif sum % 100 == 0 and sum >= -500 and sum <= -100
+			return 4
 		else
 			return 0
 		end
 	end
 
 	def i_to_category(i)
-		if i == 1
-			return "Inkomst"
-		end
-		return "Utgift"
+		categories = ["Utgift", "Inkomst", "Mat/Kaffe", "Fritid", "Bankomat", "Transport"]
+		return categories[i]
 	end
 
 	get '/delete/:id' do |id|

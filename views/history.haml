@@ -18,10 +18,25 @@
 					- @transactions.each do |transaction|
 						%tr{:align => 'center'}
 							%td 
-								- if transaction.category == 1
-									.span.label.label-success #{i_to_category transaction.category}
-								- else
-									.span.label #{i_to_category transaction.category}
+								- if transaction.category == 0
+									.span.label 
+										#{i_to_category transaction.category}
+								- elsif transaction.category == 1
+									.span.label.label-success
+										#{i_to_category transaction.category}
+								- elsif transaction.category == 2
+									.span.label.label-warning
+										#{i_to_category transaction.category}
+								- elsif transaction.category == 3
+									.span.label.label-info
+										#{i_to_category transaction.category}
+								- elsif transaction.category == 4
+									.span.label.label-inverse
+										#{i_to_category transaction.category}
+								- elsif transaction.category == 5
+									.span.label.label-important
+										#{i_to_category transaction.category}
+
 							- t = transaction.timestamp
 							%td #{t.year.to_s + '-' + t.month.to_s + '-' + t.day.to_s}
 							%td #{transaction.name}

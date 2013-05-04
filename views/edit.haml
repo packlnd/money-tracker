@@ -7,7 +7,7 @@
 			%label.control-label{for: 'category'}Kategori
 			.controls
 				%select{id: 'category', name: 'category'}
-					- (1..10).each do |i|
+					- (0..5).each do |i|
 						%option{value: "#{i}", selected: "selected"}= i_to_category(i)
 
 		%input{type: 'submit', value: 'Spara'}
