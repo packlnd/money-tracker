@@ -31,6 +31,13 @@ class MoneyTracker < Sinatra::Application
 		end
 	end
 
+	get '/updateCategory/:id' do |id|
+		transaction = Transaction[id]
+		transaction.category = (transaction.category + 1) % 6
+		transaction.save
+		redirect 'history'
+	end
+
 	post '/upload' do
 		if params['myFile']
 			file = File.open(params['myFile'][:tempfile], :encoding => 'windows-1251:utf-8').each do |line|
@@ -74,7 +81,7 @@ class MoneyTracker < Sinatra::Application
 	end
 
 	def i_to_category(i)
-		categories = ["Utgift", "Inkomst", "Mat/Kaffe", "Fritid", "Bankomat", "Transport"]
+		categories = ["UTGIFT", "INKOMST", "MAT OCH DRYCK", "FRITID", "BANKOMAT", "TRANSPORT"]
 		return categories[i]
 	end
 
