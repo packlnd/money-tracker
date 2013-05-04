@@ -1,3 +1,4 @@
+# encoding: UTF-8
 
 require 'sinatra'
 require 'haml'
@@ -31,15 +32,17 @@ class MoneyTracker < Sinatra::Application
 	end
 
 	post '/upload' do
-		file = File.open(params['myFile'][:tempfile]).each do |line|
-			data = line.delete("\n").split(',')
-			transaction = Transaction.new
-			transaction.timestamp = data[0]
-			transaction.name = data[1]
-			transaction.category = determine_category(data[0], data[1], data[2].to_i)
-			transaction.sum = data[2].to_i
-			transaction.owner = env['warden'].user.username
-			transaction.save
+		if params['myFile']
+			file = File.open(params['myFile'][:tempfile], :encoding => 'windows-1251:utf-8').each do |line|
+				data = line.encode('UTF-8').delete("\r").delete("\n").split("\t")
+				transaction = Transaction.new
+				transaction.timestamp = data[0].chomp()
+				transaction.name = data[1].chomp()
+				transaction.category = determine_category(data[0].chomp(), data[1].chomp(), data[2].delete(" ").chomp().to_f)
+				transaction.sum = data[2].chomp().delete(" ").to_f
+				transaction.owner = env['warden'].user.username
+				transaction.save
+			end
 		end
 		redirect '/history'
 	end
@@ -49,6 +52,20 @@ class MoneyTracker < Sinatra::Application
 			return 1
 		else
 			return 0
+		end
+	end
+
+	get '/delete/:id' do |id|
+		if env['warden'].authenticated?
+			Transaction[id].delete
+		end
+		redirect '/history'
+	end
+
+	get '/edit/:id' do |id|
+		if env['warden'].authenticated?
+			@transaction = Transaction[id]
+			haml :edit
 		end
 	end
 
@@ -63,6 +80,7 @@ class MoneyTracker < Sinatra::Application
 		user.username = params[:username]
 		user.password = params[:password]
 		user.save
+		redirect '/login'
 	end
 
 	get '/login' do

@@ -25,8 +25,9 @@
 							- t = transaction.timestamp
 							%td #{t.year.to_s + '-' + t.month.to_s + '-' + t.day.to_s}
 							%td #{transaction.name}
+							%td	#{transaction.sum}
 							%td 
-								.font.color{}
-								#{transaction.sum}
-							%td 
-								%a.btn.btn{:href => '/#{transaction.id}'}Redigera
+								%a{:href => "/edit/#{transaction.id}"}
+									%i.icon-pencil
+								%a{:href => "/delete/#{transaction.id}"}
+									%i.icon-trash
