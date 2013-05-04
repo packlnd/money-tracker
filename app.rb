@@ -47,12 +47,27 @@ class MoneyTracker < Sinatra::Application
 		redirect '/history'
 	end
 
+	post '/:id' do |id|
+		transaction = Transaction[id]
+		transaction.name = params[:name]
+		transaction.category = params[:category]
+		transaction.save
+		redirect '/history'
+	end
+
 	def determine_category(date, name, sum)
 		if sum > 0
 			return 1
 		else
 			return 0
 		end
+	end
+
+	def i_to_category(i)
+		if i == 1
+			return "Inkomst"
+		end
+		return "Utgift"
 	end
 
 	get '/delete/:id' do |id|

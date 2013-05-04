@@ -19,9 +19,9 @@
 						%tr{:align => 'center'}
 							%td 
 								- if transaction.category == 1
-									.span.label.label-success #{transaction.category}
+									.span.label.label-success #{i_to_category transaction.category}
 								- else
-									.span.label #{transaction.category}
+									.span.label #{i_to_category transaction.category}
 							- t = transaction.timestamp
 							%td #{t.year.to_s + '-' + t.month.to_s + '-' + t.day.to_s}
 							%td #{transaction.name}
