@@ -2,3 +2,14 @@ body {
 	padding-top: 60px;
 	padding-bottom: 40px;
 }
+
+td {
+  padding-top:10px;
+  padding-bottom:10px;
+  padding-right:20px;   
+}
+
+td:first-child {
+  padding-left:20px;
+  padding-right:0;
+}
