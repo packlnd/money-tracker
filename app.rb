@@ -39,7 +39,7 @@ class MoneyTracker < Sinatra::Application
 				transaction.timestamp = data[0].chomp()
 				transaction.name = data[1].chomp()
 				transaction.category = determine_category(data[0].chomp(), data[1].chomp(), data[2].delete(" ").chomp().to_f)
-				transaction.sum = data[2].chomp().delete(" ").to_f
+				transaction.sum = data[2].chomp().delete(" ").gsub!(',','.').to_f
 				transaction.owner = env['warden'].user.username
 				transaction.save
 			end
@@ -47,7 +47,7 @@ class MoneyTracker < Sinatra::Application
 		redirect '/history'
 	end
 
-	post '/:id' do |id|
+	post '/update/:id' do |id|
 		transaction = Transaction[id]
 		transaction.name = params[:name]
 		transaction.category = params[:category]
