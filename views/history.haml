@@ -14,7 +14,7 @@
 					%th Summa
 					%th
 				%tbody
-					- @transactions = Transaction.all
+					- @transactions = Transaction.where(:owner => env['warden'].user.username)
 					- @transactions.each do |transaction|
 						%tr{:align => 'center'}
 							%td 
