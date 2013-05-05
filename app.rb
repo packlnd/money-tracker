@@ -44,15 +44,10 @@ class MoneyTracker < Sinatra::Application
 				data = line.encode('UTF-8').delete("\r").delete("\n").split("\t")
 				transaction = Transaction.new
 
-				timestamp = data[0].chomp()
-				name = data[1].chomp()
-				sum = data[2].chomp().delete(" ").gsub!(',','.').to_f
-				category = determine_category(timestamp, name, sum)
-
-				transaction.timestamp = timestamp
-				transaction.name = name
-				transaction.category = category
-				transaction.sum = sum
+				transaction.timestamp = data[0].chomp()
+				transaction.name = data[1].chomp()
+				transaction.sum = data[2].chomp().delete(" ").gsub!(',','.').to_f
+				transaction.category = determine_category(transaction)
 				transaction.owner = env['warden'].user.username
 				transaction.save
 			end
@@ -68,12 +63,14 @@ class MoneyTracker < Sinatra::Application
 		redirect '/history'
 	end
 
-	def determine_category(date, name, sum)
-		if sum > 0
+	def determine_category(transaction)
+		if transaction.sum > 0
 			return 1
-		elsif sum > -100
+		elsif transaction.sum > -100
 			return 2
-		elsif sum % 100 == 0 and sum >= -500 and sum <= -100
+		elsif transaction.sum % 100 == 0 and 
+			transaction.sum >= -500 and 
+			transaction.sum <= -100
 			return 4
 		else
 			return 0
