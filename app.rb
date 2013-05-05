@@ -103,9 +103,7 @@ class MoneyTracker < Sinatra::Application
 	end
 
 	post '/register' do
-		user = User.new
-		user.username = params[:username]
-		user.password = params[:password]
+		user = User.new(params[:user])
 		user.save
 		redirect '/login'
 	end
@@ -141,12 +139,12 @@ class MoneyTracker < Sinatra::Application
 
 	Warden::Strategies.add(:password) do
 		def valid?
-			params['username'] || params['password']
+			params['user']['username'] || params['user']['password']
 		end
 
 		def authenticate!
-			user = User[:username => params['username']]
-			if user && user.password == params['password']
+			user = User[:username => params['user']['username']]
+			if user && user.password == params['user']['password']
 				success!(user)
 			else
 				fail!("could not log in")	
