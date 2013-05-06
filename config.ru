@@ -44,3 +44,7 @@ end
 map "/auth" do
 	run App::Sessions
 end
+
+map "/statistics" do
+	run App::Statistics
+end

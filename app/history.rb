@@ -73,17 +73,13 @@ module App
 		end
 
 		get '/delete/:id' do |id|
-			if env['warden'].authenticated?
-				Transaction[id].delete
-			end
+			Transaction[id].delete
 			redirect '/history'
 		end
 
 		get '/edit/:id' do |id|
-			if env['warden'].authenticated?
-				@transaction = Transaction[id]
-				haml :edit
-			end
+			@transaction = Transaction[id]
+			haml :edit
 		end
 	end
 end

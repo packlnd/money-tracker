@@ -5,6 +5,8 @@
 			%ul.nav
 				- if env['warden'].authenticated?
 					%li
+						%a{:href => '/history'}Historik
+					%li
 						%a{:href => '/statistics'}Statistik
 					%li
 						%a{:href => '/auth/logout'}Logga ut
