@@ -46,7 +46,7 @@ class MoneyTracker < Sinatra::Application
 
 	get '/' do
 		if env['warden'].authenticated?
-			haml :history
+			redirect '/history'
 		else
 			haml :index
 		end
@@ -56,54 +56,6 @@ class MoneyTracker < Sinatra::Application
 		haml :register
 	end
 
-	get '/history' do
-		if env['warden'].authenticated?
-			haml :history
-		end
-	end
-
-	get '/updateCategory/:id' do |id|
-		transaction = Transaction[id]
-		transaction.category = (transaction.category + 1) % @categories.length
-		transaction.save
-		redirect '/history'
-	end
-
-	post '/upload' do
-		if params['myFile']
-			file = File.open(params['myFile'][:tempfile], :encoding => 'windows-1251:utf-8').each do |line|
-				data = line.encode('UTF-8').delete("\r").delete("\n").split("\t")
-				transaction = Transaction.new
-
-				transaction.timestamp = data[0].chomp()
-				transaction.name = data[1].chomp()
-				transaction.sum = data[2].chomp().delete(" ").gsub!(',','.').to_f
-				transaction.category = determine_category(transaction)
-				transaction.owner = env['warden'].user.username
-				transaction.save
-			end
-		end
-		redirect '/history'
-	end
-
-	post '/update/:id' do |id|
-		Transaction[id].update(params[:transaction])
-		redirect '/history'
-	end
-
-	get '/delete/:id' do |id|
-		if env['warden'].authenticated?
-			Transaction[id].delete
-		end
-		redirect '/history'
-	end
-
-	get '/edit/:id' do |id|
-		if env['warden'].authenticated?
-			@transaction = Transaction[id]
-			haml :edit
-		end
-	end
 
 	get '/statistics' do
 		if env['warden'].authenticated?

@@ -1,5 +1,5 @@
 .container
 	%h1 Nytt konto
-	%form.form-horizontal{action: '/register', method: 'post'}
+	%form.form-horizontal{action: '/auth/register', method: 'post'}
 		= haml :_form
 		%input.btn{type: 'submit', value: 'Registrera'}	

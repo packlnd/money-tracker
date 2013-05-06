@@ -2,7 +2,7 @@
 	%h3 
 		Hej #{env['warden'].user.username}!
 	%center
-		%form.form-inline{action: '/upload', method: 'post', enctype: 'multipart/form-data'}
+		%form.form-inline{action: '/history/upload', method: 'post', enctype: 'multipart/form-data'}
 			%input{type: 'file', name: 'myFile'}
 			%input.btn.btn-success{type: 'submit', value: 'Ladda upp'}
 		.container
@@ -19,7 +19,7 @@
 					- @transactions.each do |transaction|
 						%tr{:align => 'center'}
 							%td 
-								%a{:href => "/updateCategory/#{transaction.id}"}
+								%a{:href => "/history/updateCategory/#{transaction.id}"}
 									.span{:class => "#{hamlCategories[transaction.category]}"} 
 										#{i_to_category transaction.category}
 							- t = transaction.timestamp
@@ -27,7 +27,7 @@
 							%td #{transaction.name}
 							%td{:class => "#{determine_class transaction.sum}"} #{transaction.sum}
 							%td 
-								%a{:href => "/edit/#{transaction.id}"}
+								%a{:href => "/history/edit/#{transaction.id}"}
 									%i.icon-pencil
-								%a{:href => "/delete/#{transaction.id}"}
+								%a{:href => "/history/delete/#{transaction.id}"}
 									%i.icon-trash
