@@ -14,13 +14,12 @@
 					%th Summa
 					%th
 				%tbody
-					- hamlCategories = ['label', 'label label-success', 'label label-warning', 'label label-info', 'label label-inverse', 'label label-important']
 					- @transactions = Transaction.where(:owner => env['warden'].user.username)
 					- @transactions.each do |transaction|
 						%tr{:align => 'center'}
 							%td 
 								%a{:href => "/history/updateCategory/#{transaction.id}"}
-									.span{:class => "#{hamlCategories[transaction.category]}"} 
+									.span{:class => "#{css_category transaction.category}"} 
 										#{i_to_category transaction.category}
 							%td #{transaction.timestamp.strftime("%Y-%m-%d")}
 							%td #{transaction.name}

@@ -1,8 +1,11 @@
+require 'pry'
+
 module App
 	class History < Sinatra::Application
 		before do
 			env['warden'].authenticate!
 			@categories = ["UTGIFT", "INKOMST", "MAT OCH DRYCK", "FRITID", "BANKOMAT", "TRANSPORT"]
+			@cssCategories = ['label', 'label label-success', 'label label-warning', 'label label-info', 'label label-inverse', 'label label-important']
 		end
 		
 		helpers do	
@@ -29,6 +32,10 @@ module App
 
 			def i_to_category(i)
 				return @categories[i]
+			end
+
+			def css_category(i)
+				return @cssCategories[i]
 			end
 		end
 
