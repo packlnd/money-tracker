@@ -52,13 +52,13 @@ module App
 
 		post '/upload' do
 			if params['myFile']
-				file = File.open(params['myFile'][:tempfile], :encoding => 'windows-1251:utf-8').each do |line|
-					data = line.encode('UTF-8').delete("\r").delete("\n").split("\t")
+				file = File.open(params['myFile'][:tempfile]).each do |line|
+					data = line.delete("\r").delete("\n").split("\t")
 					transaction = Transaction.new
 
 					transaction.timestamp = data[0].chomp()
 					transaction.name = data[1].chomp()
-					transaction.sum = data[2].chomp().delete(" ").gsub!(',','.').to_f
+					transaction.sum = data[2].chomp().delete(" ").gsub(',','.').to_f
 					transaction.category = determine_category(transaction)
 					transaction.owner = env['warden'].user.username
 					transaction.save

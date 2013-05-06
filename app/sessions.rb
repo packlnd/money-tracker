@@ -6,7 +6,7 @@ module App
 		post '/register' do
 			user = User.new(params[:user])
 			user.save
-			redirect '/login'
+			redirect '/auth/login'
 		end
 
 		get '/login' do
@@ -24,7 +24,7 @@ module App
 
 		get '/logout' do
 			env['warden'].logout
-			redirect '/login'
+			redirect '/auth/login'
 		end
 
 		post '/unauthenticated' do
