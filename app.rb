@@ -18,6 +18,13 @@ class MoneyTracker < Sinatra::Application
 	end
 
 	helpers do	
+		def determine_class(sum)
+			if sum >= 0
+				return "pos"
+			end
+			return "neg"
+		end
+
 		def determine_category(transaction)
 			if transaction.sum > 0
 				return 1

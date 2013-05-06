@@ -13,3 +13,11 @@ td:first-child {
   padding-left:20px;
   padding-right:0;
 }
+
+.pos {
+	color:#1AAE00;
+}
+
+.neg {
+	color:#AE0000;
+}

@@ -25,7 +25,7 @@
 							- t = transaction.timestamp
 							%td #{t.year.to_s + '-' + t.month.to_s + '-' + t.day.to_s}
 							%td #{transaction.name}
-							%td	#{transaction.sum}
+							%td{:class => "#{determine_class transaction.sum}"} #{transaction.sum}
 							%td 
 								%a{:href => "/edit/#{transaction.id}"}
 									%i.icon-pencil
