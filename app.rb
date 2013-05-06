@@ -13,6 +13,30 @@ end
 class MoneyTracker < Sinatra::Application
 	use Rack::Session::Cookie, secret: "mycookie"
 
+	before do
+		@categories = ["UTGIFT", "INKOMST", "MAT OCH DRYCK", "FRITID", "BANKOMAT", "TRANSPORT"]
+	end
+
+	helpers do	
+		def determine_category(transaction)
+			if transaction.sum > 0
+				return 1
+			elsif transaction.sum > -100
+				return 2
+			elsif transaction.sum % 100 == 0 and 
+				transaction.sum >= -500 and 
+				transaction.sum <= -100
+				return 4
+			else
+				return 0
+			end
+		end
+
+		def i_to_category(i)
+			return @categories[i]
+		end
+	end
+
 	get '/' do
 		if env['warden'].authenticated?
 			haml :history
@@ -58,25 +82,6 @@ class MoneyTracker < Sinatra::Application
 	post '/update/:id' do |id|
 		Transaction[id].update(params[:transaction])
 		redirect '/history'
-	end
-
-	def determine_category(transaction)
-		if transaction.sum > 0
-			return 1
-		elsif transaction.sum > -100
-			return 2
-		elsif transaction.sum % 100 == 0 and 
-			transaction.sum >= -500 and 
-			transaction.sum <= -100
-			return 4
-		else
-			return 0
-		end
-	end
-
-	def i_to_category(i)
-		@categories = ["UTGIFT", "INKOMST", "MAT OCH DRYCK", "FRITID", "BANKOMAT", "TRANSPORT"]
-		return @categories[i]
 	end
 
 	get '/delete/:id' do |id|
