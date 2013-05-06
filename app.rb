@@ -33,7 +33,7 @@ class MoneyTracker < Sinatra::Application
 
 	get '/updateCategory/:id' do |id|
 		transaction = Transaction[id]
-		transaction.category = (transaction.category + 1) % length_of_categories
+		transaction.category = (transaction.category + 1) % @categories.length
 		transaction.save
 		redirect '/history'
 	end
@@ -77,10 +77,6 @@ class MoneyTracker < Sinatra::Application
 	def i_to_category(i)
 		@categories = ["UTGIFT", "INKOMST", "MAT OCH DRYCK", "FRITID", "BANKOMAT", "TRANSPORT"]
 		return @categories[i]
-	end
-
-	def length_of_categories
-		return @categories.length
 	end
 
 	get '/delete/:id' do |id|
