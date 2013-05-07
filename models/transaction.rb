@@ -1,4 +1,6 @@
+# -*- encoding : utf-8 -*-
 require 'sequel'
+require 'pry'
 
 DB.create_table? :transactions do
 	primary_key :id
@@ -22,11 +24,11 @@ class Transaction < Sequel::Model
 	def determine_category
 		if self.sum > 0
 			self.category_id = 2
+		elsif self.name == "MÅNADSAVG BANKKORT"
+			self.category_id = 1
 		elsif self.sum > -100
 			self.category_id = 3
-		elsif self.sum % 100 == 0 and 
-			self.sum >= -500 and 
-			self.sum <= -100
+		elsif self.sum % 100 == 0 and self.sum >= -500 and self.sum <= -100
 			self.category_id = 5
 		else
 			self.category_id = 1

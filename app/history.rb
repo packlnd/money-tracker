@@ -13,6 +13,9 @@ module App
 		get '/updateCategory/:id' do |id|
 			transaction = Transaction[id]
 			transaction.category_id = (transaction.category_id + 1) % Category.count
+			if transaction.category_id == 0
+				transaction.category_id = 6
+			end
 			transaction.save
 			redirect '/history'
 		end
