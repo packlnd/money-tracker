@@ -1,5 +1,5 @@
 .container
-	%h3 Statistik för #{env['warden'].user.username}			
+	%h3 Statistik för #{env['warden'].user.username}	
 	%center
 		- @categories = Category.all
 		- @categories.each do |cat|
