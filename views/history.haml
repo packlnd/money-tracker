@@ -19,11 +19,11 @@
 						%tr{:align => 'center'}
 							%td 
 								%a{:href => "/history/updateCategory/#{transaction.id}"}
-									.span{:class => "#{css_category transaction.category}"} 
-										#{i_to_category transaction.category}
+									.span{:class => "#{Category[transaction.category_id].css}"} 
+										#{Category[transaction.category_id].name}
 							%td #{transaction.timestamp.strftime("%Y-%m-%d")}
 							%td #{transaction.name}
-							%td{:class => "#{determine_class transaction.sum}"} #{transaction.sum}
+							%td{:class => "#{transaction.determine_sum}"} #{transaction.sum}
 							%td 
 								%a{:href => "/history/edit/#{transaction.id}"}
 									%i.icon-pencil

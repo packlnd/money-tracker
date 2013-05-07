@@ -1,12 +1,11 @@
 .container
 	%h3 Statistik för #{env['warden'].user.username}			
 	%center
-		- @categories = ["UTGIFT", "INKOMST", "MAT OCH DRYCK", "FRITID", "BANKOMAT", "TRANSPORT"]
-		- @cssCategories = ['label', 'label label-success', 'label label-warning', 'label label-info', 'label label-inverse', 'label label-important']
-		- (0..5).each do |i|
+		- @categories = Category.all
+		- @categories.each do |cat|
 			%label.checkbox.inline
-				.span{:class => "#{@cssCategories[i]}"}
-					%input{:type => 'checkbox', :checked => 'yes'} #{@categories[i]}
+				.span{:class => "#{cat.css}"}
+					%input{:type => 'checkbox', :checked => 'yes'} #{cat.name}
 		%p
 			%img{:src => 'images/bar-chart'}
 		%p
