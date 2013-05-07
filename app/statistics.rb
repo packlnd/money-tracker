@@ -31,7 +31,11 @@ module App
 			names = []
 			categories.each do |cat|
 				names << cat.name
-				sums << Transaction.where(:category_id => cat.id).sum(:sum)
+				sum = Transaction.where(:category_id => cat.id).sum(:sum)
+				if sum == nil
+					sum = 0
+				end
+				sums << sum
 			end
 
 			p = Rdata.new
