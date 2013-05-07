@@ -30,11 +30,11 @@ module App
 			sums = []
 			names = []
 			categories.each do |cat|
-				names << cat.name
 				sum = Transaction.where(:category_id => cat.id).sum(:sum)
 				if sum == nil
 					sum = 0
 				end
+				names << cat.name + '(' + sum.to_s + ')'
 				sums << sum
 			end
 
@@ -46,8 +46,7 @@ module App
 
 			ch = Rchart.new(600,500)
 			ch.load_color_palette([[153,153,153],[70,136,71],[248,148,6],[57,134,172],[50,50,50],[184,73,71]])
-			ch.draw_basic_pie_graph(p.get_data,p.get_data_description,300,200,150,Rchart::PIE_PERCENTAGE,255,255,255)
-			ch.draw_pie_legend(0,0,p.get_data,p.get_data_description,250,250,250)
+			ch.draw_basic_pie_graph(p.get_data,p.get_data_description,300,200,150,Rchart::PIE_LABELS,255,255,255)
 
 			ch.render_png("public/images/pie")
 		end
