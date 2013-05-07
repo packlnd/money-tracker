@@ -1,12 +1,13 @@
 .container
 	%h3 Statistik för #{env['warden'].user.username}	
 	%center
-		- @categories = Category.all
-		- @categories.each do |cat|
-			%label.checkbox.inline
-				.span{:class => "#{cat.css}"}
-					%input{:type => 'checkbox', :checked => 'yes'} #{cat.name}
+		%form.form-inline{action: '/statistics/update', method: 'post'}
+			- @categories = Category.all
+			- @categories.each do |cat|
+				%label.checkbox.inline
+					.span{:class => "#{cat.css}"}
+						%input{:type => 'checkbox', :checked => 'yes', :name => "category[#{cat.id}]"} #{cat.name}
+			.control-group
+				%input.btn.btn{type: 'submit', value: 'Visa'} 
 		%p
-			%img{:src => 'images/bar-chart'}
-		%p
-			%img{:src => 'images/basic-pie'}
+			%img{:src => 'images/pie'}

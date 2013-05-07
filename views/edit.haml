@@ -6,8 +6,8 @@
 				%input{type: 'text', id: 'name', name: 'transaction[name]', value: "#{@transaction.name}"}
 			%label.control-label{for: 'category'}Kategori
 			.controls
-				%select{id: 'category', name: 'transaction[category]'}
-					- (0..5).each do |i|
-						%option{value: "#{i}", selected: "selected"}= i_to_category(i)
+				%select{id: 'category', name: 'transaction[category_id]'}
+					- Category.all.each do |cat|
+						%option{value: "#{cat.id}", selected: "selected"}= cat.name
 
 		%input{type: 'submit', value: 'Spara'}
