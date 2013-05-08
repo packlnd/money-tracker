@@ -21,8 +21,8 @@ module App
 		end
 
 		post '/upload' do
-			if params['myFile']
-				file = File.open(params['myFile'][:tempfile]).each do |line|
+			if params['file']
+				file = File.open(params['file'][:tempfile]).each do |line|
 					data = line.delete("\r").delete("\n").split("\t")
 					transaction = Transaction.new
 

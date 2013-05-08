@@ -4,14 +4,14 @@ body {
 }
 
 td {
-  padding-top:7px;
-  padding-bottom:7px;
-  padding-right:20px;
+	padding-top:7px;
+	padding-bottom:7px;
+	padding-right:20px;
 }
 
 td:first-child {
-  padding-left:20px;
-  padding-right:0;
+	padding-left:20px;
+	padding-right:0;
 }
 
 .pos {
@@ -20,4 +20,8 @@ td:first-child {
 
 .neg {
 	color:#AE0000;
+}
+
+.table th, .table td, .table thead {
+	border: none;
 }

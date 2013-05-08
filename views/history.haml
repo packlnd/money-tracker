@@ -3,10 +3,10 @@
 		Hej #{env['warden'].user.username}!
 	%center
 		%form.form-inline{action: '/history/upload', method: 'post', enctype: 'multipart/form-data'}
-			%input{type: 'file', name: 'myFile'}
+			%input{type: 'file', name: 'file'}
 			%input.btn.btn-success{type: 'submit', value: 'Ladda upp'}
 		.container
-			%table.table{:width => '100%'}
+			%table.table{:width => '90%'}
 				%thead
 					%th
 					%th 
@@ -22,22 +22,23 @@
 						- year = transaction.timestamp.year
 						%tr
 							%td
-								%h4 #{year}
+								%h3 #{year}
 							%td
 							%td
 							%td 
 							%td
-								%h4 #{Transaction.get_sum_year(year)}
+								%h3 #{Transaction.get_sum_year(year)}
 					- if month == "" or transaction.timestamp.month != month
 						- month = transaction.timestamp.month
 						%tr
-							%td	
-								#{transaction.timestamp.strftime("%B")}
+							%td
+								%h4 #{transaction.timestamp.strftime("%B")}
 							%td
 							%td
 							%td
-							%td #{Transaction.get_sum_month(year, month)}
-						%tr
+							%td
+								%h4 #{Transaction.get_sum_month(year, month)}
+						%tr{:align => 'center'}
 							%td 
 								%b Kategori
 							%td 
@@ -46,15 +47,15 @@
 								%b Namn
 							%td 
 								%b Summa
-					%tr{:align => 'center', :class => "#{transaction.determine_row}"}
-						%td 
+					%tr{:class => "#{transaction.determine_row}"}
+						%td
 							%a{:href => "/history/updateCategory/#{transaction.id}"}
 								.span{:class => "#{Category[transaction.category_id].css}"} 
 									#{Category[transaction.category_id].name}
 						%td #{transaction.timestamp.strftime("%Y-%m-%d")}
 						%td #{transaction.name}
 						%td{:class => "#{transaction.determine_sum}"} #{transaction.sum}
-						%td 
+						%td
 							%a{:href => "/history/edit/#{transaction.id}"}
 								%i.icon-pencil
 							%a{:href => "/history/delete/#{transaction.id}"}
