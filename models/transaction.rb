@@ -21,6 +21,13 @@ class Transaction < Sequel::Model
 		return "neg"
 	end
 
+	def determine_row
+		if self.sum >= 0
+			return "success"
+		end
+		return "error"
+	end
+
 	def determine_category
 		if self.sum > 0
 			self.category_id = 2
@@ -33,5 +40,25 @@ class Transaction < Sequel::Model
 		else
 			self.category_id = 1
 		end
+	end
+
+	def self.get_sum_year(year)
+		sum = 0
+		Transaction.all.each do |t|
+			if t.timestamp.year == year
+				sum += t.sum
+			end
+		end
+		return sum.to_i
+	end
+
+	def self.get_sum_month(year, month)
+		sum = 0
+		Transaction.all.each do |t|
+			if t.timestamp.year == year and t.timestamp.month == month
+				sum += t.sum
+			end
+		end
+		return sum.to_i
 	end
 end
