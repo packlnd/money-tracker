@@ -2,7 +2,6 @@ module App
 	class Statistics < Sinatra::Application
 
 		require 'rchart'
-		require 'pry'
 
 		def create_charts(categories)
 			#Graph.create_bar categories, env['warden'].user.username

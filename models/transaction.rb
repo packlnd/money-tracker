@@ -1,6 +1,5 @@
 # -*- encoding : utf-8 -*-
 require 'sequel'
-require 'pry'
 
 DB.create_table? :transactions do
 	primary_key :id

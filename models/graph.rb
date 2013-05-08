@@ -1,6 +1,4 @@
-class Grapher < Sinatra::Application
-
-	require 'pry'
+class Grapher
 	
 	def self.create_bar(categories, user)
 		p = Rdata.new
@@ -24,7 +22,7 @@ class Grapher < Sinatra::Application
 		names = []
 		colors = []
 		categories.each do |cat|
-			sum = Transaction.where(:category_id => cat.id, :owner => user).sum(:sum).to_i
+			sum = Transaction.where(:category_id => cat.id, :owner => user).sum(:sum).to_i.abs
 			if sum == nil
 				sum = 0
 			end

@@ -23,11 +23,3 @@ class Category < Sequel::Model
 		return self.color.split(",").map {|s| s.to_i}
 	end
 end
-
-
-		#[153,153,153],
-		#[70,136,71],
-		#[248,148,6],
-		#[57,134,172],
-		#[50,50,50],
-		#[184,73,71]

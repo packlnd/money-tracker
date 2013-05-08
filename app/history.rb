@@ -1,5 +1,3 @@
-require 'pry'
-
 module App
 	class History < Sinatra::Application
 		before do
