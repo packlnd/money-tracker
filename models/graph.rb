@@ -1,6 +1,8 @@
-class Grapher
-	def self.create_bar(categories)
+class Grapher < Sinatra::Application
 
+	require 'pry'
+	
+	def self.create_bar(categories, user)
 		p = Rdata.new
 		p.add_point([1,4,-3,2,-3,3,2,1,0,7,4], "1")
 		p.add_point([3,3,-4,1,-2,2,1,0,-1,6,3], "2")
@@ -17,16 +19,18 @@ class Grapher
 		ch.render_png("public/images/bar")
 	end
 
-	def self.create_pie(categories)
+	def self.create_pie(categories, user)
 		sums = []
 		names = []
+		colors = []
 		categories.each do |cat|
-			sum = Transaction.where(:category_id => cat.id).sum(:sum)
+			sum = Transaction.where(:category_id => cat.id, :owner => user).sum(:sum).to_i
 			if sum == nil
 				sum = 0
 			end
 			names << cat.name + '(' + sum.to_s + ')'
 			sums << sum
+			colors << cat.get_color
 		end
 
 		p = Rdata.new
@@ -35,9 +39,11 @@ class Grapher
 		p.add_all_series
 		p.set_abscise_label_serie("Names")
 
-		ch = Rchart.new(600,500)
-		ch.load_color_palette([[153,153,153],[70,136,71],[248,148,6],[57,134,172],[50,50,50],[184,73,71]])
-		ch.draw_basic_pie_graph(p.get_data,p.get_data_description,300,200,150,Rchart::PIE_LABELS,255,255,255)
+		ch = Rchart.new(700,600)
+		ch.set_font_properties("tahoma.ttf", 12)
+
+		ch.load_color_palette(colors)
+		ch.draw_basic_pie_graph(p.get_data,p.get_data_description,300,200,120,Rchart::PIE_LABELS)
 
 		ch.render_png("public/images/pie")
 	end

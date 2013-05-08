@@ -5,8 +5,8 @@ module App
 		require 'pry'
 
 		def create_charts(categories)
-			#Graph.create_bar categories
-			Grapher.create_pie categories
+			#Graph.create_bar categories, env['warden'].user.username
+			Grapher.create_pie categories, env['warden'].user.username
 		end
 
 		before do
