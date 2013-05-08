@@ -28,16 +28,35 @@ class Transaction < Sequel::Model
 	end
 
 	def determine_category
-		if self.sum > 0
-			self.category_id = 2
-		elsif self.name == "MÅNADSAVG BANKKORT"
+		if self.name == "MÅNADSAVG BANKKORT" or 
+				self.name == "SKATT"
 			self.category_id = 1
-		elsif self.sum > -100
+		elsif self.name == "SPINNERS" or 
+				self.name.include? "SF" or 
+				self.name.include? "SATS" or 
+				self.name.include? "ROMME" or 
+				self.name.include? "SONY" or 
+				self.name.include? "STEAM"
+			self.category_id = 4
+		elsif self.name.include? "SL" or 
+				self.name.include? "STATOIL"
+			self.category_id = 6
+		elsif self.name.include? "Överföring"
+			self.name = "Aktiehandel"
+			if sum >= 0
+				self.category_id = 2
+			else
+				self.category_id = 1
+			end
+		elsif self.sum > -150
 			self.category_id = 3
 		elsif self.sum % 100 == 0 and self.sum >= -500 and self.sum <= -100
 			self.category_id = 5
 		else
 			self.category_id = 1
+		end
+		if self.sum > 0
+			self.category_id = 2
 		end
 	end
 
