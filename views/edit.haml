@@ -8,6 +8,10 @@
 			.controls
 				%select{id: 'category', name: 'transaction[category_id]'}
 					- Category.all.each do |cat|
-						%option{value: "#{cat.id}", selected: "selected"}= cat.name
+						- if cat.id == @transaction.category_id
+							%option{value: "#{cat.id}", selected: "selected"}= cat.name
+						- else
+							%option{value: "#{cat.id}"}= cat.name
+
 
 		%input{type: 'submit', value: 'Spara'}
