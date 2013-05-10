@@ -1,11 +1,15 @@
 # -*- encoding : utf-8 -*-
 module App
 	class History < Sinatra::Application
+
+		require 'pry'
+
 		before do
 			env['warden'].authenticated?
 		end
 
 		get '/' do
+			@transactions = Transaction.order(Sequel.desc(:timestamp)).where(:owner => env['warden'].user.username, :timestamp => (Date.today - 14)..(Date.today))
 			haml :history
 		end
 
@@ -33,7 +37,12 @@ module App
 		end
 
 		post '/update' do
-
+			category_ids = []
+			params[:category].each do |cat|
+				category_ids << cat[0].to_i
+			end
+			@transactions = Transaction.order(Sequel.desc(:timestamp)).where(:owner => env['warden'].user.username, :timestamp => (params['date_from'])..(params['date_to']), :category_id => category_ids)
+			haml :history
 		end
 
 		post '/update/:id' do |id|

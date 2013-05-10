@@ -2,6 +2,7 @@ module App
 	class Statistics < Sinatra::Application
 
 		require 'rchart'
+		require 'pry'
 
 		def create_charts(categories)
 			#Graph.create_bar categories, env['warden'].user.username
@@ -22,10 +23,8 @@ module App
 
 		post "/update" do
 			categories = []
-			Category.all.each do |cat|
-				if params[:category][cat.id.to_s] != nil
-					categories << cat
-				end
+			params[:category].each do |cat|
+				categories << Category[cat[0].to_i]
 			end
 			create_statistics categories
 			redirect '/statistics'
