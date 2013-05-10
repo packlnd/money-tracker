@@ -37,7 +37,7 @@ class Grapher
 		p.add_all_series
 		p.set_abscise_label_serie("Names")
 
-		ch = Rchart.new(700,600)
+		ch = Rchart.new(700,400)
 		ch.set_font_properties("tahoma.ttf", 12)
 
 		ch.load_color_palette(colors)

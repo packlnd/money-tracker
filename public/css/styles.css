@@ -22,6 +22,6 @@ td:first-child {
 	color:#AE0000;
 }
 
-.table th, .table td, .table thead {
+.table th, .table td, .table thead, .table, .table tbody {
 	border: none;
 }

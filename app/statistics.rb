@@ -8,6 +8,10 @@ module App
 			Grapher.create_pie categories, env['warden'].user.username
 		end
 
+		def create_statistics(categories)
+			create_charts categories
+		end
+
 		before do
 			env['warden'].authenticate!
 		end
@@ -23,7 +27,7 @@ module App
 					categories << cat
 				end
 			end
-			create_charts categories
+			create_statistics categories
 			redirect '/statistics'
 		end
 	end

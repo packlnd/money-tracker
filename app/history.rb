@@ -2,7 +2,7 @@
 module App
 	class History < Sinatra::Application
 		before do
-			env['warden'].authenticate!
+			env['warden'].authenticated?
 		end
 
 		get '/' do
@@ -10,12 +10,8 @@ module App
 		end
 
 		get '/updateCategory/:id' do |id|
-			transaction = Transaction[id]
-			transaction.category_id = (transaction.category_id + 1) % Category.count
-			if transaction.category_id == 0
-				transaction.category_id = 6
-			end
-			transaction.save
+			new_category = (Transaction[id].category_id % Category.count) + 1
+			Transaction[id].update(:category_id => new_category)
 			redirect '/history'
 		end
 
@@ -34,6 +30,10 @@ module App
 				end
 			end
 			redirect '/history'
+		end
+
+		post '/update' do
+
 		end
 
 		post '/update/:id' do |id|

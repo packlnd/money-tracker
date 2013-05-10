@@ -1,0 +1,13 @@
+.control-group
+	- @categories = Category.all
+	- @categories.each do |cat|
+		%label.checkbox.inline
+			.span{:class => "#{cat.css}"}
+				%input{:type => 'checkbox', :checked => 'yes', :name => "category[#{cat.id}]"} #{cat.name}
+.control-group
+	- t = Time.now
+	- @user_transactions = Transaction.order(Sequel.desc(:timestamp)).where(:owner => env['warden'].user.username)
+	Från
+	%input.input-small{type: 'text', name: 'date_from', value: "#{@user_transactions.last.timestamp.strftime("%Y-%m-%d")}"}
+	till
+	%input.input-small{type: 'text', name: 'date_to', value: "#{@user_transactions.first.timestamp.strftime("%Y-%m-%d")}"}
