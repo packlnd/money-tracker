@@ -1,4 +1,5 @@
 class Grapher
+	require 'pry'
 	def self.create_bar(categories, user, from, to)
 		p = Rdata.new
 		colors = []
@@ -36,7 +37,6 @@ class Grapher
 			sums << sum
 			colors << cat.get_color
 		end
-
 		p = Rdata.new
 		p.add_point(sums, "Sums")
 		p.add_point(names, "Names")

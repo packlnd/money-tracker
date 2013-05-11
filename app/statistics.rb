@@ -28,7 +28,9 @@ module App
 			params[:category].each do |cat|
 				categories << Category[cat[0].to_i]
 			end
-			create_statistics(categories, params['date_from'], params['date_to'])
+			from = Time.new(params['date_from']) - 1
+			to = Time.new(params['date_to']) + 3600*24
+			create_statistics(categories, from, to)
 			redirect '/statistics'
 		end
 	end

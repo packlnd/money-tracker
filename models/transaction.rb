@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 require 'sequel'
+require 'pry'
 
 DB.create_table? :transactions do
 	primary_key :id
@@ -12,6 +13,37 @@ end
 
 class Transaction < Sequel::Model
 	many_to_one :category
+
+	def self.get_first_entry(user)
+		from = "2001-01-01"
+		if Transaction.where(:owner => user).count > 0
+			from = Transaction.where(:owner => user).first.timestamp.strftime("%Y-%m-%d")
+		end
+		from
+	end
+
+	def self.get_last_entry(user)
+		to = Time.now.strftime("%Y-%m-%d")
+		if Transaction.where(:owner => user).count > 0
+			to = Transaction.where(:owner => user).last.timestamp.strftime("%Y-%m-%d")
+		end
+		to
+	end
+
+	def self.handle_file(file_from_user, user)
+			if file_from_user
+				file = File.open(file_from_user[:tempfile]).each do |line|
+					data = line.delete("\r").delete("\n").split("\t")
+					transaction = Transaction.new
+					transaction.timestamp = data[0].chomp()
+					transaction.name = data[1].chomp()
+					transaction.sum = data[2].chomp().delete(" ").gsub(',','.').to_f
+					transaction.determine_category
+					transaction.owner = user
+					transaction.save
+				end
+			end
+	end
 
 	def determine_sum
 		if self.sum >= 0

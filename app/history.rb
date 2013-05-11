@@ -20,19 +20,7 @@ module App
 		end
 
 		post '/upload' do
-			if params['file']
-				file = File.open(params['file'][:tempfile]).each do |line|
-					data = line.delete("\r").delete("\n").split("\t")
-					transaction = Transaction.new
-
-					transaction.timestamp = data[0].chomp()
-					transaction.name = data[1].chomp()
-					transaction.sum = data[2].chomp().delete(" ").gsub(',','.').to_f
-					transaction.determine_category
-					transaction.owner = env['warden'].user.username
-					transaction.save
-				end
-			end
+			Transaction.handle_file(params['file'], env['warden'].user.username)
 			redirect '/history'
 		end
 
@@ -41,7 +29,9 @@ module App
 			params[:category].each do |cat|
 				category_ids << cat[0].to_i
 			end
-			@transactions = Transaction.order(Sequel.desc(:timestamp)).where(:owner => env['warden'].user.username, :timestamp => (params['date_from'])..(params['date_to']), :category_id => category_ids)
+			from = Time.new(params['date_from']) - 1
+			to = Time.new(params['date_to']) + 3600*24
+			@transactions = Transaction.order(Sequel.desc(:timestamp)).where(:owner => env['warden'].user.username, :timestamp => (from)..(to), :category_id => category_ids)
 			haml :history
 		end
 

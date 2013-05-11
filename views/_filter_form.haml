@@ -5,9 +5,8 @@
 			.span{:class => "#{cat.css}"}
 				%input{:type => 'checkbox', :checked => 'yes', :name => "category[#{cat.id}]"} #{cat.name}
 .control-group
-	- t = Time.now
 	- @user_transactions = Transaction.order(Sequel.desc(:timestamp)).where(:owner => env['warden'].user.username)
 	Från
-	%input.input-small{type: 'text', name: 'date_from', value: "#{(@user_transactions.last.timestamp - 1).strftime("%Y-%m-%d")}"}
+	%input.input-small{type: 'text', name: 'date_from', value: "#{Transaction.get_first_entry(env['warden'].user.username)}"}
 	till
-	%input.input-small{type: 'text', name: 'date_to', value: "#{(@user_transactions.first.timestamp + 3600*24).strftime("%Y-%m-%d")}"}
+	%input.input-small{type: 'text', name: 'date_to', value: "#{Transaction.get_last_entry(env['warden'].user.username).to_s}"}
