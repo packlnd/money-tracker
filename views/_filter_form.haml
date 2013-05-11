@@ -7,6 +7,6 @@
 .control-group
   - @user_transactions = Transaction.order(Sequel.desc(:timestamp)).where(:owner => env['warden'].user.username)
   Från
-  %input.input-small{type: 'text', name: 'date_from', value: "#{Transaction.get_first_entry(env['warden'].user.username)}"}
+  %input.input-small{type: 'text', name: 'date_from', value: "#{Transaction.get_last_entry(env['warden'].user.username)}"}
   till
-  %input.input-small{type: 'text', name: 'date_to', value: "#{Transaction.get_last_entry(env['warden'].user.username).to_s}"}
+  %input.input-small{type: 'text', name: 'date_to', value: "#{Transaction.get_first_entry(env['warden'].user.username).to_s}"}
