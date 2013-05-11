@@ -1,5 +1,0 @@
-set :application, "ghostandthemachines.com/sinatra-haml-bootstrap-basic-hero"
-set :user,        "jon"
-set :repository, "git@ghostandthemachines.com:sinatra-haml-bootstrap-hero.git"
-set :domain, "ghostandthemachines.com"
-set :deploy_to, "~/sites/#{application}"
