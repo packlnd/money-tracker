@@ -9,7 +9,7 @@ module App
 		end
 
 		get '/' do
-			@transactions = Transaction.order(Sequel.desc(:timestamp)).where(:owner => env['warden'].user.username, :timestamp => (Date.today - 14)..(Date.today))
+			@transactions = Transaction.order(Sequel.desc(:timestamp)).where(:owner => env['warden'].user.username)
 			haml :history
 		end
 
