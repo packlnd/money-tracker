@@ -1,21 +1,12 @@
 class Grapher
-	
 	def self.create_bar(categories, user, from, to)
 		p = Rdata.new
-		transactions = Transaction.where(:owner => user)
 		colors = []
 		categories.each do |category|
-			sums = []
+			sums = Array.new(12, 0)
 			colors << category.get_color
-			(1..12).each do |m|
-				t = transactions.where(:category_id => category.id, :timestamp => (from)..(to)).all
-				sum = 0
-				t.each do |transaction|
-					if transaction.timestamp.month == m
-						sum += transaction.sum
-					end
-				end
-				sums << sum
+			Transaction.where(:owner => user, :category_id => category.id, :timestamp => (from)..(to)).all.each do |transaction|
+				sums[transaction.timestamp.month.to_i - 1] += transaction.sum.to_i.abs
 			end
 			p.add_point(sums, category.name.to_s)
 		end

@@ -6,7 +6,9 @@ module App
 
 		def create_charts(categories, from, to)
 			Grapher.create_bar(categories, env['warden'].user.username, from, to)
-			Grapher.create_pie(categories, env['warden'].user.username, from, to)
+			if categories.count > 1
+				Grapher.create_pie(categories, env['warden'].user.username, from, to)
+			end
 		end
 
 		def create_statistics(categories, from, to)
