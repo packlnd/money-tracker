@@ -4,13 +4,13 @@ module App
 		require 'rchart'
 		require 'pry'
 
-		def create_charts(categories)
-			#Graph.create_bar categories, env['warden'].user.username
-			Grapher.create_pie categories, env['warden'].user.username
+		def create_charts(categories, from, to)
+			Grapher.create_bar(categories, env['warden'].user.username, from, to)
+			Grapher.create_pie(categories, env['warden'].user.username, from, to)
 		end
 
-		def create_statistics(categories)
-			create_charts categories
+		def create_statistics(categories, from, to)
+			create_charts(categories, from, to)
 		end
 
 		before do
@@ -26,7 +26,7 @@ module App
 			params[:category].each do |cat|
 				categories << Category[cat[0].to_i]
 			end
-			create_statistics categories
+			create_statistics(categories, params['date_from'], params['date_to'])
 			redirect '/statistics'
 		end
 	end

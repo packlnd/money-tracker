@@ -1,28 +1,43 @@
 class Grapher
 	
-	def self.create_bar(categories, user)
+	def self.create_bar(categories, user, from, to)
 		p = Rdata.new
-		p.add_point([1,4,-3,2,-3,3,2,1,0,7,4], "1")
-		p.add_point([3,3,-4,1,-2,2,1,0,-1,6,3], "2")
-		p.add_point([4,1,2,-1,-4,-2,3,2,1,2,2], "3")
+		transactions = Transaction.where(:owner => user)
+		colors = []
+		categories.each do |category|
+			sums = []
+			colors << category.get_color
+			(1..12).each do |m|
+				t = transactions.where(:category_id => category.id, :timestamp => (from)..(to)).all
+				sum = 0
+				t.each do |transaction|
+					if transaction.timestamp.month == m
+						sum += transaction.sum
+					end
+				end
+				sums << sum
+			end
+			p.add_point(sums, category.name.to_s)
+		end
+
 		p.add_all_series()
 
 		ch = Rchart.new(700,230)
 		ch.set_graph_area(50,30,680,200)
 		ch.draw_scale(p.get_data,p.get_data_description,Rchart::SCALE_NORMAL,150,150,150,true,0,2,true)
 		ch.draw_treshold(0,143,55,72,true,true)
-        ch.draw_legend(596,150,p.get_data_description,255,255,255)
+		ch.load_color_palette(colors)
 		ch.draw_bar_graph(p.get_data,p.get_data_description)
 
 		ch.render_png("public/images/bar")
 	end
 
-	def self.create_pie(categories, user)
+	def self.create_pie(categories, user, from, to)
 		sums = []
 		names = []
 		colors = []
 		categories.each do |cat|
-			sum = Transaction.where(:category_id => cat.id, :owner => user).sum(:sum).to_i.abs
+			sum = Transaction.where(:category_id => cat.id, :owner => user, :timestamp => (from)..(to)).sum(:sum).to_i.abs
 			if sum == nil
 				sum = 0
 			end
