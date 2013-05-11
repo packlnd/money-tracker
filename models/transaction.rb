@@ -17,7 +17,7 @@ class Transaction < Sequel::Model
   def self.get_first_entry(user)
     from = "2001-01-01"
     if Transaction.where(:owner => user).count > 0
-      from = Transaction.where(:owner => user).first.timestamp.strftime("%Y-%m-%d")
+      from = Transaction.order(Sequel.desc(:timestamp)).where(:owner => user).first.timestamp.strftime("%Y-%m-%d")
     end
     from
   end
@@ -25,7 +25,7 @@ class Transaction < Sequel::Model
   def self.get_last_entry(user)
     to = Time.now.strftime("%Y-%m-%d")
     if Transaction.where(:owner => user).count > 0
-      to = Transaction.where(:owner => user).last.timestamp.strftime("%Y-%m-%d")
+      to = Transaction.order(Sequel.desc(:timestamp)).where(:owner => user).last.timestamp.strftime("%Y-%m-%d")
     end
     to
   end
