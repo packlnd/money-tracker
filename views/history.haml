@@ -1,56 +1,56 @@
 .container
-	%h3 
-		Hej #{env['warden'].user.username}!
-	%center
-		%form.form-inline{action: '/history/upload', method: 'post', enctype: 'multipart/form-data'}
-			%input{type: 'file', name: 'file'}
-			%input.btn.btn-success{type: 'submit', value: 'Ladda upp'}
-	%h3 Historik
-	%center
-		%form.form-inline{action: '/history/update', method: 'post'}
-			= haml :_filter_form
-			%input.btn.btn{type: 'submit', value: 'Visa'}
-	.container
-		%table.table{:width => '90%'}
-			%thead
-				%th
-				%th 
-				%th 
-				%th 
-				%th
-			%tbody
-			- year = ""
-			- month = ""
-			- @transactions.each do |transaction|
-				- if year == "" or transaction.timestamp.year != year
-					- year = transaction.timestamp.year
-					%tr
-						%td
-							%h3 #{year.to_s + " (" + Transaction.get_sum_year(year).to_s + ")"}
-				- if month == "" or transaction.timestamp.month != month
-					- month = transaction.timestamp.month
-					%tr
-						%td
-							%h4 #{Date::MONTHNAMES[month].to_s + " (" + Transaction.get_sum_month(year, month).to_s + ")"}
-					%tr
-						%td 
-							%b Kategori
-						%td 
-							%b Datum
-						%td 
-							%b Namn
-						%td 
-							%b Summa
-				%tr{:class => "#{transaction.determine_row}"}
-					%td
-						%a{:href => "/history/updateCategory/#{transaction.id}"}
-							.span{:class => "#{Category[transaction.category_id].css}"} 
-								#{Category[transaction.category_id].name}
-					%td #{transaction.timestamp.strftime("%Y-%m-%d")}
-					%td #{transaction.name}
-					%td{:class => "#{transaction.determine_sum}"} #{transaction.sum}
-					%td
-						%a{:href => "/history/edit/#{transaction.id}"}
-							%i.icon-pencil
-						%a{:href => "/history/delete/#{transaction.id}"}
-							%i.icon-trash
+  %h3 
+    Hej #{env['warden'].user.username}!
+  %center
+    %form.form-inline{action: '/history/upload', method: 'post', enctype: 'multipart/form-data'}
+      %input{type: 'file', name: 'file'}
+      %input.btn.btn-success{type: 'submit', value: 'Ladda upp'}
+  %h3 Historik
+  %center
+    %form.form-inline{action: '/history/update', method: 'post'}
+      = haml :_filter_form
+      %input.btn.btn{type: 'submit', value: 'Visa'}
+  .container
+    %table.table{:width => '90%'}
+      %thead
+        %th
+        %th 
+        %th 
+        %th 
+        %th
+      %tbody
+      - year = ""
+      - month = ""
+      - @transactions.each do |transaction|
+        - if year == "" or transaction.timestamp.year != year
+          - year = transaction.timestamp.year
+          %tr
+            %td
+              %h3 #{year.to_s + " (" + Transaction.get_sum_year(year).to_s + ")"}
+        - if month == "" or transaction.timestamp.month != month
+          - month = transaction.timestamp.month
+          %tr
+            %td
+              %h4 #{Date::MONTHNAMES[month].to_s + " (" + Transaction.get_sum_month(year, month).to_s + ")"}
+          %tr
+            %td 
+              %b Kategori
+            %td 
+              %b Datum
+            %td 
+              %b Namn
+            %td 
+              %b Summa
+        %tr{:class => "#{transaction.determine_row}"}
+          %td
+            %a{:href => "/history/updateCategory/#{transaction.id}"}
+              .span{:class => "#{Category[transaction.category_id].css}"} 
+                #{Category[transaction.category_id].name}
+          %td #{transaction.timestamp.strftime("%Y-%m-%d")}
+          %td #{transaction.name}
+          %td{:class => "#{transaction.determine_sum}"} #{transaction.sum}
+          %td
+            %a{:href => "/history/edit/#{transaction.id}"}
+              %i.icon-pencil
+            %a{:href => "/history/delete/#{transaction.id}"}
+              %i.icon-trash

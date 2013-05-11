@@ -1,17 +1,17 @@
 .navbar.navbar-fixed-top.navbar-inverse
-	.navbar-inner
-		.container
-			%a.brand{:href => '/'} Mina utgifter
-			%ul.nav
-				- if env['warden'].authenticated?
-					%li
-						%a{:href => '/history'}Historik
-					%li
-						%a{:href => '/statistics'}Statistik
-					%li
-						%a{:href => '/auth/logout'}Logga ut
-				- else 	
-					%li
-						%a{:href => '/auth/login'}Logga in
-					%li
-						%a{:href => '/auth/register'}Nytt konto
+  .navbar-inner
+    .container
+      %a.brand{:href => '/'} Mina utgifter
+      %ul.nav
+        - if env['warden'].authenticated?
+          %li
+            %a{:href => '/history'}Historik
+          %li
+            %a{:href => '/statistics'}Statistik
+          %li
+            %a{:href => '/auth/logout'}Logga ut
+        - else   
+          %li
+            %a{:href => '/auth/login'}Logga in
+          %li
+            %a{:href => '/auth/register'}Nytt konto

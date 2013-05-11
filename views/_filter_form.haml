@@ -1,12 +1,12 @@
 .control-group
-	- @categories = Category.all
-	- @categories.each do |cat|
-		%label.checkbox.inline
-			.span{:class => "#{cat.css}"}
-				%input{:type => 'checkbox', :checked => 'yes', :name => "category[#{cat.id}]"} #{cat.name}
+  - @categories = Category.all
+  - @categories.each do |cat|
+    %label.checkbox.inline
+      .span{:class => "#{cat.css}"}
+        %input{:type => 'checkbox', :checked => 'yes', :name => "category[#{cat.id}]"} #{cat.name}
 .control-group
-	- @user_transactions = Transaction.order(Sequel.desc(:timestamp)).where(:owner => env['warden'].user.username)
-	Från
-	%input.input-small{type: 'text', name: 'date_from', value: "#{Transaction.get_first_entry(env['warden'].user.username)}"}
-	till
-	%input.input-small{type: 'text', name: 'date_to', value: "#{Transaction.get_last_entry(env['warden'].user.username).to_s}"}
+  - @user_transactions = Transaction.order(Sequel.desc(:timestamp)).where(:owner => env['warden'].user.username)
+  Från
+  %input.input-small{type: 'text', name: 'date_from', value: "#{Transaction.get_first_entry(env['warden'].user.username)}"}
+  till
+  %input.input-small{type: 'text', name: 'date_to', value: "#{Transaction.get_last_entry(env['warden'].user.username).to_s}"}

@@ -1,17 +1,17 @@
 .container
-	%form.form{action: "/history/update/#{@transaction.id}", method: 'post'}
-		.control-group
-			%label.control-label{for: 'name'}Namn
-			.controls
-				%input{type: 'text', id: 'name', name: 'transaction[name]', value: "#{@transaction.name}"}
-			%label.control-label{for: 'category'}Kategori
-			.controls
-				%select{id: 'category', name: 'transaction[category_id]'}
-					- Category.all.each do |cat|
-						- if cat.id == @transaction.category_id
-							%option{value: "#{cat.id}", selected: "selected"}= cat.name
-						- else
-							%option{value: "#{cat.id}"}= cat.name
+  %form.form{action: "/history/update/#{@transaction.id}", method: 'post'}
+    .control-group
+      %label.control-label{for: 'name'}Namn
+      .controls
+        %input{type: 'text', id: 'name', name: 'transaction[name]', value: "#{@transaction.name}"}
+      %label.control-label{for: 'category'}Kategori
+      .controls
+        %select{id: 'category', name: 'transaction[category_id]'}
+          - Category.all.each do |cat|
+            - if cat.id == @transaction.category_id
+              %option{value: "#{cat.id}", selected: "selected"}= cat.name
+            - else
+              %option{value: "#{cat.id}"}= cat.name
 
 
-		%input{type: 'submit', value: 'Spara'}
+    %input{type: 'submit', value: 'Spara'}
