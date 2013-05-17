@@ -1,28 +1,31 @@
 .container
   %h3 Statistik för #{env['warden'].user.username}
   %center
-    %form.form-inline{action: '/statistics/update', method: 'post'}
+    -#%form.form-inline{action: '/statistics/update', method: 'post'}
+    %form.form-inline{name: 'myform', action: '', method: 'POST'}
       = haml :_filter_form
-      %input.btn.btn{type: 'submit', value: 'Visa', onClick: 'doStuff()'}
-  %input.btn.btn{type: 'button', value: 'do stuff', onClick: 'doStuff()'}    
+      -#%input.btn.btn{type: 'submit', value: 'Visa'}
+      %input.btn.btn{type: 'button', value: 'Click', name: 'button', onClick: 'doStuff(this.form)'}  
   #example
   %script{ :type => "text/javascript", :src => "/js/flotr2.min.js"}
   :javascript
-    function doStuff() {
+    function doStuff(form) {
       (function basic_pie(container) {
         var
-          d1 = [[0, 1]],
-          d2 = [[0, 0]],
-          d3 = [[0, 1]],
-          d4 = [[0, 0]],
-          de = [[0, 1]],
-          graph;
+          d1 = [[0, #{Transaction.where(:category_id => 1).sum(:sum).to_i.abs}]],
+          d2 = [[0, #{Transaction.where(:category_id => 2).sum(:sum).to_i.abs}]],
+          d3 = [[0, #{Transaction.where(:category_id => 3).sum(:sum).to_i.abs}]],
+          d4 = [[0, #{Transaction.where(:category_id => 4).sum(:sum).to_i.abs}]],
+          d5 = [[0, #{Transaction.where(:category_id => 5).sum(:sum).to_i.abs}]],
+          d6 = [[0, #{Transaction.where(:category_id => 6).sum(:sum).to_i.abs}]],
+          graph,
+
         graph = Flotr.draw(container, [{ data : d1, label : 'Utgift' },
           { data : d2, label : 'Inkomst' },
           { data : d3, label : 'Mat & Dryck' },
-          { data : de, label : 'Fritid'},
-          { data : de, label : 'Bankomat'},
-          { data : d4, label : 'Transport' }], {
+          { data : d4, label : 'Fritid'},
+          { data : d5, label : 'Bankomat'},
+          { data : d6, label : 'Transport' }], {
 
           colors : ['#999999', '#468847', '#F89406', '#3986AC', '#323232', '#B84947'],
           HtmlText : false,

@@ -3,7 +3,7 @@
   - @categories.each do |cat|
     %label.checkbox.inline
       .span{:class => "#{cat.css}"}
-        %input{:type => 'checkbox', :checked => 'yes', :name => "category[#{cat.id}]"} #{cat.name}
+        %input{:type => 'checkbox', :checked => 'yes', :name => "cat#{cat.id}"} #{cat.name}
 .control-group
   - @user_transactions = Transaction.order(Sequel.desc(:timestamp)).where(:owner => env['warden'].user.username)
   Från

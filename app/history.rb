@@ -2,8 +2,6 @@
 module App
   class History < Sinatra::Application
 
-    require 'pry'
-
     before do
       env['warden'].authenticated?
     end
