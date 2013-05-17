@@ -11,18 +11,20 @@
     function doStuff() {
       (function basic_pie(container) {
         var
-          d1 = [[0, 4]],
-          d2 = [[0, 3]],
-          d3 = [[0, 1.03]],
-          d4 = [[0, 3.5]],
+          d1 = [[0, 1]],
+          d2 = [[0, 0]],
+          d3 = [[0, 1]],
+          d4 = [[0, 0]],
+          de = [[0, 1]],
           graph;
-    
-        graph = Flotr.draw(container, [
-          { data : d1, label : 'Comedy' },
-          { data : d2, label : 'Action' },
-          { data : d3, label : 'Romance' },
-          { data : d4, label : 'Drama' }
-        ], {
+        graph = Flotr.draw(container, [{ data : d1, label : 'Utgift' },
+          { data : d2, label : 'Inkomst' },
+          { data : d3, label : 'Mat & Dryck' },
+          { data : de, label : 'Fritid'},
+          { data : de, label : 'Bankomat'},
+          { data : d4, label : 'Transport' }], {
+
+          colors : ['#999999', '#468847', '#F89406', '#3986AC', '#323232', '#B84947'],
           HtmlText : false,
           grid : {
             verticalLines : false,
@@ -31,16 +33,12 @@
           },
           xaxis : { showLabels : false },
           yaxis : { showLabels : false },
-          pie : {
-            show : true, 
-            //explode : 6
-          },
+          pie : { show : true },
           mouse : { track : true },
           legend : {
             position : 'se',
             backgroundColor : '#FFF'
-          },
-          colors : ['#0F0']
+          }
         });
       })(document.getElementById("example"));
     }
