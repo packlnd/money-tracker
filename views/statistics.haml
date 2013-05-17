@@ -6,28 +6,18 @@
       = haml :_filter_form
       -#%input.btn.btn{type: 'submit', value: 'Visa'}
       %input.btn.btn{type: 'button', value: 'Click', name: 'button', onClick: 'doStuff(this.form)'}  
-  #example
+  #piechart
   %script{ :type => "text/javascript", :src => "/js/flotr2.min.js"}
   :javascript
     function doStuff(form) {
       (function basic_pie(container) {
-        var
-          d1 = [[0, #{Transaction.where(:category_id => 1).sum(:sum).to_i.abs}]],
-          d2 = [[0, #{Transaction.where(:category_id => 2).sum(:sum).to_i.abs}]],
-          d3 = [[0, #{Transaction.where(:category_id => 3).sum(:sum).to_i.abs}]],
-          d4 = [[0, #{Transaction.where(:category_id => 4).sum(:sum).to_i.abs}]],
-          d5 = [[0, #{Transaction.where(:category_id => 5).sum(:sum).to_i.abs}]],
-          d6 = [[0, #{Transaction.where(:category_id => 6).sum(:sum).to_i.abs}]],
-          graph,
+        var form_from = form.date_from.value;
+        var form_to = form.date_to.value;
+        var graph,
 
-        graph = Flotr.draw(container, [{ data : d1, label : 'Utgift' },
-          { data : d2, label : 'Inkomst' },
-          { data : d3, label : 'Mat & Dryck' },
-          { data : d4, label : 'Fritid'},
-          { data : d5, label : 'Bankomat'},
-          { data : d6, label : 'Transport' }], {
+        graph = Flotr.draw(container, [#{Grapher.get_pie_data("form_from", "form_to", ["1", "2"])}], {
 
-          colors : ['#999999', '#468847', '#F89406', '#3986AC', '#323232', '#B84947'],
+          colors : #{"['#999999', '#468847', '#F89406', '#3986AC', '#323232', '#B84947']"},
           HtmlText : false,
           grid : {
             verticalLines : false,
@@ -43,5 +33,5 @@
             backgroundColor : '#FFF'
           }
         });
-      })(document.getElementById("example"));
+      })(document.getElementById("piechart"));
     }
