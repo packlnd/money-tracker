@@ -1,22 +1,16 @@
 .container
   %h3 Statistik för #{env['warden'].user.username}
   %center
-    -#%form.form-inline{action: '/statistics/update', method: 'post'}
-    %form.form-inline{name: 'myform', action: '', method: 'POST'}
+    %form.form-inline{name: 'myform', action: "", method: 'POST'}
       = haml :_filter_form
-      -#%input.btn.btn{type: 'submit', value: 'Visa'}
-      %input.btn.btn{type: 'button', value: 'Click', name: 'button', onClick: 'doStuff(this.form)'}  
+      %input.btn.btn{type: 'button', value: 'Visa', name: 'button', onClick: 'doStuff(this.form)'}  
   #piechart
   %script{ :type => "text/javascript", :src => "/js/flotr2.min.js"}
   :javascript
     function doStuff(form) {
+
       (function basic_pie(container) {
-        var form_from = form.date_from.value;
-        var form_to = form.date_to.value;
-        var graph,
-
-        graph = Flotr.draw(container, [#{Grapher.get_pie_data("form_from", "form_to", ["1", "2"])}], {
-
+        Flotr.draw(container, [#{Grapher.get_pie_data().to_s}], {
           colors : #{"['#999999', '#468847', '#F89406', '#3986AC', '#323232', '#B84947']"},
           HtmlText : false,
           grid : {
