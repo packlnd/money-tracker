@@ -34,6 +34,7 @@ module App
       to_date = params['date_to'].split('-')
       to = Time.new(to_date[0], to_date[1], to_date[2]) + 3600*24
       @transactions = Transaction.order(Sequel.desc(:timestamp)).where(:owner => env['warden'].user.username, :timestamp => (from)..(to), :category_id => category_ids)
+      @cat_ids = category_ids
       haml :history
     end
 

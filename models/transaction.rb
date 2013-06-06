@@ -105,9 +105,9 @@ class Transaction < Sequel::Model
     puts total_probability
   end
 
-  def self.get_sum_year(year)
+  def self.get_sum_year(year, cat_ids)
     sum = 0
-    Transaction.all.each do |t|
+    Transaction.where(:category_id => cat_ids).all.each do |t|
       if t.timestamp.year == year
         sum += t.sum
       end
@@ -115,9 +115,9 @@ class Transaction < Sequel::Model
     return sum.to_i
   end
 
-  def self.get_sum_month(year, month)
+  def self.get_sum_month(year, month, cat_ids)
     sum = 0
-    Transaction.all.each do |t|
+    Transaction.where(:category_id => cat_ids).all.each do |t|
       if t.timestamp.year == year and t.timestamp.month == month
         sum += t.sum
       end
