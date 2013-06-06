@@ -1,6 +1,8 @@
 # -*- encoding : utf-8 -*-
 module App
   class History < Sinatra::Application
+    
+    require 'pry'
 
     before do
       env['warden'].authenticated?
@@ -27,8 +29,10 @@ module App
       params[:category].each do |cat|
         category_ids << cat[0].to_i
       end
-      from = Time.new(params['date_from']) - 1
-      to = Time.new(params['date_to']) + 3600*24
+      from_date = params['date_from'].split('-')
+      from = Time.new(from_date[0], from_date[1], from_date[2]) - 1
+      to_date = params['date_to'].split('-')
+      to = Time.new(to_date[0], to_date[1], to_date[2]) + 3600*24
       @transactions = Transaction.order(Sequel.desc(:timestamp)).where(:owner => env['warden'].user.username, :timestamp => (from)..(to), :category_id => category_ids)
       haml :history
     end
