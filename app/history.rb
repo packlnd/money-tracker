@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 module App
   class History < Sinatra::Application
-    
+
     require 'pry'
 
     before do
@@ -10,6 +10,10 @@ module App
 
     get '/' do
       @transactions = Transaction.order(Sequel.desc(:timestamp)).where(:owner => env['warden'].user.username)
+      @cat_ids = Array.new(Category.count, 0)
+      for i in 1..Category.count
+        @cat_ids[i-1] = i
+      end
       haml :history
     end
 
