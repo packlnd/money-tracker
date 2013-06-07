@@ -1,4 +1,4 @@
-function doStuff(form, data_for_pie, pie_color) {
+function create_piechart(form, data_for_pie, pie_color) {
   (function basic_pie(container) {
     Flotr.draw(container, data_for_pie, {
       colors : pie_color,
