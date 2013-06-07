@@ -3,29 +3,7 @@
   %center
     %form.form-inline{name: 'myform', action: "", method: 'POST'}
       = haml :_filter_form
-      %input.btn.btn{type: 'button', value: 'Visa', name: 'button', onClick: 'doStuff(this.form)'}  
+      %input.btn.btn{type: 'button', value: 'Visa', name: 'button', onClick: "doStuff(this.form, #{"[" + Grapher.get_pie_data().to_s + "]"}, #{"['#999999', '#468847', '#F89406', '#3986AC', '#323232', '#B84947']"})"}
   #piechart
   %script{ :type => "text/javascript", :src => "/js/flotr2.min.js"}
--#  :javascript
--#    function doStuff(form) {
--#
--#      (function basic_pie(container) {
--#        Flotr.draw(container, [#{Grapher.get_pie_data().to_s}], {
--#          colors : #{"['#999999', '#468847', '#F89406', '#3986AC', '#323232', '#B84947']"},
--#          HtmlText : false,
--#          grid : {
--#            verticalLines : false,
--#            horizontalLines : false,
--#            outlineWidth:0
--#          },
--#          xaxis : { showLabels : false },
--#          yaxis : { showLabels : false },
--#          pie : { show : true },
--#          mouse : { track : true },
--#          legend : {
--#            position : 'se',
--#            backgroundColor : '#FFF'
--#          }
--#        });
--#      })(document.getElementById("piechart"));
--#    }
+  %script{ :type => "text/javascript", :src => "/js/piechart.js"}
