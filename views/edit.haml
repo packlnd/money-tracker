@@ -3,15 +3,14 @@
     .control-group
       %label.control-label{for: 'name'}Namn
       .controls
-        %input{type: 'text', id: 'name', name: 'transaction[name]', value: "#{@transaction.name}"}
+        %input{:type => 'text', :id => 'name', :name => 'transaction[name]', :value => "#{@transaction.name}"}
       %label.control-label{for: 'category'}Kategori
       .controls
-        %select{id: 'category', name: 'transaction[category_id]'}
-          - Category.all.each do |cat|
-            - if cat.id == @transaction.category_id
-              %option{value: "#{cat.id}", selected: "selected"}= cat.name
-            - else
-              %option{value: "#{cat.id}"}= cat.name
-
-
+        - Category.all.each do |category|
+          %label.radio.inline
+            .span{:class => "#{category.css}"}
+              -if category.id == @transaction.category_id
+                %input{:checked => 'true', :type => 'radio', :id => "#{category.id}", :name => 'transaction[category_id]', :value => "#{category.id}"} #{category.name}
+              -else
+                %input{:type => 'radio', :id => "#{category.id}", :name => 'transaction[category_id]', :value => "#{category.id}"} #{category.name}
     %input{type: 'submit', value: 'Spara'}
