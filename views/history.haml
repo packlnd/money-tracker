@@ -1,5 +1,5 @@
 .container
-  %h3 
+  %h3
     Hej #{env['warden'].user.username}!
   %center
     %form.form-inline{action: '/history/upload', method: 'post', enctype: 'multipart/form-data'}
@@ -14,9 +14,9 @@
     %table.table{:width => '90%'}
       %thead
         %th
-        %th 
-        %th 
-        %th 
+        %th
+        %th
+        %th
         %th
       %tbody
       - year = ""
@@ -33,18 +33,18 @@
             %td
               %h4 #{Date::MONTHNAMES[month].to_s + " (" + Transaction.get_sum_month(year, month, @cat_ids, env['warden'].user.username).to_s + ")"}
           %tr
-            %td 
+            %td
               %b Kategori
-            %td 
+            %td
               %b Datum
-            %td 
+            %td
               %b Namn
-            %td 
+            %td
               %b Summa
         %tr{:class => "#{transaction.determine_row}"}
           %td
             %a{:href => "/history/updateCategory/#{transaction.id}"}
-              .span{:class => "#{Category[transaction.category_id].css}"} 
+              .span{:class => "#{Category[transaction.category_id].css}"}
                 #{Category[transaction.category_id].name}
           %td #{transaction.timestamp.strftime("%Y-%m-%d")}
           %td #{transaction.name}

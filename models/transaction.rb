@@ -92,7 +92,7 @@ class Transaction < Sequel::Model
       for id in 0..(Category.count-1)
         if word_appears == 0 or transactions == 0
           total_probability[id] = 0
-          next          
+          next
         end
         total_probability[id] += (probability_per_category[id].to_f/(word_appears.to_f/transactions.to_f))
       end
@@ -102,7 +102,6 @@ class Transaction < Sequel::Model
       total_probability[id] /= Category.count
     end
     self.category_id = total_probability.rindex(total_probability.max)+1
-    puts total_probability
   end
 
   def self.get_sum_year(year, cat_ids, user)
