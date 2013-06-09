@@ -104,9 +104,9 @@ class Transaction < Sequel::Model
     self.category_id = total_probability.rindex(total_probability.max)+1
   end
 
-  def self.get_sum_year(year, cat_ids, user)
+  def self.get_sum_year(year, cat_ids, user, from, to)
     sum = 0
-    Transaction.where(:category_id => cat_ids, :owner => user).all.each do |t|
+    Transaction.where(:timestamp => from..to, :category_id => cat_ids, :owner => user).all.each do |t|
       if t.timestamp.year == year
         sum += t.sum
       end
@@ -114,9 +114,9 @@ class Transaction < Sequel::Model
     return sum.to_i
   end
 
-  def self.get_sum_month(year, month, cat_ids, user)
+  def self.get_sum_month(year, month, cat_ids, user, from, to)
     sum = 0
-    Transaction.where(:category_id => cat_ids, :owner => user).all.each do |t|
+    Transaction.where(:timestamp => from..to, :category_id => cat_ids, :owner => user).all.each do |t|
       if t.timestamp.year == year and t.timestamp.month == month
         sum += t.sum
       end

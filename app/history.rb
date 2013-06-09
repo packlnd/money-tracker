@@ -29,23 +29,13 @@ module App
     end
 
     get '/update/:from/:to/:categories' do
+      from_date = params[:from].split('-')
+      @from = Time.new(from_date[0], from_date[1], from_date[2]) - 1
+      to_date = params[:to].split('-')
+      @to = Time.new(to_date[0], to_date[1], to_date[2]) + 3600*24
       @cat_ids = params[:categories].split('.');
-      @transactions = Transaction.order(Sequel.desc(:timestamp)).where(:timestamp => params[:from]..params[:to],:owner => env['warden'].user.username, :category_id => @cat_ids)
+      @transactions = Transaction.order(Sequel.desc(:timestamp)).where(:timestamp => @from..@to,:owner => env['warden'].user.username, :category_id => @cat_ids)
       haml :table
-    end
-
-    post '/update' do
-      category_ids = []
-      params[:category].each do |cat|
-        category_ids << cat[0].to_i
-      end
-      from_date = params['date_from'].split('-')
-      from = Time.new(from_date[0], from_date[1], from_date[2]) - 1
-      to_date = params['date_to'].split('-')
-      to = Time.new(to_date[0], to_date[1], to_date[2]) + 3600*24
-      @transactions = Transaction.order(Sequel.desc(:timestamp)).where(:owner => env['warden'].user.username, :timestamp => (from)..(to), :category_id => category_ids)
-      @cat_ids = category_ids
-      haml :history
     end
 
     post '/update/:id' do |id|
