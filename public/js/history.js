@@ -5,7 +5,7 @@ function display_history(form, number_of_categories) {
     if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
       document.getElementById("historytable").innerHTML = xmlhttp.responseText;
     } else {
-      document.getElementById("historytable").innerHTML = "Waiting for server...";
+      document.getElementById("historytable").innerHTML = "Laddar...";
     }
   }
   var from = form.elements["date_from"].value;
