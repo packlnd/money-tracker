@@ -28,6 +28,12 @@ module App
       redirect '/history'
     end
 
+    get '/update/:from/:to/:categories' do
+      @cat_ids = params[:categories].split('.');
+      @transactions = Transaction.order(Sequel.desc(:timestamp)).where(:timestamp => params[:from]..params[:to],:owner => env['warden'].user.username, :category_id => @cat_ids)
+      haml :table
+    end
+
     post '/update' do
       category_ids = []
       params[:category].each do |cat|
