@@ -3,7 +3,7 @@
   %center
     %form.form-inline{name: 'myform', action: "", method: 'POST'}
       = haml :_filter_form
-      %input.btn.btn{type: 'button', value: 'Visa', name: 'button', onClick: "create_piechart(this.form, #{"[" + Grapher.get_pie_data().to_s + "]"}, #{"['#999999', '#468847', '#F89406', '#3986AC', '#323232', '#B84947']"})"}
+      %input.btn.btn{type: 'button', value: 'Visa', name: 'button', onClick: "create_statistics(this.form, #{Category.count})"}
   #piechart
   %script{ :type => "text/javascript", :src => "/js/flotr2.min.js"}
-  %script{ :type => "text/javascript", :src => "/js/piechart.js"}
+  %script{ :type => "text/javascript", :src => "/js/statistics.js"}

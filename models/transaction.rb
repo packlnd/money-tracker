@@ -104,6 +104,14 @@ class Transaction < Sequel::Model
     self.category_id = total_probability.rindex(total_probability.max)+1
   end
 
+  def self.get_sum(cat_ids, user, from, to)
+    sum = 0
+    Transaction.where(:timestamp => from..to, :category_id => cat_ids, :owner => user).all.each do |t|
+      sum += t.sum
+    end
+    return sum
+  end
+
   def self.get_sum_year(year, cat_ids, user, from, to)
     sum = 0
     Transaction.where(:timestamp => from..to, :category_id => cat_ids, :owner => user).all.each do |t|

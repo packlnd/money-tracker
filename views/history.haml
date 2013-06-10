@@ -12,3 +12,4 @@
       %input.btn.btn{type: 'button', value: 'Visa', name: 'button', onClick: "display_history(this.form, #{Category.count})"}
     %script{:type => "text/javascript", :src => "/js/history.js"}
     #historytable
+      =haml :table
