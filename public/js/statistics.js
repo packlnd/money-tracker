@@ -10,11 +10,11 @@ function create_pie_chart(from, to, categories) {
   xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-      var categories = JSON.parse(xmlhttp.responseText);
+      var json_categories = JSON.parse(xmlhttp.responseText);
       var pie_data = new Array();
       var colors = new Array();
-      for (var name in categories) {
-        var category = JSON.parse(categories[name]);
+      for (var name in json_categories) {
+        var category = JSON.parse(json_categories[name]);
         if (category.sum == 0) {
           continue;
         }
@@ -23,6 +23,7 @@ function create_pie_chart(from, to, categories) {
         pie_data.push({ data : sum, label : name.toString() });
       }
       display_piechart(pie_data, colors);
+      create_monthly_chart(from, to, categories);
     }
   }
   var url = "/statistics/get_pie_data/" + from + "/" + to + "/" + categories;
@@ -34,6 +35,20 @@ function create_monthly_chart(from, to, categories) {
   xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+      var json_categories = JSON.parse(xmlhttp.responseText);
+      var chart_data = new Array();
+      var colors = new Array();
+      for (var name in json_categories) {
+        category = JSON.parse(json_categories[name]);
+        colors.push(category.color.toString());
+        var d = [];
+        var months = JSON.parse(category.months);
+        for (var month in months) {
+          d.push([month, months[month]]);
+        }
+        chart_data.push({ data : d, label : name });
+      }
+      display_monthlychart(chart_data, colors);
     }
   }
   var url = "/statistics/get_monthly_data/" + from + "/" + to + "/" + categories;
@@ -49,6 +64,19 @@ function format_categories(form, number_of_categories) {
     }
   }
   return s.substring(1);
+}
+
+function display_monthlychart(data, colors) {
+  (function basic_legend(container) {
+    Flotr.draw(container, data, {
+      colors : colors,
+      HtmlText : false,
+      legend : {
+        position : 'se',
+        backgroundColor : '#FFF'
+      }
+    });
+  })(document.getElementById("monthlychart"));
 }
 
 function display_piechart(data, colors) {

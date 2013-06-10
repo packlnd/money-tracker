@@ -18,22 +18,37 @@ module App
     end
 
     get "/get_monthly_data/:from/:to/:categories" do
-      
+      from = params[:from]
+      to = params[:from]
+      category_ids = params[:categories].split('.')
+      categories = Hash.new
+      category_ids.each do |cat_id|
+        category = Hash.new
+        cat = Category[cat_id]
+        category["color"] = to_hex(cat.color)
+        month = Hash.new
+        (1..12).each do |m|
+          month[m-1] = Transaction.get_sum_month(m, cat_id, env['warden'].user.username, from, to)
+        end
+        category["months"] = month.to_json
+        categories[cat.name] = category.to_json
+      end
+      categories.to_json
     end
 
     get "/get_pie_data/:from/:to/:categories" do
       from = params[:from]
       to = params[:to]
-      category_ids = params[:categories].split('.');
-      hash = Hash.new()
+      category_ids = params[:categories].split('.')
+      categories = Hash.new
       category_ids.each do |cat_id|
         cat = Category[cat_id]
         category = Hash.new
         category["sum"] = Transaction.get_sum(cat_id, env['warden'].user.username, from, to).to_i.abs
         category["color"] = to_hex(cat.color)
-        hash[cat.name] = category.to_json
+        categories[cat.name] = category.to_json
       end
-      hash.to_json
+      categories.to_json
     end
   end
 end

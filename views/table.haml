@@ -18,7 +18,7 @@
         -month = transaction.timestamp.month
         %tr
           %td
-            %h4 #{Date::MONTHNAMES[month].to_s + " (" + Transaction.get_sum_month(year, month, @cat_ids, env['warden'].user.username, @from, @to).to_s + ")"}
+            %h4 #{Date::MONTHNAMES[month].to_s + " (" + Transaction.get_sum_month_year(year, month, @cat_ids, env['warden'].user.username, @from, @to).to_s + ")"}
         %tr
           %td
             %b Kategori

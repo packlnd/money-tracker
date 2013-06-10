@@ -122,7 +122,17 @@ class Transaction < Sequel::Model
     return sum.to_i
   end
 
-  def self.get_sum_month(year, month, cat_ids, user, from, to)
+  def self.get_sum_month(month, cat_ids, user, from, to)
+    sum = 0
+    Transaction.where(:timestamp => from..to, :category_id => cat_ids, :owner => user).all.each do |t|
+      if t.timestamp.month == month
+        sum += t.sum
+      end
+    end
+    return sum.to_i
+  end
+
+  def self.get_sum_month_year(year, month, cat_ids, user, from, to)
     sum = 0
     Transaction.where(:timestamp => from..to, :category_id => cat_ids, :owner => user).all.each do |t|
       if t.timestamp.year == year and t.timestamp.month == month

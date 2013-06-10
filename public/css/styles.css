@@ -31,3 +31,9 @@ td:first-child {
     height: 400px;
     margin: 8px auto;
 }
+
+#monthlychart {
+  width: 600px;
+  height: 400px;
+  margin 8px auto;
+}
