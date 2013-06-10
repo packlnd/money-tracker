@@ -19,7 +19,7 @@ module App
 
     get "/get_monthly_data/:from/:to/:categories" do
       from = params[:from]
-      to = params[:from]
+      to = params[:to]
       category_ids = params[:categories].split('.')
       categories = Hash.new
       category_ids.each do |cat_id|
@@ -28,7 +28,7 @@ module App
         category["color"] = to_hex(cat.color)
         month = Hash.new
         (1..12).each do |m|
-          month[m-1] = Transaction.get_sum_month(m, cat_id, env['warden'].user.username, from, to)
+          month[m-1] = Transaction.get_sum_month(m, cat_id, env['warden'].user.username, from, to).to_i
         end
         category["months"] = month.to_json
         categories[cat.name] = category.to_json
