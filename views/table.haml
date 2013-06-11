@@ -13,12 +13,12 @@
         -year = transaction.timestamp.year
         %tr
           %td
-            %h3 #{year.to_s + " (" + Transaction.get_sum_year(year, @cat_ids, @from, @to).to_s + ")"}
+            %h3 #{year.to_s + " (" + Transaction.get_sum_year(year, @cat_ids, @from, @to, @user).to_s + ")"}
       -if month == "" or transaction.timestamp.month != month
         -month = transaction.timestamp.month
         %tr
           %td
-            %h4 #{month_name(month).to_s + " (" + Transaction.get_sum_month_year(year, month, @cat_ids, @from, @to).to_s + ")"}
+            %h4 #{month_name(month).to_s + " (" + Transaction.get_sum_month_year(year, month, @cat_ids, @from, @to, @user).to_s + ")"}
         %tr
           %td
             %b Kategori

@@ -1,5 +1,5 @@
 .container
-  %h3 Statistik för #{env['warden'].user.username}
+  %h3 Statistik för #{@user}
   %center
     %form.form-inline{name: 'myform', action: "", method: 'POST'}
       = haml :_filter_form

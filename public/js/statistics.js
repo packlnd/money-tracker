@@ -24,7 +24,7 @@ function create_pie_chart(from, to, categories) {
       }
       display_piechart(pie_data, colors);
       document.getElementById("pieheader").innerHTML = "<h4>Statistik per kategori från " + from + " till " + to + "</h4>";
-      create_monthly_chart(from, to, categories);
+      create_monthly_chart(to, categories);
     }
   }
   var url = "/statistics/get_pie_data/" + from + "/" + to + "/" + categories;
@@ -32,7 +32,7 @@ function create_pie_chart(from, to, categories) {
   xmlhttp.send();
 }
 
-function create_monthly_chart(from, to, categories) {
+function create_monthly_chart(to, categories) {
   xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
@@ -56,7 +56,7 @@ function create_monthly_chart(from, to, categories) {
       document.getElementById("monthlyheader").innerHTML = "<br/><h4>Statistik per månad och kategori för " + to.split('-')[0].toString();
     }
   }
-  var url = "/statistics/get_monthly_data/" + from + "/" + to + "/" + categories;
+  var url = "/statistics/get_monthly_data/" + to + "/" + categories;
   xmlhttp.open("GET", url, true);
   xmlhttp.send();
 }

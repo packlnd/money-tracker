@@ -1,6 +1,5 @@
 # -*- encoding : utf-8 -*-
 require 'sequel'
-require 'pry'
 DB.create_table? :transactions do
   primary_key :id
   Float :sum, null: false
@@ -13,23 +12,23 @@ end
 class Transaction < Sequel::Model
   many_to_one :category
 
-  def self.first
+  def self.first_transaction(user)
     from = "2001-01-01"
-    if Transaction.where(:owner => $user).count > 0
-      from = Transaction.order(Sequel.desc(:timestamp)).where(:owner => $user).first.timestamp.strftime("%Y-%m-%d")
+    if Transaction.where(:owner => user).count > 0
+      from = Transaction.order(Sequel.asc(:timestamp)).where(:owner => user).first.timestamp.strftime("%Y-%m-%d")
     end
     from
   end
 
-  def self.last
+  def self.last_transaction(user)
     to = Time.now.strftime("%Y-%m-%d")
-    if Transaction.where(:owner => $user).count > 0
-      to = Transaction.order(Sequel.desc(:timestamp)).where(:owner => $user).last.timestamp.strftime("%Y-%m-%d")
+    if Transaction.where(:owner => user).count > 0
+      to = Transaction.order(Sequel.asc(:timestamp)).where(:owner => user).last.timestamp.strftime("%Y-%m-%d")
     end
     to
   end
 
-  def self.handle_file(file_from_user)
+  def self.handle_file(file_from_user, user)
       if file_from_user
         file = File.open(file_from_user[:tempfile]).each do |line|
           data = line.delete("\r").delete("\n").split("\t")
@@ -38,34 +37,25 @@ class Transaction < Sequel::Model
           transaction.name = data[1].chomp()
           transaction.sum = data[2].chomp().delete(" ").gsub(',','.').to_f
           transaction.determine_category
-          transaction.owner = $user
+          transaction.owner = user
           transaction.save
         end
       end
   end
 
   def determine_sum
-    if self.sum >= 0
-      return "pos"
-    end
-    return "neg"
+    self.sum >= 0 ? "pos" : "neg"
   end
 
   def determine_row
-    if self.sum >= 0
-      return "success"
-    end
-    return "error"
+    self.sum >= 0 ? "success" : "error"
   end
 
   def determine_category
-    # If sum is positive we already know which category to put it in (for now).
-    if self.sum > 0
-      self.category_id = 2
-      return
-    end
+    self.category_id = self.sum > 0 ? 2 : bayesian_filtering
+  end
 
-    # Else we use bayesian filtering.
+  def bayesian_filtering
     words = self.name.split(' ')
     total_probability = Array.new(Category.count,0)
 
@@ -100,20 +90,20 @@ class Transaction < Sequel::Model
     for id in 0..(Category.count-1)
       total_probability[id] /= Category.count
     end
-    self.category_id = total_probability.rindex(total_probability.max)+1
+    total_probability.rindex(total_probability.max)+1
   end
 
-  def self.get_sum(cat_ids, from, to)
+  def self.get_sum(cat_ids, from, to, user)
     sum = 0
-    Transaction.where(:timestamp => from..to, :category_id => cat_ids, :owner => $user).all.each do |t|
+    Transaction.where(:timestamp => from..to, :category_id => cat_ids, :owner => user).all.each do |t|
       sum += t.sum
     end
     return sum
   end
 
-  def self.get_sum_year(year, cat_ids, from, to)
+  def self.get_sum_year(year, cat_ids, from, to, user)
     sum = 0
-    Transaction.where(:timestamp => from..to, :category_id => cat_ids, :owner => $user).all.each do |t|
+    Transaction.where(:timestamp => from..to, :category_id => cat_ids, :owner => user).all.each do |t|
       if t.timestamp.year == year
         sum += t.sum
       end
@@ -121,9 +111,9 @@ class Transaction < Sequel::Model
     return sum.to_i
   end
 
-  def self.get_sum_month(month, cat_ids, from, to)
+  def self.get_sum_month(month, cat_ids, from, to, user)
     sum = 0
-    Transaction.where(:timestamp => from..to, :category_id => cat_ids, :owner => $user).all.each do |t|
+    Transaction.where(:timestamp => from..to, :category_id => cat_ids, :owner => user).all.each do |t|
       if t.timestamp.month == month
         sum += t.sum
       end
@@ -131,9 +121,9 @@ class Transaction < Sequel::Model
     return sum.to_i
   end
 
-  def self.get_sum_month_year(year, month, cat_ids, from, to)
+  def self.get_sum_month_year(year, month, cat_ids, from, to, user)
     sum = 0
-    Transaction.where(:timestamp => from..to, :category_id => cat_ids, :owner => $user).all.each do |t|
+    Transaction.where(:timestamp => from..to, :category_id => cat_ids, :owner => user).all.each do |t|
       if t.timestamp.year == year and t.timestamp.month == month
         sum += t.sum
       end

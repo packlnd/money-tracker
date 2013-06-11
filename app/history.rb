@@ -1,7 +1,6 @@
 # -*- encoding : utf-8 -*-
 module App
   class History < Sinatra::Application
-
     before do
       env['warden'].authenticated?
     end
@@ -18,11 +17,11 @@ module App
     end
 
     get '/' do
-      $user = env['warden'].user.username
-      @transactions = Transaction.order(Sequel.desc(:timestamp)).where(:owner => $user)
+      @user = env['warden'].user.username
+      @transactions = Transaction.order(Sequel.desc(:timestamp)).where(:owner => env['warden'].user.username)
       @cat_ids = Array.new()
-      @from = string_to_time(Transaction.last) - 1
-      @to = string_to_time(Transaction.first) + 3600*24
+      @from = string_to_time(Transaction.first_transaction(env['warden'].user.username)) - 1
+      @to = string_to_time(Transaction.last_transaction(env['warden'].user.username)) + 3600*24
       (1..Category.count).each do |i|
         @cat_ids.push(i)
       end
@@ -36,15 +35,16 @@ module App
     end
 
     post '/upload' do
-      Transaction.handle_file(params['file'])
+      Transaction.handle_file(params['file'], env['warden'].user.username)
       redirect '/history'
     end
 
     get '/update/:from/:to/:categories' do
+      @user = env['warden'].user.username
       @from = string_to_time(params[:from]) - 1
       @to = string_to_time(params[:to]) + 3600*24
       @cat_ids = params[:categories].split('.');
-      @transactions = Transaction.order(Sequel.desc(:timestamp)).where(:timestamp => @from..@to,:owner => $user, :category_id => @cat_ids)
+      @transactions = Transaction.order(Sequel.desc(:timestamp)).where(:timestamp => @from..@to,:owner => env['warden'].user.username, :category_id => @cat_ids)
       haml :table
     end
 
