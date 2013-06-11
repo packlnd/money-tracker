@@ -4,8 +4,8 @@
       .span{:class => "#{category.css}"}
         %input{:type => 'checkbox', :checked => 'yes', :name => "category[#{category.id}]"} #{category.name}
 .control-group
-  - @user_transactions = Transaction.order(Sequel.desc(:timestamp)).where(:owner => env['warden'].user.username)
+  - @user_transactions = Transaction.order(Sequel.desc(:timestamp)).where(:owner => $user)
   Från
-  %input.input-small{type: 'text', name: 'date_from', value: "#{Transaction.get_last_entry(env['warden'].user.username)}"}
+  %input.input-small{type: 'text', name: 'date_from', value: "#{Transaction.last.to_s}"}
   till
-  %input.input-small{type: 'text', name: 'date_to', value: "#{Transaction.get_first_entry(env['warden'].user.username).to_s}"}
+  %input.input-small{type: 'text', name: 'date_to', value: "#{Transaction.first.to_s}"}

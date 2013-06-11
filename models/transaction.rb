@@ -1,7 +1,6 @@
 # -*- encoding : utf-8 -*-
 require 'sequel'
 require 'pry'
-
 DB.create_table? :transactions do
   primary_key :id
   Float :sum, null: false
@@ -14,23 +13,23 @@ end
 class Transaction < Sequel::Model
   many_to_one :category
 
-  def self.get_first_entry(user)
+  def self.first
     from = "2001-01-01"
-    if Transaction.where(:owner => user).count > 0
-      from = Transaction.order(Sequel.desc(:timestamp)).where(:owner => user).first.timestamp.strftime("%Y-%m-%d")
+    if Transaction.where(:owner => $user).count > 0
+      from = Transaction.order(Sequel.desc(:timestamp)).where(:owner => $user).first.timestamp.strftime("%Y-%m-%d")
     end
     from
   end
 
-  def self.get_last_entry(user)
+  def self.last
     to = Time.now.strftime("%Y-%m-%d")
-    if Transaction.where(:owner => user).count > 0
-      to = Transaction.order(Sequel.desc(:timestamp)).where(:owner => user).last.timestamp.strftime("%Y-%m-%d")
+    if Transaction.where(:owner => $user).count > 0
+      to = Transaction.order(Sequel.desc(:timestamp)).where(:owner => $user).last.timestamp.strftime("%Y-%m-%d")
     end
     to
   end
 
-  def self.handle_file(file_from_user, user)
+  def self.handle_file(file_from_user)
       if file_from_user
         file = File.open(file_from_user[:tempfile]).each do |line|
           data = line.delete("\r").delete("\n").split("\t")
@@ -39,7 +38,7 @@ class Transaction < Sequel::Model
           transaction.name = data[1].chomp()
           transaction.sum = data[2].chomp().delete(" ").gsub(',','.').to_f
           transaction.determine_category
-          transaction.owner = user
+          transaction.owner = $user
           transaction.save
         end
       end
@@ -104,17 +103,17 @@ class Transaction < Sequel::Model
     self.category_id = total_probability.rindex(total_probability.max)+1
   end
 
-  def self.get_sum(cat_ids, user, from, to)
+  def self.get_sum(cat_ids, from, to)
     sum = 0
-    Transaction.where(:timestamp => from..to, :category_id => cat_ids, :owner => user).all.each do |t|
+    Transaction.where(:timestamp => from..to, :category_id => cat_ids, :owner => $user).all.each do |t|
       sum += t.sum
     end
     return sum
   end
 
-  def self.get_sum_year(year, cat_ids, user, from, to)
+  def self.get_sum_year(year, cat_ids, from, to)
     sum = 0
-    Transaction.where(:timestamp => from..to, :category_id => cat_ids, :owner => user).all.each do |t|
+    Transaction.where(:timestamp => from..to, :category_id => cat_ids, :owner => $user).all.each do |t|
       if t.timestamp.year == year
         sum += t.sum
       end
@@ -122,9 +121,9 @@ class Transaction < Sequel::Model
     return sum.to_i
   end
 
-  def self.get_sum_month(month, cat_ids, user, from, to)
+  def self.get_sum_month(month, cat_ids, from, to)
     sum = 0
-    Transaction.where(:timestamp => from..to, :category_id => cat_ids, :owner => user).all.each do |t|
+    Transaction.where(:timestamp => from..to, :category_id => cat_ids, :owner => $user).all.each do |t|
       if t.timestamp.month == month
         sum += t.sum
       end
@@ -132,9 +131,9 @@ class Transaction < Sequel::Model
     return sum.to_i
   end
 
-  def self.get_sum_month_year(year, month, cat_ids, user, from, to)
+  def self.get_sum_month_year(year, month, cat_ids, from, to)
     sum = 0
-    Transaction.where(:timestamp => from..to, :category_id => cat_ids, :owner => user).all.each do |t|
+    Transaction.where(:timestamp => from..to, :category_id => cat_ids, :owner => $user).all.each do |t|
       if t.timestamp.year == year and t.timestamp.month == month
         sum += t.sum
       end

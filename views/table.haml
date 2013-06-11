@@ -13,12 +13,12 @@
         -year = transaction.timestamp.year
         %tr
           %td
-            %h3 #{year.to_s + " (" + Transaction.get_sum_year(year, @cat_ids, env['warden'].user.username, @from, @to).to_s + ")"}
+            %h3 #{year.to_s + " (" + Transaction.get_sum_year(year, @cat_ids, @from, @to).to_s + ")"}
       -if month == "" or transaction.timestamp.month != month
         -month = transaction.timestamp.month
         %tr
           %td
-            %h4 #{Date::MONTHNAMES[month].to_s + " (" + Transaction.get_sum_month_year(year, month, @cat_ids, env['warden'].user.username, @from, @to).to_s + ")"}
+            %h4 #{month_name(month).to_s + " (" + Transaction.get_sum_month_year(year, month, @cat_ids, @from, @to).to_s + ")"}
         %tr
           %td
             %b Kategori
@@ -30,7 +30,7 @@
             %b Summa
       %tr{:class => "#{transaction.determine_row}"}
         %td
-          %a{:href => "/history/updateCategory/#{transaction.id}"}
+          %a{:href => "/history/update_category/#{transaction.id}"}
             .span{:class => "#{Category[transaction.category_id].css}"}
               #{Category[transaction.category_id].name}
         %td #{transaction.timestamp.strftime("%Y-%m-%d")}
