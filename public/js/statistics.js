@@ -41,12 +41,15 @@ function create_monthly_chart(from, to, categories) {
       for (var name in json_categories) {
         category = JSON.parse(json_categories[name]);
         colors.push(category.color.toString());
-        var d = [];
+        var m_data = new Array();
         var months = JSON.parse(category.months);
         for (var month in months) {
-          d.push([month, months[month]]);
+          if (months[month] == 0) {
+            continue;
+          }
+          m_data.push([month, months[month]]);
         }
-        chart_data.push({ data : d, label : name });
+        chart_data.push({ data : m_data, label : name });
       }
       display_monthlychart(chart_data, colors);
     }
@@ -67,13 +70,21 @@ function format_categories(form, number_of_categories) {
 }
 
 function display_monthlychart(data, colors) {
-  (function basic_legend(container) {
+  (function bars_stacked(container) {
     Flotr.draw(container, data, {
+      legend : { backgroundColor : '#FFF' },
       colors : colors,
-      HtmlText : false,
-      legend : {
-        position : 'se',
-        backgroundColor : '#FFF'
+      bars : {
+        show : true,
+        stacked : true,
+        horizontal : false,
+        barWidth : 0.5,
+        lineWidth : 1,
+        shadowSize : 0
+      },
+      grid : {
+        verticalLines : false,
+        horizontalLines : true
       }
     });
   })(document.getElementById("monthlychart"));
@@ -100,3 +111,32 @@ function display_piechart(data, colors) {
     });
   })(document.getElementById("piechart"));
 }
+/*
+1
+[0, -6]
+[1, -1020]
+[2, -400]
+[3, -911]
+2
+[0, 5554]
+[1, 3423]
+[2, 4641]
+[3, 4156]
+[4, 1831]
+3
+[0, -374]
+[1, -26]
+[2, -206]
+[4, -185]
+4
+[0, -1316]
+[2, -200]
+[3, -201]
+[4, -4394]
+5
+[3, -200]
+[4, -100]
+6
+[0, -1540]
+[3, -560]
+*/
