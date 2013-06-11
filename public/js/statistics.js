@@ -52,13 +52,28 @@ function create_monthly_chart(to, categories) {
         }
         chart_data.push({ data : m_data, label : name });
       }
-      display_monthlychart(chart_data, colors);
+      display_monthlychart(chart_data, colors, "monthlychart");
       document.getElementById("monthlyheader").innerHTML = "<br/><h4>Statistik per månad och kategori för " + to.split('-')[0].toString();
+      create_result_chart(json_categories)
     }
   }
   var url = "/statistics/get_monthly_data/" + to + "/" + categories;
   xmlhttp.open("GET", url, true);
   xmlhttp.send();
+}
+
+function create_result_chart(json_categories) {
+  var result_data = new Array();
+  for (var name in json_categories) {
+    category = JSON.parse(json_categories[name]);
+    var months = JSON.parse(category.months);
+    for (var month in months) {
+      result_data[parseInt(month)] += parseInt(months[month]);
+    }
+  }
+  chart_data.push({ data : result_data, label : name });
+  display_monthlychart(chart_data, ['#468847'], "resultchart");
+  document.getElementById("resultheader").innerHTML = "<br/><h4>Resultat per månad för " + to.split('-')[0].toString();
 }
 
 function format_categories(form, number_of_categories) {
@@ -71,7 +86,7 @@ function format_categories(form, number_of_categories) {
   return s.substring(1);
 }
 
-function display_monthlychart(data, colors) {
+function display_monthlychart(data, colors, div) {
   (function bars_stacked(container) {
     var d1 = [[0, 1], [1, 5]],
       d2 = [[0, 3], [1, 1]],
@@ -93,7 +108,7 @@ function display_monthlychart(data, colors) {
         horizontalLines : true
       }
     });
-  })(document.getElementById("monthlychart"));
+  })(document.getElementById(div));
 }
 
 function display_piechart(data, colors) {

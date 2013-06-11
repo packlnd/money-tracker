@@ -26,14 +26,32 @@ td:first-child {
   border:none;
 }
 
-#piechart {
-  width :600px;
+#piechart, #monthlychart, #resultchart {
+  width:600px;
   height:400px;
   margin:8px auto;
 }
 
-#monthlychart {
-  width:600px;
-  height:400px;
-  margin:8px auto;
+.abc, .def, .ghi {
+  vertical-align:middle;
+  border-radius: 4px;
+  font-size:x-small;
+  font-family:"Verdana", Sans-serif;
+  font-weight:bold;
+  width:auto;
+  padding:2px 5px;
+  height:20px;
+  color:#FFF;
+}
+
+.abc {
+  background-color:#606;
+}
+
+.def {
+  background-color:#C30;
+}
+
+.ghi {
+  background-color:#963;
 }
