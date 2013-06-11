@@ -23,17 +23,17 @@ td:first-child {
 }
 
 .table th, .table td, .table thead, .table, .table tbody {
-  border: none;
+  border:none;
 }
 
 #piechart {
-  width : 600px;
-  height: 400px;
-  margin: 8px auto;
+  width :600px;
+  height:400px;
+  margin:8px auto;
 }
 
 #monthlychart {
-  width: 600px;
-  height: 400px;
-  margin 8px auto;
+  width:600px;
+  height:400px;
+  margin:8px auto;
 }
