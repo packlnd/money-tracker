@@ -74,6 +74,7 @@ function display_monthlychart(data, colors) {
     Flotr.draw(container, data, {
       legend : { backgroundColor : '#FFF' },
       colors : colors,
+      HtmlText : false,
       bars : {
         show : true,
         stacked : true,
@@ -111,32 +112,3 @@ function display_piechart(data, colors) {
     });
   })(document.getElementById("piechart"));
 }
-/*
-1
-[0, -6]
-[1, -1020]
-[2, -400]
-[3, -911]
-2
-[0, 5554]
-[1, 3423]
-[2, 4641]
-[3, 4156]
-[4, 1831]
-3
-[0, -374]
-[1, -26]
-[2, -206]
-[4, -185]
-4
-[0, -1316]
-[2, -200]
-[3, -201]
-[4, -4394]
-5
-[3, -200]
-[4, -100]
-6
-[0, -1540]
-[3, -560]
-*/
