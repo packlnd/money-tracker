@@ -1,39 +1,39 @@
 body {
-	padding-top: 60px;
-	padding-bottom: 40px;
+  padding-top: 60px;
+  padding-bottom: 40px;
 }
 
 td {
-	padding-top:7px;
-	padding-bottom:7px;
-	padding-right:20px;
+  padding-top:7px;
+  padding-bottom:7px;
+  padding-right:20px;
 }
 
 td:first-child {
-	padding-left:20px;
-	padding-right:0;
+  padding-left:20px;
+  padding-right:0;
 }
 
 .pos {
-	color:#1AAE00;
+  color:#1AAE00;
 }
 
 .neg {
-	color:#AE0000;
+  color:#AE0000;
 }
 
 .table th, .table td, .table thead, .table, .table tbody {
-	border: none;
+  border: none;
 }
 
 #piechart {
-    width : 600px;
-    height: 400px;
-    margin: 8px auto;
+  width : 600px;
+  height: 400px;
+  margin: 8px auto;
 }
 
 #monthlychart {
   width: 600px;
-  height: 600px;
+  height: 400px;
   margin 8px auto;
 }

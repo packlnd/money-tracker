@@ -23,6 +23,7 @@ function create_pie_chart(from, to, categories) {
         pie_data.push({ data : sum, label : name.toString() });
       }
       display_piechart(pie_data, colors);
+      document.getElementById("pieheader").innerHTML = "<h4>Statistik per kategori från " + from + " till " + to + "</h4>";
       create_monthly_chart(from, to, categories);
     }
   }
@@ -47,11 +48,12 @@ function create_monthly_chart(from, to, categories) {
           if (months[month] == 0) {
             continue;
           }
-          m_data.push([month, months[month]]);
+          m_data.push([parseInt(month), parseInt(months[month])]);
         }
         chart_data.push({ data : m_data, label : name });
       }
       display_monthlychart(chart_data, colors);
+      document.getElementById("monthlyheader").innerHTML = "<br/><h4>Statistik per månad och kategori för " + to.split('-')[0].toString();
     }
   }
   var url = "/statistics/get_monthly_data/" + from + "/" + to + "/" + categories;
@@ -71,6 +73,9 @@ function format_categories(form, number_of_categories) {
 
 function display_monthlychart(data, colors) {
   (function bars_stacked(container) {
+    var d1 = [[0, 1], [1, 5]],
+      d2 = [[0, 3], [1, 1]],
+      d3 = [[0, 0], [1, 0]];
     Flotr.draw(container, data, {
       legend : { backgroundColor : '#FFF' },
       colors : colors,
