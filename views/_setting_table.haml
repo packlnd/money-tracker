@@ -1,0 +1,12 @@
+%table{:width => '30%'}
+  %thead
+    %th Kategori
+    %th Redigera
+  %tbody
+    -Category.all.each do |category|
+      %tr
+        %td
+          .span.cat_label{:style => "background-color:#{category.color};"}
+            %input{:type => 'checkbox', :checked => 'yes', :name => "category[#{category.id}]"} #{category.name}
+        %td{:style => "text-align:center;"}
+          %a.btn{href: "/settings/#{category.id}/edit"} Redigera

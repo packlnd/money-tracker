@@ -31,7 +31,7 @@
       %tr{:class => "#{transaction.determine_row}"}
         %td
           %a{:href => "/history/update_category/#{transaction.id}"}
-            .span{:class => "#{Category[transaction.category_id].css}"}
+            .span.cat_label{:style => "background-color:#{Category[transaction.category_id].color};"}
               #{Category[transaction.category_id].name}
         %td #{transaction.timestamp.strftime("%Y-%m-%d")}
         %td #{transaction.name}

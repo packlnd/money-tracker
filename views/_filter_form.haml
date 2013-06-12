@@ -1,14 +1,8 @@
 .control-group
   - Category.all.each do |category|
     %label.checkbox.inline
-      .span{:class => "#{category.css}"}
+      .span.cat_label{:style => "background-color:#{category.color};"}
         %input{:type => 'checkbox', :checked => 'yes', :name => "category[#{category.id}]"} #{category.name}
-.span.abc
-  %input{:type => 'checkbox', :checked => 'yes', :name => "SKOLA"} SKOLA
-.span.def
-  %input{:type => 'checkbox', :checked => 'yes', :name => "SKOLA"} AVGIFTER OCH DRYCK
-.span.ghi
-  %input{:type => 'checkbox', :checked => 'yes', :name => "SKOLA"} AKTIER
 .control-group
   Från
   %input.input-small{type: 'text', name: 'date_from', value: "#{Transaction.first_transaction(@user).to_s}"}

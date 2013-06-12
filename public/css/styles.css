@@ -32,7 +32,7 @@ td:first-child {
   margin:8px auto;
 }
 
-.abc, .def, .ghi {
+.cat_label {
   vertical-align:middle;
   border-radius: 4px;
   font-size:x-small;
@@ -42,16 +42,4 @@ td:first-child {
   padding:2px 5px;
   height:20px;
   color:#FFF;
-}
-
-.abc {
-  background-color:#606;
-}
-
-.def {
-  background-color:#C30;
-}
-
-.ghi {
-  background-color:#963;
 }

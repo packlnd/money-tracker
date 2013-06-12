@@ -3,14 +3,16 @@
     .container
       %a.brand{:href => '/'} Mina utgifter
       %ul.nav
-        - if env['warden'].authenticated?
+        -if env['warden'].authenticated?
           %li
             %a{:href => '/history'}Historik
           %li
             %a{:href => '/statistics'}Statistik
           %li
             %a{:href => '/auth/logout'}Logga ut
-        - else   
+          %li
+            %a{:href => '/settings'}Inställningar
+        -else
           %li
             %a{:href => '/auth/login'}Logga in
           %li

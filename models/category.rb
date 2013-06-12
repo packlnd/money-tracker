@@ -1,19 +1,17 @@
 require 'sequel'
 
-DB.create_table? :categories do 
+DB.create_table? :categories do
   primary_key :id
   String :name, null: false
-  String :css, null: false
   String :color, null: false
 end
-
 if DB[:categories].count == 0
-  DB[:categories].insert(:name => "UTGIFT", :css => "label", :color => "153,153,153")
-  DB[:categories].insert(:name => "INKOMST", :css => "label label-success", :color => "70,136,71")
-  DB[:categories].insert(:name => "MAT OCH DRYCK", :css => "label label-warning", :color => "248,148,6")
-  DB[:categories].insert(:name => "FRITID", :css => "label label-info", :color => "57,134,172")
-  DB[:categories].insert(:name => "BANKOMAT", :css => "label label-inverse", :color => "50,50,50")
-  DB[:categories].insert(:name => "TRANSPORT", :css => "label label-important", :color => "184,73,71")
+  DB[:categories].insert(:name => "UTGIFT", :color => "#999999")
+  DB[:categories].insert(:name => "INKOMST", :color => "#468847")
+  DB[:categories].insert(:name => "MAT OCH DRYCK", :color => "#F89406")
+  DB[:categories].insert(:name => "FRITID", :color => "#3986AC")
+  DB[:categories].insert(:name => "BANKOMAT", :color => "#323232")
+  DB[:categories].insert(:name => "TRANSPORT", :color => "#B84947")
 end
 
 class Category < Sequel::Model

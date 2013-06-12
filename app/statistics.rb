@@ -11,10 +11,6 @@ module App
         arr = s.split('-')
         Time.new(arr[0], arr[1], arr[2])
       end
-
-      def to_hex(rgb)
-        return "#%02X%02X%02X" % rgb.split(',')
-      end
     end
 
     get "/" do
@@ -31,7 +27,7 @@ module App
       category_ids.each do |cat_id|
         category = Hash.new
         cat = Category[cat_id]
-        category["color"] = to_hex(cat.color)
+        category["color"] = cat.color
         month = Hash.new
         (1..12).each do |m|
           month[m-1] = Transaction.get_sum_month(m, cat_id, from, to, env['warden'].user.username).to_i
@@ -51,7 +47,7 @@ module App
         cat = Category[cat_id]
         category = Hash.new
         category["sum"] = Transaction.get_sum(cat_id, from, to, env['warden'].user.username).to_i.abs
-        category["color"] = to_hex(cat.color)
+        category["color"] = cat.color
         categories[cat.name] = category.to_json
       end
       categories.to_json

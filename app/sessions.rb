@@ -2,7 +2,7 @@ module App
   class Sessions < Sinatra::Application
 
     set :logging, true
-    
+
     post '/register' do
       user = User.new(params[:user])
       user.save
@@ -29,6 +29,6 @@ module App
 
     post '/unauthenticated' do
       redirect '/failure'
-    end  
+    end
   end
 end

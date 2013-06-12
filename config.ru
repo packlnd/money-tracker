@@ -47,3 +47,7 @@ end
 map "/statistics" do
   run App::Statistics
 end
+
+map "/settings" do
+  run App::Settings
+end
