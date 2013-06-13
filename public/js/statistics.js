@@ -49,33 +49,44 @@ function create_monthly_chart(to, categories) {
         chart_data.push({ data : m_data, label : name });
       }
       display_monthlychart(chart_data, colors, "monthlychart");
-      document.getElementById("monthlyheader").innerHTML = "<br/><h4>Statistik per månad och kategori för " + to.split('-')[0].toString();
-      create_result_chart(json_categories)
+      var year = to.split('-')[0].toString();
+      document.getElementById("monthlyheader").innerHTML = "<br/><h4>Statistik per månad och kategori för " + year;
+      create_result_chart(json_categories, year)
     },
     div = "monthlyheader";
   handle_request(url, div, func);
 }
 
-function create_result_chart(json_categories) {
+function create_result_chart(json_categories, year) {
   var result_data = [],
-    chart_data = [];
+    chart_data = [],
+    pos_data = [],
+    neg_data = [];
+  for (var i = 0; i < 12; i++) {
+    result_data.push([i,0]);
+  }
   for (var name in json_categories) {
     category = JSON.parse(json_categories[name]);
     var months = JSON.parse(category.months);
     for (var month in months) {
-      result_data[parseInt(month)] += parseInt(months[month]);
+      result_data[parseInt(month)][1] += parseInt(months[month]);
     }
   }
-  chart_data.push({ data : result_data, label : "Resultat" });
-  display_monthlychart(chart_data, ['#468847'], "resultchart");
-  document.getElementById("resultheader").innerHTML = "<br/><h4>Resultat per månad för " + to.split('-')[0].toString();
+  for (var elem in result_data) {
+    var sum = result_data[elem];
+    if (sum[1] == 0) {
+      continue;
+    }
+    sum[1] > 0 ? pos_data.push(sum) : neg_data.push(sum);
+  }
+  chart_data.push({data:pos_data, label:"POSITIVT"});
+  chart_data.push({data:neg_data, label:"NEGATIVT"});
+  display_monthlychart(chart_data, ['#468847', '#B84947'], "resultchart");
+  document.getElementById("resultheader").innerHTML = "<br/><h4>Resultat per månad för " + year;
 }
 
 function display_monthlychart(data, colors, div) {
   (function bars_stacked(container) {
-    var d1 = [[0, 1], [1, 5]],
-      d2 = [[0, 3], [1, 1]],
-      d3 = [[0, 0], [1, 0]];
     Flotr.draw(container, data, {
       legend : { backgroundColor : '#FFF' },
       colors : colors,
@@ -88,6 +99,7 @@ function display_monthlychart(data, colors, div) {
         lineWidth : 1,
         shadowSize : 0
       },
+      mouse : { track : true },
       grid : {
         verticalLines : false,
         horizontalLines : true
