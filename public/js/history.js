@@ -13,9 +13,5 @@ function delete_transaction(id) {
 }
 
 function increment_category(id) {
-  handle_request("history/" + id + "/increment", undefined, function(response) {
-    var category = JSON.parse(response);
-    document.getElementById("cat_" + id).innerHTML =
-      "<span class='cat_label' style='background-color:" + category.color + ";'>" + category.name + "</span>" ;
-  });
+  format_request("history/" + id + "/increment", "cat_" + id);
 }

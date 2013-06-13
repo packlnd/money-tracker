@@ -14,8 +14,10 @@ module App
       haml :'settings/_table'
     end
 
-    get "/:id/edit" do |id|
-      
+    get '/format/:name/:color' do
+      @label_name = params[:name]
+      @label_color = params[:color]
+      haml :_new_label
     end
 
     get "/:id/delete" do |id|
@@ -23,7 +25,7 @@ module App
         transaction.category_id = 1
       end
       Category[id].delete
-      (id+1..Category.count).each do |update_id|
+      ((id.to_i+1)..Category.count).each do |update_id|
         Category[update_id].seq_id -= 1
       end
       haml :'settings/_table'

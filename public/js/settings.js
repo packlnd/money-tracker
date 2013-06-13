@@ -1,6 +1,7 @@
 function create_category(form) {
-  var content = '<span class="temp_label" style="background-color:#' + form.elements["color"].value + ';">' + form.elements["name"].value.toUpperCase() + '</span>';
-  document.getElementById("templabel").innerHTML = content;
+  var color = form.elements["color"].value,
+    name = form.elements["name"].value.toUpperCase();
+  format_request("/settings/format/" + name + "/" + color, "templabel");
 }
 
 function save_category(form) {

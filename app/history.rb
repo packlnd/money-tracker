@@ -34,11 +34,10 @@ module App
       new_category = (Transaction[id].category_id % Category.count) + 1
       if new_category == 1 then new_category = 2 end
       Transaction[id].update(:category_id => new_category)
-      cat = Hash.new
       category = Category.get_category(new_category)
-      cat["name"] = category.name
-      cat["color"] = category.color
-      cat.to_json
+      @label_color = category.color
+      @label_name = category.name
+      haml :_new_label
     end
 
     post '/upload' do
