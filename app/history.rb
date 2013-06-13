@@ -59,6 +59,14 @@ module App
 
     get '/:id/delete' do |id|
       Transaction[id].delete
+      @user = env['warden'].user.username
+      @transactions = Transaction.order(Sequel.desc(:timestamp)).where(:owner => env['warden'].user.username)
+      @cat_ids = Array.new()
+      @from = string_to_time(Transaction.first_transaction(env['warden'].user.username)) - 1
+      @to = string_to_time(Transaction.last_transaction(env['warden'].user.username)) + 3600*24
+      (1..Category.count).each do |i|
+        @cat_ids.push(i)
+      end
       haml :'history/_table'
     end
 

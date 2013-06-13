@@ -6,5 +6,5 @@ function display_history(form, number_of_categories) {
 }
 
 function delete_transaction(id) {
-  format_request("history/" + id + "/delete", "history_table");
+  format_request("history/" + id + "/delete", "historytable");
 }
