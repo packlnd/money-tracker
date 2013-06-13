@@ -19,25 +19,21 @@
         %tr
           %td
             %h4 #{month_name(month).to_s + " (" + Transaction.get_sum_month_year(year, month, @cat_ids, @from, @to, @user).to_s + ")"}
-        %tr
-          %td
-            %b Kategori
-          %td
-            %b Datum
-          %td
-            %b Namn
-          %td
-            %b Summa
+        %tr{style: 'font-weight:bold;'}
+          %td Kategori
+          %td Datum
+          %td Namn
+          %td Summa
       %tr{class: "#{t.determine_row}"}
         %td
           %a{:href => "/history/update_category/#{t.id}"}
-            .span.cat_label{:style => "background-color:#{Category.get_category(t.category_id).color};"}
-              #{Category.get_category(t.category_id).name}
+            -cat = Category.get_category(t.category_id)
+            .span.cat_label{:style => "background-color:#{cat.color};"} #{cat.name}
         %td #{t.timestamp.strftime("%Y-%m-%d")}
         %td #{t.name}
         %td{:class => "#{t.determine_sum}"} #{t.sum}
         %td
           %a.btn{href: "history/#{t.id}/edit"}
             %i.icon-pencil
-          %a.btn{onclick: "delete_t(#{t.id})"}
+          %a.btn{onclick: "delete_transaction(#{t.id})"}
             %i.icon-trash
