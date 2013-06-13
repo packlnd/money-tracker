@@ -8,3 +8,22 @@ function format_categories(form, number_of_categories) {
   }
   return s.substring(1);
 }
+
+function format_request(url, div) {
+  handle_request(url, div, function(response) {
+    document.getElementById(div).innerHTML = response;
+  });
+}
+
+function handle_request(url, div, func) {
+  xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+      func(xmlhttp.responseText);
+    } else {
+      document.getElementById(div).innerHTML = "Laddar...";
+    }
+  }
+  xmlhttp.open("GET", url, true);
+  xmlhttp.send();
+}
