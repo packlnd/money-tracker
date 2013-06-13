@@ -8,14 +8,14 @@
   %tbody
     -year = ""
     -month = ""
-    -@transactions.each do |transaction|
-      -if year == "" or transaction.timestamp.year != year
-        -year = transaction.timestamp.year
+    -@transactions.each do |t|
+      -if year == "" or t.timestamp.year != year
+        -year = t.timestamp.year
         %tr
           %td
             %h3 #{year.to_s + " (" + Transaction.get_sum_year(year, @cat_ids, @from, @to, @user).to_s + ")"}
-      -if month == "" or transaction.timestamp.month != month
-        -month = transaction.timestamp.month
+      -if month == "" or t.timestamp.month != month
+        -month = t.timestamp.month
         %tr
           %td
             %h4 #{month_name(month).to_s + " (" + Transaction.get_sum_month_year(year, month, @cat_ids, @from, @to, @user).to_s + ")"}
@@ -28,16 +28,16 @@
             %b Namn
           %td
             %b Summa
-      %tr{:class => "#{transaction.determine_row}"}
+      %tr{class: "#{t.determine_row}"}
         %td
-          %a{:href => "/history/update_category/#{transaction.id}"}
-            .span.cat_label{:style => "background-color:#{Category[transaction.category_id].color};"}
-              #{Category[transaction.category_id].name}
-        %td #{transaction.timestamp.strftime("%Y-%m-%d")}
-        %td #{transaction.name}
-        %td{:class => "#{transaction.determine_sum}"} #{transaction.sum}
+          %a{:href => "/history/update_category/#{t.id}"}
+            .span.cat_label{:style => "background-color:#{Category.get_category(t.category_id).color};"}
+              #{Category.get_category(t.category_id).name}
+        %td #{t.timestamp.strftime("%Y-%m-%d")}
+        %td #{t.name}
+        %td{:class => "#{t.determine_sum}"} #{t.sum}
         %td
-          %a.btn{href: "history/#{transaction.id}/edit"}
+          %a.btn{href: "history/#{t.id}/edit"}
             %i.icon-pencil
-          %a.btn{onclick: "delete_transaction(#{transaction.id})"}
+          %a.btn{onclick: "delete_t(#{t.id})"}
             %i.icon-trash

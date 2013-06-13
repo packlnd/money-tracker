@@ -20,7 +20,7 @@ end
 class Category < Sequel::Model
   one_to_many :transaction
 
-  def get_color
-    return self.color.split(",").map {|s| s.to_i}
+  def self.get_category(seq_id)
+    Category.where(seq_id: seq_id).all[0]
   end
 end
