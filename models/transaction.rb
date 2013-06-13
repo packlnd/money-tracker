@@ -57,40 +57,35 @@ class Transaction < Sequel::Model
 
   def bayesian_filtering
     words = self.name.split(' ')
-    total_probability = Array.new(Category.count,0)
-
+    tot_prob = Array.new(Category.count,0)
     words.each do |word|
       word_appears = 0
       transactions = Transaction.count
-      probability_per_category = Array.new(Category.count,0)
-
+      prob_per_cat = Array.new(Category.count,0)
       for id in 1..Category.count
         word_appears_in_category = 0
         transactions_in_category = Transaction.where(:category_id => id).count
-
         Transaction.where(:category_id => id).all.each do |transaction|
           if transaction.name.include? word
             word_appears_in_category += 1
           end
         end
-
-        probability_per_category[id-1] = word_appears_in_category.to_f/transactions_in_category.to_f
+        prob_per_cat[id-1] = word_appears_in_category.to_f/transactions_in_category.to_f
         word_appears += word_appears_in_category
       end
-
       for id in 0..(Category.count-1)
         if word_appears == 0 or transactions == 0
-          total_probability[id] = 0
+          tot_prob[id] = 0
           next
         end
-        total_probability[id] += (probability_per_category[id].to_f/(word_appears.to_f/transactions.to_f))
+        tot_prob[id] += (prob_per_cat[id].to_f/(word_appears.to_f/transactions.to_f))
       end
     end
-
     for id in 0..(Category.count-1)
-      total_probability[id] /= Category.count
+      tot_prob[id] /= Category.count
     end
-    total_probability.rindex(total_probability.max)+1
+
+    tot_prob.uniq.length == 1 ? 1 : tot_prob.rindex(tot_prob.max)+1
   end
 
   def self.get_sum(cat_ids, from, to, user)
