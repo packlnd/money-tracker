@@ -4,3 +4,7 @@ function display_history(form, number_of_categories) {
     categories = format_categories(form, number_of_categories);
   format_request("/history/update/" + from + "/" + to + "/" + categories, "historytable");
 }
+
+function delete_transaction(id) {
+  format_request("history/" + id + "/delete", "history_table");
+}

@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 module App
+  require 'pry'
   class History < Sinatra::Application
     before do
       env['warden'].authenticated?
@@ -29,6 +30,9 @@ module App
     end
 
     get '/update_category/:id' do |id|
+      ###
+      # OUTDATED
+      ###
       new_category = (Transaction[id].category_id % Category.count) + 1
       Transaction[id].update(:category_id => new_category)
       redirect '/history'
@@ -53,12 +57,12 @@ module App
       redirect '/history'
     end
 
-    get '/delete/:id' do |id|
+    get '/:id/delete' do |id|
       Transaction[id].delete
-      redirect '/history'
+      haml :'history/_table'
     end
 
-    get '/edit/:id' do |id|
+    get '/:id/edit' do |id|
       @transaction = Transaction[id]
       haml :'history/edit'
     end

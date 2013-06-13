@@ -9,8 +9,7 @@ module App
     end
 
     get '/add/:name/:color' do
-      puts "hello"
-      category = Category.new(name: params[:name], color: "#" + params[:color])
+      category = Category.new(name: params[:name], color: "#" + params[:color], seq_id: "#{Category.last.seq_id + 1}")
       category.save
       haml :'settings/_table'
     end
@@ -20,8 +19,13 @@ module App
     end
 
     get "/:id/delete" do |id|
-      puts "hello"
+      Transaction.where(category_id: id).all.each do |transaction|
+        transaction.category_id = 1
+      end
       Category[id].delete
+      (id+1..Category.count).each do |update_id|
+        Category[update_id].seq_id -= 1
+      end
       haml :'settings/_table'
     end
   end
