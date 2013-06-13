@@ -6,11 +6,12 @@
         %input{:type => 'text', :id => 'name', :name => 'transaction[name]', :value => "#{@transaction.name}"}
       %label.control-label{for: 'category'}Kategori
       .controls
-        - Category.all.each do |category|
-          %label.radio.inline
-            .span{:class => "#{category.css}"}
-              -if category.id == @transaction.category_id
-                %input{:checked => 'true', :type => 'radio', :id => "#{category.id}", :name => 'transaction[category_id]', :value => "#{category.id}"} #{category.name}
-              -else
-                %input{:type => 'radio', :id => "#{category.id}", :name => 'transaction[category_id]', :value => "#{category.id}"} #{category.name}
+        - Category.all.each do |cat|
+          .span.cat_label{style: "background-color:#{cat.color};"}
+            -if @transaction.category_id == cat.seq_id
+              %input{checked: 'true', type: 'radio', id: "#{cat.seq_id}", name: 'transaction[category_id]', value: "#{cat.seq_id}"} #{cat.name}
+            -else
+              %input{:type => "radio", :id => "#{cat.seq_id}", :name => 'transaction[category_id]', :value => "#{cat.seq_id}"} #{cat.name}
+    %br
+    %br
     %input{type: 'submit', value: 'Spara'}

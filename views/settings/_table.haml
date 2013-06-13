@@ -5,6 +5,7 @@
     %th
   %tbody
     -Category.all.each do |category|
+      -if category.seq_id == 1 then next end
       %tr
         %td
           .span.cat_label{:style => "background-color:#{category.color};"} #{category.name}
