@@ -9,6 +9,7 @@ module App
     end
 
     get '/add/:name/:color' do
+      puts "hello"
       category = Category.new(name: params[:name], color: "#" + params[:color])
       category.save
       haml :_setting_table
@@ -19,8 +20,9 @@ module App
     end
 
     get "/:id/delete" do |id|
+      puts "hello"
       Category[id].delete
-      redirect '/settings'
+      haml :_setting_table
     end
   end
 end

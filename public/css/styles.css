@@ -32,7 +32,7 @@ td:first-child {
   margin:8px auto;
 }
 
-.cat_label {
+.cat_label, .temp_label {
   vertical-align:middle;
   border-radius: 4px;
   font-size:x-small;
@@ -40,6 +40,13 @@ td:first-child {
   font-weight:bold;
   width:auto;
   padding:2px 5px;
-  height:20px;
   color:#FFF;
+}
+
+.temp_label {
+  height:40px;
+}
+
+.cat_label {
+  height:20px;
 }

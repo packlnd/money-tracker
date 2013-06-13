@@ -37,7 +37,7 @@
         %td #{transaction.name}
         %td{:class => "#{transaction.determine_sum}"} #{transaction.sum}
         %td
-          %a{:href => "/history/edit/#{transaction.id}"}
+          %a.btn{:href => "/history/edit/#{transaction.id}"}
             %i.icon-pencil
-          %a{:href => "/history/delete/#{transaction.id}"}
+          %a.btn{:href => "/history/delete/#{transaction.id}"}
             %i.icon-trash
