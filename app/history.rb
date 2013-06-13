@@ -32,6 +32,7 @@ module App
 
     get '/:id/increment' do |id|
       new_category = (Transaction[id].category_id % Category.count) + 1
+      if new_category == 1 then new_category = 2 end
       Transaction[id].update(:category_id => new_category)
       cat = Hash.new
       category = Category.get_category(new_category)
