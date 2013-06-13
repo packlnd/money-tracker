@@ -1,5 +1,5 @@
 function create_category(form) {
-  var content = '<span class="cat_label" style="height:120%; background-color:#' + form.elements["color"].value + ';"><input type="checkbox"/>' + form.elements["name"].value + '\r\n</span>';
+  var content = '<span class="cat_label" style="height:120%; background-color:#' + form.elements["color"].value + ';">' + form.elements["name"].value + '</span>';
   document.getElementById("templabel").innerHTML = content;
 }
 

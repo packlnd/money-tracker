@@ -17,5 +17,10 @@ module App
     get "/:id/edit" do |id|
       
     end
+
+    get "/:id/delete" do |id|
+      Category[id].delete
+      redirect '/settings'
+    end
   end
 end
