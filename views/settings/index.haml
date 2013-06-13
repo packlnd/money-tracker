@@ -2,7 +2,7 @@
   %h1 Inställningar för #{env['warden'].user.username}
   %h3 Kategorier
   #setting_table
-    =haml :_setting_table
+    =haml :'settings/_table'
   %br
   %br
   %form.form-inline{action: "/settings/add"}

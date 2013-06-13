@@ -1,6 +1,5 @@
 # -*- encoding : utf-8 -*-
 module App
-  require 'pry'
   class History < Sinatra::Application
     before do
       env['warden'].authenticated?
@@ -26,7 +25,7 @@ module App
       (1..Category.count).each do |i|
         @cat_ids.push(i)
       end
-      haml :history
+      haml :'history/index'
     end
 
     get '/update_category/:id' do |id|
@@ -46,7 +45,7 @@ module App
       @to = string_to_time(params[:to]) + 3600*24
       @cat_ids = params[:categories].split('.');
       @transactions = Transaction.order(Sequel.desc(:timestamp)).where(:timestamp => @from..@to,:owner => env['warden'].user.username, :category_id => @cat_ids)
-      haml :table
+      haml :'history/_table'
     end
 
     post '/update/:id' do |id|
@@ -61,7 +60,7 @@ module App
 
     get '/edit/:id' do |id|
       @transaction = Transaction[id]
-      haml :edit
+      haml :'history/edit'
     end
   end
 end

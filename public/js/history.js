@@ -15,13 +15,3 @@ function display_history(form, number_of_categories) {
   xmlhttp.open("GET", url, true);
   xmlhttp.send();
 }
-
-function format_categories(form, number_of_categories) {
-  var s = "";
-  for (var i = 1; i < number_of_categories+1; i++) {
-    if (form.elements["category[" + i + "]"].checked) {
-      s += "." + i;
-    }
-  }
-  return s.substring(1);
-}

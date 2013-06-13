@@ -10,7 +10,7 @@ module App
     end
 
     get '/login' do
-      haml :login
+      haml :'sessions/login'
     end
 
     post '/login' do
@@ -19,7 +19,7 @@ module App
     end
 
     get '/register' do
-      haml :register
+      haml :'sessions/register'
     end
 
     get '/logout' do

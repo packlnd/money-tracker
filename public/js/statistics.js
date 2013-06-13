@@ -76,16 +76,6 @@ function create_result_chart(json_categories) {
   document.getElementById("resultheader").innerHTML = "<br/><h4>Resultat per månad för " + to.split('-')[0].toString();
 }
 
-function format_categories(form, number_of_categories) {
-  var s = "";
-  for (var i = 1; i < number_of_categories+1; i++) {
-    if (form.elements["category[" + i + "]"].checked) {
-      s += "." + i;
-    }
-  }
-  return s.substring(1);
-}
-
 function display_monthlychart(data, colors, div) {
   (function bars_stacked(container) {
     var d1 = [[0, 1], [1, 5]],

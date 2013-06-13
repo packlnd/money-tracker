@@ -15,7 +15,7 @@ module App
 
     get "/" do
       @user = env['warden'].user.username
-      haml :statistics
+      haml :'statistics/index'
     end
 
     get "/get_monthly_data/:to/:categories" do

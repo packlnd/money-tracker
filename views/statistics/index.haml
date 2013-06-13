@@ -2,8 +2,8 @@
   %h3 Statistik för #{@user}
   %center
     %form.form-inline{name: 'myform', action: "", method: 'POST'}
-      = haml :_filter_form
-      %input.btn.btn{type: 'button', value: 'Visa', name: 'button', onClick: "create_statistics(this.form, #{Category.count})"}
+      =haml :_filter_form
+      %input.btn.btn{type: 'button', value: 'Visa', name: 'button', onClick: "create_statistics(this.form, #{Category.last.id})"}
     #pieheader
     #piechart
     #resultheader
@@ -11,4 +11,5 @@
     #monthlyheader
     #monthlychart
   %script{ :type => "text/javascript", :src => "/js/flotr2.min.js"}
+  %script{type: "text/javascript", src: "/js/helpers.js"}
   %script{ :type => "text/javascript", :src => "/js/statistics.js"}
