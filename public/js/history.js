@@ -6,5 +6,8 @@ function display_history(form, number_of_categories) {
 }
 
 function delete_transaction(id) {
-  format_request("history/" + id + "/delete", "historytable");
+  document.getElementById("r" + id).innerHTML = "";
+  xmlhttp = new XMLHttpRequest();
+  xmlhttp.open("GET", "/history/" + id + "/delete", true);
+  xmlhttp.send();
 }

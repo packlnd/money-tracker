@@ -7,6 +7,7 @@
       %label.control-label{for: 'category'}Kategori
       .controls
         - Category.all.each do |cat|
+          -if cat.id == 1 then next end
           .span.cat_label{style: "background-color:#{cat.color};"}
             -if @transaction.category_id == cat.seq_id
               %input{checked: 'true', type: 'radio', id: "#{cat.seq_id}", name: 'transaction[category_id]', value: "#{cat.seq_id}"} #{cat.name}

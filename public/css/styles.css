@@ -28,8 +28,9 @@ td:first-child {
 
 #piechart, #monthlychart, #resultchart {
   width:600px;
-  height:400px;
+  height:600px;
   margin:8px auto;
+
 }
 
 .cat_label, .temp_label {

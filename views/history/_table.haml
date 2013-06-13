@@ -24,7 +24,7 @@
           %td Datum
           %td Namn
           %td Summa
-      %tr{class: "#{t.determine_row}"}
+      %tr{id: "r#{t.id}", class: "#{t.determine_row}"}
         %td
           %a{:href => "/history/update_category/#{t.id}"}
             -cat = Category.get_category(t.category_id)
