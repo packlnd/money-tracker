@@ -34,6 +34,7 @@ td:first-child {
 }
 
 .cat_label, .temp_label {
+  cursor: pointer;
   vertical-align:middle;
   border-radius: 4px;
   font-size:x-small;

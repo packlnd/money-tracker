@@ -11,3 +11,11 @@ function delete_transaction(id) {
   xmlhttp.open("GET", "/history/" + id + "/delete", true);
   xmlhttp.send();
 }
+
+function increment_category(id) {
+  handle_request("history/" + id + "/increment", undefined, function(response) {
+    var category = JSON.parse(response);
+    document.getElementById("cat_" + id).innerHTML =
+      "<span class='cat_label' style='background-color:" + category.color + ";'>" + category.name + "</span>" ;
+  });
+}

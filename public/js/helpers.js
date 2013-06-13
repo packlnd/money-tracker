@@ -20,7 +20,7 @@ function handle_request(url, div, func) {
   xmlhttp.onreadystatechange = function() {
     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
       func(xmlhttp.responseText);
-    } else {
+    } else if (div != undefined) {
       document.getElementById(div).innerHTML = "Laddar...";
     }
   }

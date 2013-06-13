@@ -1,6 +1,7 @@
 # -*- encoding : utf-8 -*-
 module App
   require 'pry'
+  require 'json'
   class History < Sinatra::Application
     before do
       env['warden'].authenticated?
@@ -29,13 +30,14 @@ module App
       haml :'history/index'
     end
 
-    get '/update_category/:id' do |id|
-      ###
-      # OUTDATED
-      ###
+    get '/:id/increment' do |id|
       new_category = (Transaction[id].category_id % Category.count) + 1
       Transaction[id].update(:category_id => new_category)
-      redirect '/history'
+      cat = Hash.new
+      category = Category.get_category(new_category)
+      cat["name"] = category.name
+      cat["color"] = category.color
+      cat.to_json
     end
 
     post '/upload' do

@@ -26,9 +26,10 @@
           %td Summa
       %tr{id: "r#{t.id}", class: "#{t.determine_row}"}
         %td
-          %a{:href => "/history/update_category/#{t.id}"}
+          %a{onclick: "increment_category(#{t.id})"}
             -cat = Category.get_category(t.category_id)
-            .span.cat_label{:style => "background-color:#{cat.color};"} #{cat.name}
+            .increment{id: "cat_#{t.id}"}
+              .span.cat_label{:style => "background-color:#{cat.color};"} #{cat.name}
         %td #{t.timestamp.strftime("%Y-%m-%d")}
         %td #{t.name}
         %td{:class => "#{t.determine_sum}"} #{t.sum}
