@@ -52,7 +52,7 @@ class Transaction < Sequel::Model
   end
 
   def determine_category
-    self.category_id = self.sum > 0 ? 2 : bayesian_filtering
+    self.category_id = self.sum > 0 ? 3 : bayesian_filtering
   end
 
   def bayesian_filtering
