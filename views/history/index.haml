@@ -9,7 +9,7 @@
   %center
     %form.form-inline{:action => '', :name => 'myform', :method => 'post'}
       =haml :_filter_form
-      %input.btn.btn{type: 'button', value: 'Visa', name: 'button', onClick: "display_history(this.form, #{Category.last.id})"}
+      %input.btn.btn{type: 'button', value: 'Visa', name: 'button', onClick: "display_history(this.form, #{Category.count})"}
     #historytable
       =haml :'history/_table'
   %script{type: "text/javascript", src: "/js/helpers.js"}

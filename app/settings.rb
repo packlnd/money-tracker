@@ -5,6 +5,7 @@ module App
     end
 
     get "/" do
+
       @user = env['warden'].user.username
       haml :'settings/index'
     end
@@ -24,10 +25,14 @@ module App
     get "/:id/delete" do |id|
       Transaction.where(category_id: id).all.each do |transaction|
         transaction.category_id = 1
+        transaction.save
       end
-      Category[id].delete
+      Category.get_category(id).delete
       ((id.to_i+1)..Category.count).each do |update_id|
-        Category[update_id].seq_id -= 1
+        category = Category.get_category(update_id)
+        new_id = category.seq_id - 1
+        category.seq_id = new_id
+        category.save
       end
       haml :'settings/_table', :layout => false
     end

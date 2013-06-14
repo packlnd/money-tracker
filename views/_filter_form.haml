@@ -3,7 +3,7 @@
     -if Transaction.where(category_id: category.seq_id).count == 0 then next end
     %label.checkbox.inline
       .span.cat_label{:style => "background-color:#{category.color};"}
-        %input{:type => 'checkbox', :checked => 'yes', :name => "category[#{category.id}]"} #{category.name}
+        %input{:type => 'checkbox', :checked => 'yes', :name => "category[#{category.seq_id}]"} #{category.name}
 .control-group
   Från
   %input.input-small{type: 'text', name: 'date_from', value: "#{Transaction.first_transaction(@user).to_s}"}

@@ -10,8 +10,8 @@
         %td
           .span.cat_label{:style => "background-color:#{category.color};"} #{category.name}
         %td{:style => "text-align:right;"}
-          %a.btn{href: "/settings/#{category.id}/edit"}
+          %a.btn{href: "/settings/#{category.seq_id}/edit"}
             %i.icon-pencil
         %td{:style => "text-align:right;"}
-          %a.btn{onclick: "delete_category(#{category.id})"}
+          %a.btn{onclick: "delete_category(#{category.seq_id})"}
             %i.icon-trash

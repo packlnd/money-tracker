@@ -81,7 +81,7 @@ class Transaction < Sequel::Model
       probability[id] /= Category.count
     end
 
-    probability.uniq.length == 1 ? 1 : probability.rindex(probability.max)+1
+    if probability.uniq.length == 1 then 1 else (probability.rindex(probability.max) + 1) end
   end
 
   def times_in_category(word, id)
