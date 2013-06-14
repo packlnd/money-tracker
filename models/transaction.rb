@@ -29,18 +29,18 @@ class Transaction < Sequel::Model
   end
 
   def self.handle_file(file_from_user, user)
-      if file_from_user
-        file = File.open(file_from_user[:tempfile]).each do |line|
-          data = line.delete("\r").delete("\n").split("\t")
-          transaction = Transaction.new
-          transaction.timestamp = data[0].chomp()
-          transaction.name = data[1].chomp()
-          transaction.sum = data[2].chomp().delete(" ").gsub(',','.').to_f
-          transaction.determine_category
-          transaction.owner = user
-          transaction.save
-        end
+    if file_from_user
+      file = File.open(file_from_user[:tempfile]).each do |line|
+        data = line.delete("\r").delete("\n").split("\t")
+        transaction = Transaction.new
+        transaction.timestamp = data[0].chomp()
+        transaction.name = data[1].chomp()
+        transaction.sum = data[2].chomp().delete(" ").gsub(',','.').to_f
+        transaction.determine_category
+        transaction.owner = user
+        transaction.save
       end
+    end
   end
 
   def determine_sum
@@ -93,8 +93,6 @@ class Transaction < Sequel::Model
       end
     end
   end
-
-  def average_probabilities
 
   def self.get_sum(cat_ids, from, to, user)
     sum = 0
