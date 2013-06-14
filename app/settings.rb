@@ -16,7 +16,7 @@ module App
 
     get '/format/:name/:color' do
       @label_name = params[:name]
-      @label_color = params[:color]
+      @label_color = "#" + params[:color]
       haml :_new_label, :layout => false
     end
 

@@ -33,7 +33,7 @@ td:first-child {
 
 }
 
-.cat_label, .temp_label {
+.cat_label {
   cursor: pointer;
   vertical-align:middle;
   border-radius: 4px;
@@ -41,14 +41,7 @@ td:first-child {
   font-family:"Verdana", Sans-serif;
   font-weight:bold;
   width:auto;
+  height:20px;
   padding:2px 5px;
   color:#FFF;
-}
-
-.temp_label {
-  height:40px;
-}
-
-.cat_label {
-  height:20px;
 }
