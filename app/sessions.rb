@@ -5,6 +5,7 @@ module App
 
     post '/register' do
       user = User.new(params[:user])
+      user.username.downcase!
       user.save
       redirect '/auth/login'
     end

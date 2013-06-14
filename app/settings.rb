@@ -5,6 +5,7 @@ module App
     end
 
     get "/" do
+      @user = env['warden'].user.username
       haml :'settings/index'
     end
 

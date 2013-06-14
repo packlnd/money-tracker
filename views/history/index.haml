@@ -1,6 +1,6 @@
 .container
   %h3
-    Hej #{@user}!
+    Hej #{@user.capitalize}!
   %center
     %form.form-inline{action: '/history/upload', method: 'post', enctype: 'multipart/form-data'}
       %input{type: 'file', name: 'file'}

@@ -1,5 +1,5 @@
 .container
-  %h1 Inställningar för #{env['warden'].user.username}
+  %h1 Inställningar för #{@user.capitalize}
   %h3 Kategorier
   #setting_table
     =haml :'settings/_table'

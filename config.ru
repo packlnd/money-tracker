@@ -23,7 +23,7 @@ Warden::Strategies.add(:password) do
   end
 
   def authenticate!
-    user = User[:username => params['user']['username']]
+    user = User[:username => params['user']['username'].downcase!]
     if user && user.password == params['user']['password']
       success!(user)
     else

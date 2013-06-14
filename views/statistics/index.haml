@@ -1,5 +1,5 @@
 .container
-  %h3 Statistik för #{@user}
+  %h3 Statistik för #{@user.capitalize}
   %center
     %form.form-inline{name: 'myform', action: "", method: 'POST'}
       =haml :_filter_form
