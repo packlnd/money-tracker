@@ -94,6 +94,7 @@ class Transaction < Sequel::Model
     end
   end
 
+  def average_probabilities
 
   def self.get_sum(cat_ids, from, to, user)
     sum = 0
