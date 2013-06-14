@@ -30,6 +30,7 @@ module App
         category["color"] = cat.color
         month = Hash.new
         (1..12).each do |m|
+          puts year
           month[m-1] = Transaction.get_sum_month(m, cat_id, from, to, env['warden'].user.username).to_i
         end
         category["months"] = month.to_json

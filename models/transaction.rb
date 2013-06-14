@@ -44,11 +44,11 @@ class Transaction < Sequel::Model
   end
 
   def determine_sum
-    self.sum >= 0 ? "pos" : "neg"
+    if self.sum >= 0 then "pos" else "neg" end
   end
 
   def determine_row
-    self.sum >= 0 ? "success" : "error"
+    if self.sum >= 0 then "success" else "error" end
   end
 
   def determine_category
@@ -57,36 +57,43 @@ class Transaction < Sequel::Model
 
   def bayesian_filtering
     words = self.name.split(' ')
-    tot_prob = Array.new(Category.count,0)
+    probability = Array.new(Category.count,0)
+
     words.each do |word|
       word_appears = 0
       transactions = Transaction.count
-      prob_per_cat = Array.new(Category.count,0)
+      probability_category = Array.new(Category.count,0)
+
       for id in 1..Category.count
-        word_appears_in_category = 0
-        transactions_in_category = Transaction.where(:category_id => id).count
-        Transaction.where(:category_id => id).all.each do |transaction|
-          if transaction.name.include? word
-            word_appears_in_category += 1
-          end
-        end
-        prob_per_cat[id-1] = word_appears_in_category.to_f/transactions_in_category.to_f
-        word_appears += word_appears_in_category
+        word_category = times_in_category(word, id)
+        transactions_category = Transaction.where(category_id: id).count
+        probability_category[id-1] = word_category/transactions_category.to_f
+        word_appears += word_category
       end
+
       for id in 0..(Category.count-1)
-        if word_appears == 0 or transactions == 0
-          tot_prob[id] = 0
-          next
-        end
-        tot_prob[id] += (prob_per_cat[id].to_f/(word_appears.to_f/transactions.to_f))
+        if word_appears == 0 or transactions == 0 then next end
+        probability[id] += (probability_category[id]/(word_appears/transactions.to_f))
       end
-    end
-    for id in 0..(Category.count-1)
-      tot_prob[id] /= Category.count
     end
 
-    tot_prob.uniq.length == 1 ? 1 : tot_prob.rindex(tot_prob.max)+1
+    for id in 0..(Category.count-1)
+      probability[id] /= Category.count
+    end
+
+    probability.uniq.length == 1 ? 1 : probability.rindex(probability.max)+1
   end
+
+  def times_in_category(word, id)
+    word_count = 0
+    transactions_in_category = Transaction.where(:category_id => id).count
+    Transaction.where(:category_id => id).all.each do |transaction|
+      if transaction.name.include? word
+        word_count += 1
+      end
+    end
+  end
+
 
   def self.get_sum(cat_ids, from, to, user)
     sum = 0
