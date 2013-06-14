@@ -43,12 +43,21 @@ module App
       redirect '/history'
     end
 
-    get '/update/:from/:to/:categories' do
+   get '/update/:from/:to/:categories' do
       @user = env['warden'].user.username
       @from = string_to_time(params[:from]) - 1
       @to = string_to_time(params[:to]) + 3600*24
       @cat_ids = params[:categories].split('.');
       @transactions = Transaction.order(Sequel.desc(:timestamp)).where(:timestamp => @from..@to,:owner => env['warden'].user.username, :category_id => @cat_ids)
+      haml :'history/_table', :layout => false
+    end
+
+    get '/update/:from/:to/:categories/:text' do
+      @user = env['warden'].user.username
+      @from = string_to_time(params[:from]) - 1
+      @to = string_to_time(params[:to]) + 3600*24
+      @cat_ids = params[:categories].split('.');
+      @transactions = Transaction.order(Sequel.desc(:timestamp)).where(:name => params[:text], :timestamp => @from..@to,:owner => env['warden'].user.username, :category_id => @cat_ids)
       haml :'history/_table', :layout => false
     end
 
