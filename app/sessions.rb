@@ -28,7 +28,7 @@ module App
     end
 
     post '/unauthenticated' do
-      redirect '/failure'
+      redirect '/auth/login'
     end
   end
 end
