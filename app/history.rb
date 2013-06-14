@@ -1,7 +1,5 @@
 # -*- encoding : utf-8 -*-
 module App
-  require 'pry'
-  require 'json'
   class History < Sinatra::Application
     before do
       env['warden'].authenticated?
@@ -37,7 +35,7 @@ module App
       category = Category.get_category(new_category)
       @label_color = category.color
       @label_name = category.name
-      haml :_new_label
+      haml :_new_label, :layout => false
     end
 
     post '/upload' do
@@ -51,7 +49,7 @@ module App
       @to = string_to_time(params[:to]) + 3600*24
       @cat_ids = params[:categories].split('.');
       @transactions = Transaction.order(Sequel.desc(:timestamp)).where(:timestamp => @from..@to,:owner => env['warden'].user.username, :category_id => @cat_ids)
-      haml :'history/_table'
+      haml :'history/_table', :layout => false
     end
 
     post '/update/:id' do |id|
