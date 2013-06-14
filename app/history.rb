@@ -1,6 +1,5 @@
 # -*- encoding : utf-8 -*-
 module App
-  require 'pry'
   class History < Sinatra::Application
     before do
       env['warden'].authenticated?
@@ -18,7 +17,6 @@ module App
     end
 
     get '/' do
-      binding.pry
       @user = env['warden'].user.username
       @transactions = Transaction.order(Sequel.desc(:timestamp)).where(:owner => env['warden'].user.username)
       @cat_ids = Array.new()

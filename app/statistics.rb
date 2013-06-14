@@ -26,11 +26,11 @@ module App
       categories = Hash.new
       category_ids.each do |cat_id|
         category = Hash.new
-        cat = Category[cat_id]
+        cat = Category.get_category(cat_id)
         category["color"] = cat.color
         month = Hash.new
         (1..12).each do |m|
-          month[m-1] = Transaction.get_sum_month(m, cat_id, from, to, env['warden'].user.username).to_i
+          month[m-1] = Transaction.get_sum_month(m, cat.seq_id, from, to, env['warden'].user.username).to_i
         end
         category["months"] = month.to_json
         categories[cat.name] = category.to_json
@@ -44,9 +44,9 @@ module App
       category_ids = params[:categories].split('.')
       categories = Hash.new
       category_ids.each do |cat_id|
-        cat = Category[cat_id]
+        cat = Category.get_category(cat_id)
         category = Hash.new
-        category["sum"] = Transaction.get_sum(cat_id, from, to, env['warden'].user.username).to_i.abs
+        category["sum"] = Transaction.get_sum(cat.seq_id, from, to, env['warden'].user.username).to_i.abs
         category["color"] = cat.color
         categories[cat.name] = category.to_json
       end
