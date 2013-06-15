@@ -13,5 +13,5 @@
           %a.btn{href: "/settings/#{category.seq_id}/edit"}
             %i.icon-pencil
         %td{:style => "text-align:right;"}
-          %a.btn{onclick: "delete_category(#{category.seq_id})"}
+          %a.btn.delete{id: "#{category.seq_id}"}
             %i.icon-trash

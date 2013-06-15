@@ -7,13 +7,14 @@
   %br
   %form.form-inline{action: "/settings/add"}
     %label.control-label Namn
-    %input.input-small{type: "text", name: "category[name]", id: "name", value: "NAMN", onkeyup: 'create_category(this.form)'}
+    %input.input-small.format{type: "text", name: "category[name]", id: "name", value: "NAMN"}
     %label.control-label Färg
     .input-prepend
       %span.add-on #
-      %input.input-small{type: "text", name: "category[color]", id: "color", value: "000000", onkeyup: 'create_category(this.form)'}
-    %input.btn{type: "button", value: "Lägg till", name: "button", onclick: "save_category(form)"}
+      %input.input-small.format{type: "text", name: "category[color]", id: "color", value: "000000"}
+    %input.btn.save{type: "button", value: "Lägg till"}
   #templabel
     .span.cat_label{style: "background-color:#000;"} NAMN
-  %script{type: "text/javascript", src: "/js/helpers.js"}
-  %script{type: "text/javascript", src: "/js/settings.js"}
+  %script{src: "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"}
+  %script{src: "/js/helpers.js"}
+  %script{src: "/js/settings.js"}
