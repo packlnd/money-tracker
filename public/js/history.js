@@ -5,6 +5,14 @@ $("a.showhide").click(function() {
   return false;
 });
 
+$("a.delete").click(function() {
+  var id = $(this).attr("id");
+  $("#row" + id).hide();
+  xmlhttp = new XMLHttpRequest();
+  xmlhttp.open("GET", "/history/" + id + "/delete", true);
+  xmlhttp.send();
+});
+
 function display_history(form) {
   var from = form.elements["date_from"].value,
     to = form.elements["date_to"].value,
@@ -15,13 +23,6 @@ function display_history(form) {
   } else {
     format_request("/history/update/" + from + "/" + to + "/" + categories + "/" + text, "historytable");
   }
-}
-
-function delete_transaction(id) {
-  $("#r" + id).hide();
-  xmlhttp = new XMLHttpRequest();
-  xmlhttp.open("GET", "/history/" + id + "/delete", true);
-  xmlhttp.send();
 }
 
 function increment_category(id) {

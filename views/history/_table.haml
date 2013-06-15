@@ -24,7 +24,7 @@
           %td Datum
           %td Namn
           %td Summa
-      %tr{id: "r#{t.id}", class: "#{t.determine_row}"}
+      %tr{id: "row#{t.id}", class: "#{t.determine_row}"}
         %td
           %a{onclick: "increment_category(#{t.id})"}
             -cat = Category.get_category(t.category_id)
@@ -36,5 +36,5 @@
         %td
           %a.btn{href: "history/#{t.id}/edit"}
             %i.icon-pencil
-          %a.btn{onclick: "delete_transaction(#{t.id})"}
+          %a.btn.delete{id: "#{t.id}"}
             %i.icon-trash
