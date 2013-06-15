@@ -1,7 +1,7 @@
-function create_statistics(form, number_of_categories) {
+function create_statistics(form) {
   var from = form.elements["date_from"].value,
     to = form.elements["date_to"].value,
-    categories = format_categories(form, number_of_categories);
+    categories = format_categories();
 
   create_pie_chart(from, to, categories);
 }

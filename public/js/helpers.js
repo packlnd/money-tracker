@@ -1,10 +1,12 @@
-function format_categories(form, number_of_categories) {
-  var s = "";
-  for (var i = 1; i < number_of_categories+1; i++) {
-    var element = form.elements["category[" + i + "]"];
-    if (element != undefined && element.checked) {
+function format_categories() {
+  var s = "",
+    i = 3,
+    element = $("#cat" + i);
+  while ($(element).attr("type") == 'checkbox') {
+    if ($(element).is(":checked")) {
       s += "." + i;
     }
+    element = $("#cat" + ++i);
   }
   return s.substring(1);
 }

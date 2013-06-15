@@ -3,7 +3,7 @@
   %center
     %form.form-inline{name: 'myform', action: "", method: 'POST'}
       =haml :_filter_form
-      %input.btn.btn{type: 'button', value: 'Visa', name: 'button', onClick: "create_statistics(this.form, #{Category.count})"}
+      %input.btn.btn{type: 'button', value: 'Visa', name: 'button', onClick: "create_statistics(this.form)"}
     #pieheader
     #piechart
     #resultheader

@@ -5,10 +5,10 @@ $("a.showhide").click(function() {
   return false;
 });
 
-function display_history(form, number_of_categories) {
+function display_history(form) {
   var from = form.elements["date_from"].value,
     to = form.elements["date_to"].value,
-    categories = format_categories(form, number_of_categories),
+    categories = format_categories(),
     text = form.elements["search"].value;
   if (text == "") {
     format_request("/history/update/" + from + "/" + to + "/" + categories, "historytable");

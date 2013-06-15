@@ -15,10 +15,10 @@
       %form.form-inline{:action => '', :name => 'myform', :method => 'post'}
         =haml :_filter_form
         %label.control-label Filtrera
-        %input{type: 'text', name: 'search', onkeyup: "display_history(this.form, #{Category.count})"}
+        %input{type: 'text', name: 'search', onkeyup: "display_history(this.form)"}
         %br
         %br
-        %input.btn.btn{type: 'button', value: 'Visa', name: 'button', onClick: "display_history(this.form, #{Category.count})"}
+        %input.btn.btn{type: 'button', value: 'Visa', id: 'filter_btn', onClick: "display_history(this.form, #{Category.count})"}
   %center
     %h1 Historik
   %center
