@@ -1,19 +1,20 @@
 .navbar.navbar-fixed-top
   .navbar-inner
     .container
-      %a.brand{:href => '/'} Mina utgifter
+      %a.brand{:href => '/', :tabindex => -1} Mina utgifter
       %ul.nav
         -if env['warden'].authenticated?
           %li
-            %a{:href => '/history'}Historik
+            %a{:href => '/history', :tabindex => -1}Historik
           %li
-            %a{:href => '/statistics'}Statistik
+            %a{:href => '/statistics', :tabindex => -1}Statistik
           %li
-            %a{:href => '/settings'}Inställningar
+            %a{:href => '/settings', :tabindex => -1}Inställningar
+          %li.divider
           %li
-            %a{:href => '/auth/logout'}Logga ut
+            %a{:href => '/auth/logout', :tabindex => -1}Logga ut
         -else
           %li
-            %a{:href => '/auth/login'}Logga in
+            %a{:href => '/auth/login', :tabindex => -1}Logga in
           %li
-            %a{:href => '/auth/register'}Nytt konto
+            %a{:href => '/auth/register', :tabindex => -1}Nytt konto

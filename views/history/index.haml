@@ -1,19 +1,27 @@
 .container
-  %h3
-    Hej #{@user.capitalize}!
+  %h5.pull-right
+    %a.showhide{:href => "#upload"} Ladda upp fil
+  #upload.forms
+    %center
+      %form.form-inline{action: '/history/upload', method: 'post', enctype: 'multipart/form-data'}
+        %input{type: 'file', name: 'file'}
+        %input.btn.btn-success{type: 'submit', value: 'Ladda upp'}
+  %br
+  %br
+  %h5.pull-right
+    %a.showhide{:href => "#filter"} Filtrera
+  #filter.forms
+    %center
+      %form.form-inline{:action => '', :name => 'myform', :method => 'post'}
+        =haml :_filter_form
+        %label.control-label Filtrera
+        %input{type: 'text', name: 'search', onkeyup: "display_history(this.form, #{Category.count})"}
+        %br
+        %br
+        %input.btn.btn{type: 'button', value: 'Visa', name: 'button', onClick: "display_history(this.form, #{Category.count})"}
   %center
-    %form.form-inline{action: '/history/upload', method: 'post', enctype: 'multipart/form-data'}
-      %input{type: 'file', name: 'file'}
-      %input.btn.btn-success{type: 'submit', value: 'Ladda upp'}
-  %h3 Historik
+    %h1 Historik
   %center
-    %form.form-inline{:action => '', :name => 'myform', :method => 'post'}
-      =haml :_filter_form
-      %label.control-label Filtrera
-      %input{type: 'text', name: 'search', onkeyup: "display_history(this.form, #{Category.count})"}
-      %br
-      %br
-      %input.btn.btn{type: 'button', value: 'Visa', name: 'button', onClick: "display_history(this.form, #{Category.count})"}
     #historytable
       =haml :'history/_table'
   %script{type: "text/javascript", src: "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"}

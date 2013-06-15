@@ -1,3 +1,10 @@
+$(".forms").hide();
+$("a.showhide").click(function() {
+  var id_show = $(this).attr("href");
+  $(id_show).slideToggle();
+  return false;
+});
+
 function display_history(form, number_of_categories) {
   var from = form.elements["date_from"].value,
     to = form.elements["date_to"].value,
@@ -11,7 +18,7 @@ function display_history(form, number_of_categories) {
 }
 
 function delete_transaction(id) {
-  document.getElementById("r" + id).innerHTML = "";
+  $("#r" + id).hide();
   xmlhttp = new XMLHttpRequest();
   xmlhttp.open("GET", "/history/" + id + "/delete", true);
   xmlhttp.send();
