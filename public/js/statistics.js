@@ -1,6 +1,16 @@
-function create_statistics(form) {
-  var from = form.elements["date_from"].value,
-    to = form.elements["date_to"].value,
+$(".charts").hide();
+$("a.showhide").click(function() {
+  var id_show = $(this).attr("href");
+  $(id_show).slideToggle();
+  return false;
+});
+
+$("input.text_filter").keyup(function(){create_statistics();});
+$("input.click_filter").click(function(){create_statistics();});
+
+function create_statistics() {
+  var from = $("#from").attr("value"),
+    to = $("#to").attr("value"),
     categories = format_categories();
 
   create_pie_chart(from, to, categories);
@@ -21,8 +31,8 @@ function create_pie_chart(from, to, categories) {
         var sum = [[0, category.sum]];
         pie_data.push({ data : sum, label : name.toString() });
       }
-      display_piechart(pie_data, colors);
-      document.getElementById("pieheader").innerHTML = "<h4>Statistik per kategori från " + from + " till " + to + "</h4>";
+      display_piechart(pie_data, colors, "piechart");
+      $("h5.pie").text = "Statistik per kategori från " + from + " till " + to;
       create_monthly_chart(to, categories);
     },
     div = "pieheader";
@@ -50,7 +60,7 @@ function create_monthly_chart(to, categories) {
       }
       display_monthlychart(chart_data, colors, "monthlychart");
       var year = to.split('-')[0].toString();
-      document.getElementById("monthlyheader").innerHTML = "<br/><h4>Statistik per månad och kategori för " + year;
+      $("h5.monthly").text = "Statistik per månad och kategori för " + year;
       create_result_chart(json_categories, year)
     },
     div = "monthlyheader";
@@ -82,10 +92,11 @@ function create_result_chart(json_categories, year) {
   chart_data.push({data:pos_data, label:"POSITIVT"});
   chart_data.push({data:neg_data, label:"NEGATIVT"});
   display_monthlychart(chart_data, ['#468847', '#B84947'], "resultchart");
-  document.getElementById("resultheader").innerHTML = "<br/><h4>Resultat per månad för " + year;
+  $("h5.result").text = "Resultat per månad för " + year;
 }
 
 function display_monthlychart(data, colors, div) {
+  $("#" + div).slideToggle();
   (function bars_stacked(container) {
     Flotr.draw(container, data, {
       legend : { backgroundColor : '#FFF' },
@@ -108,7 +119,8 @@ function display_monthlychart(data, colors, div) {
   })(document.getElementById(div));
 }
 
-function display_piechart(data, colors) {
+function display_piechart(data, colors, div) {
+  $("#" + div).slideToggle();
   (function basic_pie(container) {
     Flotr.draw(container, data, {
       colors : colors,
@@ -127,5 +139,5 @@ function display_piechart(data, colors) {
         backgroundColor : '#FFF'
       }
     });
-  })(document.getElementById("piechart"));
+  })(document.getElementById(div));
 }

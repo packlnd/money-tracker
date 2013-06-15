@@ -1,15 +1,18 @@
 .container
   %center
     %h1 Statistik
-    %form.form-inline{name: 'myform', action: "", method: 'POST'}
+    %form.form-inline
       =haml :_filter_form
-      %input.btn.btn{type: 'button', value: 'Visa', name: 'button', onClick: "create_statistics(this.form)"}
-    #pieheader
-    #piechart
-    #resultheader
-    #resultchart
-    #monthlyheader
-    #monthlychart
-  %script{ :type => "text/javascript", :src => "/js/flotr2.min.js"}
-  %script{type: "text/javascript", src: "/js/helpers.js"}
-  %script{ :type => "text/javascript", :src => "/js/statistics.js"}
+    %h5.pie
+      %a.showhide{href: "#piechart"} Utgift per kategori
+    #piechart.charts
+    %h5.result
+      %a.showhide{href: "#resultchart"} Resultat per månad
+    #resultchart.charts
+    %h5.monthly
+      %a.showhide{href: "#monthlychart"} Per månad och kategori
+    #monthlychart.charts
+  %script{src: "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"}
+  %script{src: "/js/helpers.js"}
+  %script{src: "/js/flotr2.min.js"}
+  %script{src: "/js/statistics.js"}
