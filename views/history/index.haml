@@ -1,22 +1,20 @@
 .container
-  %h5.pull-right
-    %a.showhide{href: "#upload"} Ladda upp fil
-  #upload.forms
-    %center
+  %center
+    %h5.pull-right
+      %a.showhide{href: "#upload"} Ladda upp fil
+    #upload.forms
       %form.form-inline{action: '/history/upload', method: 'post', enctype: 'multipart/form-data'}
         %input{type: 'file', name: 'file'}
         %input.btn.btn-success{type: 'submit', value: 'Ladda upp'}
-  .clearfix
-  %h5.pull-right
-    %a.showhide{href: "#filter"} Filtrera
-  #filter.forms
-    %center
+    .clearfix
+    %h5.pull-right
+      %a.showhide{href: "#filter"} Filtrera
+    #filter.forms
       %form.form-inline
         =haml :_filter_form
-  %center
     %h1 Historik
     #historytable
       =haml :'history/_table'
-  %script{src: "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"}
-  %script{src: "/js/helpers.js"}
-  %script{src: "/js/history.js"}
+    %script{src: "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"}
+    %script{src: "/js/helpers.js"}
+    %script{src: "/js/history.js"}

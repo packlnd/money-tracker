@@ -1,6 +1,6 @@
 .container
-  %h3 Statistik för #{@user.capitalize}
   %center
+    %h1 Statistik
     %form.form-inline{name: 'myform', action: "", method: 'POST'}
       =haml :_filter_form
       %input.btn.btn{type: 'button', value: 'Visa', name: 'button', onClick: "create_statistics(this.form)"}
