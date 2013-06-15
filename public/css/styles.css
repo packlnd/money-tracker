@@ -45,3 +45,8 @@ td:first-child {
   padding:2px 5px;
   color:#FFF;
 }
+
+.small-box {
+  padding-top:10px;
+  width:60%;
+}

@@ -1,27 +1,20 @@
 .container
   %h5.pull-right
-    %a.showhide{:href => "#upload"} Ladda upp fil
+    %a.showhide{href: "#upload"} Ladda upp fil
   #upload.forms
     %center
       %form.form-inline{action: '/history/upload', method: 'post', enctype: 'multipart/form-data'}
         %input{type: 'file', name: 'file'}
         %input.btn.btn-success{type: 'submit', value: 'Ladda upp'}
-  %br
-  %br
+  .clearfix
   %h5.pull-right
-    %a.showhide{:href => "#filter"} Filtrera
+    %a.showhide{href: "#filter"} Filtrera
   #filter.forms
     %center
-      %form.form-inline{:action => '', :name => 'myform', :method => 'post'}
+      %form.form-inline
         =haml :_filter_form
-        %label.control-label Filtrera
-        %input{type: 'text', name: 'search', onkeyup: "display_history(this.form)"}
-        %br
-        %br
-        %input.btn.btn{type: 'button', value: 'Visa', id: 'filter_btn', onClick: "display_history(this.form, #{Category.count})"}
   %center
     %h1 Historik
-  %center
     #historytable
       =haml :'history/_table'
   %script{src: "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"}

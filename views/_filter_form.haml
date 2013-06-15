@@ -2,10 +2,16 @@
   -Category.all.each do |category|
     -if Transaction.where(category_id: category.seq_id).count == 0 then next end
     %label.checkbox.inline
-      .span.cat_label{:style => "background-color:#{category.color};"}
-        %input{:id => "cat#{category.seq_id}", :type => 'checkbox', :checked => 'yes', :name => "category[#{category.seq_id}]"} #{category.name}
+      .span.cat_label{style: "background-color:#{category.color};"}
+        %input{class: 'click_filter', id: "cat#{category.seq_id}", type: 'checkbox', checked: 'yes'} #{category.name}
 .control-group
-  Från
-  %input.input-small{type: 'text', name: 'date_from', value: "#{Transaction.first_transaction(@user).to_s}"}
-  till
-  %input.input-small{type: 'text', name: 'date_to', value: "#{Transaction.last_transaction(@user).to_s}"}
+  .small-box
+    .pull-left
+      %label.control-label Från
+      %input.input-small.text_filter{id: "from", type: 'text', value: "#{Transaction.first_transaction(@user).to_s}"}
+      %label.control-label till
+      %input.input-small.text_filter{id: "to", type: 'text', value: "#{Transaction.last_transaction(@user).to_s}"}
+    .pull-right
+      %label.control-label Filtrera
+      %input.text_filter{type: 'text', id: 'query'}
+    .clearfix

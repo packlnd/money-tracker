@@ -5,6 +5,22 @@ $("a.showhide").click(function() {
   return false;
 });
 
+$("input.text_filter").keyup(function(){filter_history()});
+$("input.click_filter").click(function(){filter_history()});
+
+function filter_history() {
+  var from = $("#from").attr("value"),
+    to = $("#to").attr("value"),
+    categories = format_categories(),
+    text = $("#query").attr("value");
+
+    if (text == "") {
+      format_request("/history/update/" + from + "/" + to + "/" + categories, "historytable");
+    } else {
+      format_request("history/update/" + from + "/" + to + "/" + categories + "/" + text, "historytable");
+    }
+}
+
 $("a.delete").click(function() {
   var id = $(this).attr("id");
   $("#row" + id).hide();
@@ -12,18 +28,6 @@ $("a.delete").click(function() {
   xmlhttp.open("GET", "/history/" + id + "/delete", true);
   xmlhttp.send();
 });
-
-function display_history(form) {
-  var from = form.elements["date_from"].value,
-    to = form.elements["date_to"].value,
-    categories = format_categories(),
-    text = form.elements["search"].value;
-  if (text == "") {
-    format_request("/history/update/" + from + "/" + to + "/" + categories, "historytable");
-  } else {
-    format_request("/history/update/" + from + "/" + to + "/" + categories + "/" + text, "historytable");
-  }
-}
 
 function increment_category(id) {
   format_request("history/" + id + "/increment", "cat_" + id);
