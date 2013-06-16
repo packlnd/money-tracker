@@ -6,7 +6,7 @@
   %tbody
     -Category.all.each do |category|
       -if category.seq_id == 1 then next end
-      %tr
+      %tr{id: "row#{category.seq_id}"}
         %td
           .span.cat_label{:style => "background-color:#{category.color};"} #{category.name}
         %td{:style => "text-align:right;"}

@@ -1,7 +1,4 @@
-var min_pos = 552,
-  max_pos = 808,
-  MOUSE_DOWN,
-  $slider;
+var min_pos = 557, max_pos = 813, MOUSE_DOWN, $slider;
 
 $(document).ready(function() {
   $(".slider#red").offset({left:min_pos});
@@ -17,13 +14,18 @@ $(".format").keyup(function() {
   handle_category("format", "#templabel");
 });
 
-$(".delete").click(function() {
+$("a.delete").click(function() {
   var id = $(this).attr("id");
-  format_request("settings/" + id + "/delete", "#setting_table");
+  $("#row" + id).hide();
+  $.ajax({
+  url: "/settings/" + id + "/delete"});
 });
 
 $(".red, .green, .blue").click(function(e) {
-  $(".slider#" + $(this).attr("class")).offset({left:e.pageX});
+  var curr_pos = e.pageX;
+  if (curr_pos >= min_pos && curr_pos < max_pos) {
+    $(".slider#" + $(this).attr("class")).offset({left:curr_pos});
+  }
   handle_category("format", "#templabel");
 });
 
