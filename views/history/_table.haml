@@ -13,24 +13,24 @@
         -year = t.timestamp.year
         %tr
           %td
-            %h3 #{year.to_s + " (" + Transaction.get_sum_year(year, @cat_ids, @from, @to, @user).to_s + ")"}
+            %h3 #{"#{year.to_s} (#{Transaction.get_sum_year(year, @cat_ids, @from, @to, @user).to_s})"}
       -if month == "" or t.timestamp.month != month
         -month = t.timestamp.month
         %tr
           %td
-            %h4 #{month_name(month).to_s + " (" + Transaction.get_sum_month_year(year, month, @cat_ids, @from, @to, @user).to_s + ")"}
-        %tr{style: 'font-weight:bold;'}
+            %h4 #{"#{month_name(month).to_s} (#{Transaction.get_sum_month_year(year, month, @cat_ids, @from, @to, @user).to_s})"}
+        %tr.month
           %td Kategori
           %td Datum
           %td Namn
           %td Summa
       %tr{id: "row#{t.id}", class: "#{t.determine_row}"}
         %td
-          %a{onclick: "increment_category(#{t.id})"}
+          %a.category{id: "#{t.id}"}
             -cat = Category.get_category(t.category_id)
             .increment{id: "cat_#{t.id}"}
               .span.cat_label{:style => "background-color:#{cat.color};"} #{cat.name}
-        %td #{t.timestamp.strftime("%Y-%m-%d")}
+        %td #{t.time_to_s}
         %td #{t.name}
         %td{:class => "#{t.determine_sum}"} #{t.sum}
         %td

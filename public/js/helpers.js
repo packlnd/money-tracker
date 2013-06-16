@@ -18,18 +18,13 @@ function format_categories() {
 }
 
 function format_request(url, div) {
-  handle_request(url, div, function(response) {
-    document.getElementById(div).innerHTML = response;
+  handle_request(url, function(response) {
+    $(div).html(response);
   });
 }
 
-function handle_request(url, div, func) {
-  xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
-    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-      func(xmlhttp.responseText);
-    }
-  }
-  xmlhttp.open("GET", url, true);
-  xmlhttp.send();
+function handle_request(request_url, func) {
+  $.ajax({
+    url: request_url,
+    success: function(data){func(data);}});
 }

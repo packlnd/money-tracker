@@ -14,6 +14,10 @@ td:first-child {
   padding-right:0;
 }
 
+td.month {
+  font-weight:bold;
+}
+
 .pos {
   color:#1AAE00;
 }

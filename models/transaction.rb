@@ -15,7 +15,7 @@ class Transaction < Sequel::Model
   def self.first_transaction(user)
     from = "2001-01-01"
     if Transaction.where(:owner => user).count > 0
-      from = Transaction.order(Sequel.asc(:timestamp)).where(:owner => user).first.timestamp.strftime("%Y-%m-%d")
+      from = Transaction.order(Sequel.asc(:timestamp)).where(:owner => user).first.time_to_s
     end
     from
   end
@@ -23,7 +23,7 @@ class Transaction < Sequel::Model
   def self.last_transaction(user)
     to = Time.now.strftime("%Y-%m-%d")
     if Transaction.where(:owner => user).count > 0
-      to = Transaction.order(Sequel.asc(:timestamp)).where(:owner => user).last.timestamp.strftime("%Y-%m-%d")
+      to = Transaction.order(Sequel.asc(:timestamp)).where(:owner => user).last.time_to_s
     end
     to
   end
@@ -41,6 +41,10 @@ class Transaction < Sequel::Model
         transaction.save
       end
     end
+  end
+
+  def time_to_s
+    self.timestamp.strftime("%Y-%m-%d")
   end
 
   def determine_sum

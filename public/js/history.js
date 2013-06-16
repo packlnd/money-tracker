@@ -10,20 +10,20 @@ function filter_history() {
     text = $("#query").attr("value");
 
     if (text == "") {
-      format_request("/history/update/" + from + "/" + to + "/" + categories, "historytable");
+      format_request("/history/update/" + from + "/" + to + "/" + categories, "#historytable");
     } else {
-      format_request("history/update/" + from + "/" + to + "/" + categories + "/" + text, "historytable");
+      format_request("history/update/" + from + "/" + to + "/" + categories + "/" + text, "#historytable");
     }
 }
 
 $("a.delete").click(function() {
   var id = $(this).attr("id");
   $("#row" + id).hide();
-  xmlhttp = new XMLHttpRequest();
-  xmlhttp.open("GET", "/history/" + id + "/delete", true);
-  xmlhttp.send();
+  $.ajax({
+    url: "/history/" + id + "/delete"});
 });
 
-function increment_category(id) {
-  format_request("history/" + id + "/increment", "cat_" + id);
-}
+$("a.category").click(function() {
+  var id = $(this).attr("id");
+  format_request("history/" + id + "/increment", "#cat_" + id);
+});

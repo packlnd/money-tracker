@@ -1,14 +1,14 @@
 $(".save").click(function() {
-  handle_category("add", "setting_table");
+  handle_category("add", "#setting_table");
 });
 
 $(".format").keyup(function() {
-  handle_category("format", "templabel");
+  handle_category("format", "#templabel");
 });
 
 $(".delete").click(function() {
   var id = $(this).attr("id");
-  format_request("settings/" + id + "/delete", "setting_table");
+  format_request("settings/" + id + "/delete", "#setting_table");
 });
 
 function handle_category(command, div) {

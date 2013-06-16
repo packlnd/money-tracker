@@ -32,7 +32,7 @@ function create_pie_chart(from, to, categories) {
       create_monthly_chart(to, categories);
     },
     div = "pieheader";
-  handle_request(url, div, func);
+  handle_request(url, func);
 }
 
 function create_monthly_chart(to, categories) {
@@ -60,7 +60,7 @@ function create_monthly_chart(to, categories) {
       create_result_chart(json_categories, year)
     },
     div = "monthlyheader";
-  handle_request(url, div, func);
+  handle_request(url, func);
 }
 
 function create_result_chart(json_categories, year) {
