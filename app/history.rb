@@ -61,18 +61,19 @@ module App
       haml :'history/_table', :layout => false
     end
 
-    post '/update/:id' do |id|
-      Transaction[id].update(params[:transaction])
-      redirect '/history'
-    end
-
     get '/:id/delete' do |id|
       Transaction[id].delete
     end
 
     get '/:id/edit' do |id|
-      @transaction = Transaction[id]
-      haml :'history/edit'
+      @t = Transaction[id]
+      haml :'history/_edit_row', :layout => false
+    end
+
+    get '/:id/:name/save' do
+      @t = Transaction[params[:id]]
+      @t.update(name: params[:name])
+      haml :'history/_display_row', :layout => false
     end
   end
 end

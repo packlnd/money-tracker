@@ -27,3 +27,17 @@ $("a.category").click(function() {
   var id = $(this).attr("id");
   format_request("history/" + id + "/increment", "#cat_" + id);
 });
+
+$("a.edit").click(function() {
+  var id = $(this).attr("id");
+  format_request("history/" + id + "/edit", "#row" + id);
+});
+
+//http://jsfiddle.net/qY9UM/2/
+$("a.save").bind("click", function() {
+  alert("hello");
+  var id = $(this).attr("id"),
+    name = $("#edit_text").attr("value");
+  format_request("history/" + id + "/" + name + "/save", "#row" + id);
+});
+
