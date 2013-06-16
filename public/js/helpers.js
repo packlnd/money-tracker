@@ -6,7 +6,7 @@ $("a.showhide").click(function() {
 
 function format_categories() {
   var s = "",
-    i = 3,
+    i = 2,
     element = $("#cat" + i);
   while ($(element).attr("type") == 'checkbox') {
     if ($(element).is(":checked")) {

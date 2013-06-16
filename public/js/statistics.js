@@ -88,7 +88,7 @@ function create_result_chart(json_categories, year) {
   chart_data.push({data:pos_data, label:"POSITIVT"});
   chart_data.push({data:neg_data, label:"NEGATIVT"});
   display_monthlychart(chart_data, ['#468847', '#B84947'], "resultchart");
-  $("a#resultchart").text( "<a class='showhide' href='#result'>Resultat per månad för " + year + "</a>");
+  $("a#resultchart").text( "Resultat per månad för " + year);
 }
 
 function display_monthlychart(data, colors, div) {
