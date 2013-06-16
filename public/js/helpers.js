@@ -1,3 +1,9 @@
+$("a.showhide").click(function() {
+  var id_show = $(this).attr("href");
+  $(id_show).slideToggle();
+  return false;
+});
+
 function format_categories() {
   var s = "",
     i = 3,

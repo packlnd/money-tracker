@@ -1,9 +1,4 @@
 $(".forms").hide();
-$("a.showhide").click(function() {
-  var id_show = $(this).attr("href");
-  $(id_show).slideToggle();
-  return false;
-});
 
 $("input.text_filter").keyup(function(){filter_history()});
 $("input.click_filter").click(function(){filter_history()});
