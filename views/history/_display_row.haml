@@ -1,0 +1,13 @@
+%td
+  %a.category{id: "#{@t.id}"}
+    -cat = Category.get_category(@t.category_id)
+    .increment{id: "cat_#{@t.id}"}
+      .span.cat_label{style: "background-color:#{cat.color};"} #{cat.name}
+%td #{@t.date_to_s}
+%td #{@t.name}
+%td{class: "#{@t.determine_sum}"} #{@t.sum}
+%td
+  %a.btn.edit{id: "#{@t.id}"}
+    %i.icon-pencil
+  %a.btn.delete{id: "#{@t.id}"}
+    %i.icon-trash
