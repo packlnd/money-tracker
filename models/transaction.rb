@@ -14,16 +14,16 @@ class Transaction < Sequel::Model
 
   def self.first_transaction(user)
     from = "2001-01-01"
-    if Transaction.where(:owner => user).count > 0
-      from = Transaction.order(Sequel.asc(:timestamp)).where(:owner => user).first.date_to_s
+    if Transaction.where(owner: user).count > 0
+      from = Transaction.order(Sequel.asc(:timestamp)).where(owner: user).first.date_to_s
     end
     from
   end
 
   def self.last_transaction(user)
     to = Time.now.strftime("%Y-%m-%d")
-    if Transaction.where(:owner => user).count > 0
-      to = Transaction.order(Sequel.asc(:timestamp)).where(:owner => user).last.date_to_s
+    if Transaction.where(owner: user).count > 0
+      to = Transaction.order(Sequel.asc(:timestamp)).where(owner: user).last.date_to_s
     end
     to
   end
@@ -56,7 +56,7 @@ class Transaction < Sequel::Model
   end
 
   def determine_category
-    self.category_id = self.sum > 0 ? 3 : bayesian_filtering
+    self.category_id = if self.sum > 0 then 3 else bayesian_filtering end
   end
 
   def bayesian_filtering
@@ -71,6 +71,7 @@ class Transaction < Sequel::Model
       for id in 1..Category.count
         word_category = times_in_category(word, id)
         transactions_category = Transaction.where(category_id: id).count
+        if transactions_category == 0 then next end
         probability_category[id-1] = word_category/transactions_category.to_f
         word_appears += word_category
       end
@@ -90,17 +91,18 @@ class Transaction < Sequel::Model
 
   def times_in_category(word, id)
     word_count = 0
-    transactions_in_category = Transaction.where(:category_id => id).count
-    Transaction.where(:category_id => id).all.each do |transaction|
+    transactions_in_category = Transaction.where(category_id: id).count
+    Transaction.where(category_id: id).all.each do |transaction|
       if transaction.name.include? word
         word_count += 1
       end
     end
+    word_count
   end
 
   def self.get_sum(cat_ids, from, to, user)
     sum = 0
-    Transaction.where(:timestamp => from..to, :category_id => cat_ids, :owner => user).all.each do |t|
+    Transaction.where(timestamp: from..to, category_id: cat_ids, owner: user).all.each do |t|
       sum += t.sum
     end
     return sum
@@ -108,7 +110,7 @@ class Transaction < Sequel::Model
 
   def self.get_sum_year(year, cat_ids, from, to, user)
     sum = 0
-    Transaction.where(:timestamp => from..to, :category_id => cat_ids, :owner => user).all.each do |t|
+    Transaction.where(timestamp: from..to, category_id: cat_ids, owner: user).all.each do |t|
       if t.timestamp.year == year
         sum += t.sum
       end
@@ -118,7 +120,7 @@ class Transaction < Sequel::Model
 
   def self.get_sum_month(month, cat_ids, from, to, user)
     sum = 0
-    Transaction.where(:timestamp => from..to, :category_id => cat_ids, :owner => user).all.each do |t|
+    Transaction.where(timestamp: from..to, category_id: cat_ids, owner: user).all.each do |t|
       if t.timestamp.month == month
         sum += t.sum
       end
@@ -128,7 +130,7 @@ class Transaction < Sequel::Model
 
   def self.get_sum_month_year(year, month, cat_ids, from, to, user)
     sum = 0
-    Transaction.where(:timestamp => from..to, :category_id => cat_ids, :owner => user).all.each do |t|
+    Transaction.where(timestamp: from..to, category_id: cat_ids, owner: user).all.each do |t|
       if t.timestamp.year == year and t.timestamp.month == month
         sum += t.sum
       end

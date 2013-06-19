@@ -43,7 +43,7 @@ module App
       redirect '/history'
     end
 
-   get '/update/:from/:to/:categories' do
+get '/update/:from/:to/:categories' do
       @user = env['warden'].user.username
       @from = string_to_time(params[:from]) - 1
       @to = string_to_time(params[:to]) + 3600*24
