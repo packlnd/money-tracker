@@ -20,6 +20,10 @@ class Transaction < Sequel::Model
     from
   end
 
+  def siblings
+    Transaction.where(category_id: 1, name: self.name)
+  end
+
   def self.last_transaction(user)
     to = Time.now.strftime("%Y-%m-%d")
     if Transaction.where(owner: user).count > 0

@@ -24,8 +24,14 @@ $("a.delete").click(function() {
 });
 
 $("a.category").click(function() {
-  var id = $(this).attr("id");
-  format_request("history/" + id + "/increment", "#cat_" + id);
+  $.ajax({
+    url : "history/" + $(this).attr("id") + "/siblings/",
+    success : function(ids) {
+      for (id in ids) {
+        format_request("history/" + id + "/increment", "#cat_" + id);
+      }
+    }
+  });
 });
 
 $("a.edit").click(function() {

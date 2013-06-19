@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 module App
+  require 'pry'
   class History < Sinatra::Application
     before do
       env['warden'].authenticated?
@@ -28,8 +29,16 @@ module App
       haml :'history/index'
     end
 
+    get '/:id/siblings/' do |id|
+      ids = []
+      for transaction in Transaction[id].siblings
+        ids << transaction.id
+      end
+      ids
+    end
+
     get '/:id/increment' do |id|
-      new_category = (Transaction[id].category_id % Category.count) + 1
+      new_category = (Transaction[id].category_id % Category.all.count) + 1
       if new_category == 1 then new_category = 2 end
       Transaction[id].update(category_id: new_category)
       category = Category.get_category(new_category)
