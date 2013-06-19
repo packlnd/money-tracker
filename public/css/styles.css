@@ -14,6 +14,10 @@ td:first-child {
   padding-right:0;
 }
 
+tr {
+  height:56px;
+}
+
 td.month {
   font-weight:bold;
 }
