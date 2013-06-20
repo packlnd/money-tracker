@@ -16,14 +16,14 @@ function filter_history() {
     }
 }
 
-$("a.delete").click(function() {
+$(document).on("click", "a.delete", function() {
   var id = $(this).attr("id");
   $("#row" + id).hide();
   $.ajax({
     url: "/history/" + id + "/delete"});
 });
 
-$("a.category").click(function() {
+$(document).on("click", "a.category", function() {
   $.ajax({
     url : "history/" + $(this).attr("id") + "/siblings/",
     success : function(ids) {

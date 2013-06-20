@@ -14,11 +14,15 @@ $(".format").keyup(function() {
   handle_category("format", "#templabel");
 });
 
-$("a.delete").click(function() {
+$(document).on("click", "a.delete", function() {
   var id = $(this).attr("id");
   $("#row" + id).hide();
   $.ajax({
   url: "/settings/" + id + "/delete"});
+});
+
+$(document).on("click", "a.edit", function() {
+
 });
 
 $(".red, .green, .blue").click(function(e) {
