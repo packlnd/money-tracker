@@ -1,7 +1,8 @@
 var MOUSE_DOWN, $slider, min_pos, max_pos;
 
 $(document).ready(function() {
-  $(".slider").offset({left:$(".red").offset().left});
+  min_pos = $(".red").offset().left;
+  $(".slider").offset({left:min_pos});
 });
 
 $(".save").click(function() {
@@ -74,7 +75,7 @@ $(document).mouseup(function(e) {
 });
 
 function handle_category(command, div) {
-  var name = $("#name").attr("value").toUpperCase();
+  var name = $("#name").val().toUpperCase();
   if (name == "") {
     return;
   }
