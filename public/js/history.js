@@ -34,16 +34,13 @@ $("a.category").click(function() {
   });
 });
 
-$("a.edit").click(function() {
+$(document).on("click", "a.edit", function() {
   var id = $(this).attr("id");
   format_request("history/" + id + "/edit", "#row" + id);
 });
 
-//http://jsfiddle.net/qY9UM/2/
-$("a.save").bind("click", function() {
-  alert("hello");
+$(document).on("click", "a.save", function() {
   var id = $(this).attr("id"),
-    name = $("#edit_text").attr("value");
+    name = $("input#edit_text.smaller").val();
   format_request("history/" + id + "/" + name + "/save", "#row" + id);
 });
-
