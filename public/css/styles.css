@@ -14,12 +14,12 @@ td:first-child {
   padding-right:0;
 }
 
-tr {
-  height:56px;
-}
-
 td.month {
   font-weight:bold;
+}
+
+input.smaller[type="text"] {
+  height: 10px;
 }
 
 .pos {

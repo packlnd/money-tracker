@@ -5,7 +5,7 @@
       .span.cat_label{style: "background-color:#{cat.color};"} #{cat.name}
 %td #{@t.date_to_s}
 %td
-  %input{id: 'edit_text', type: 'text', value: "#{@t.name}"}
+  %input.smaller{id: 'edit_text', type: 'text', value: "#{@t.name}"}
 %td{class: "#{@t.determine_sum}"} #{@t.sum}
 %td
   %a.btn.save{id: "#{@t.id}"}
