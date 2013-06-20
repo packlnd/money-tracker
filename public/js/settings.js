@@ -1,9 +1,7 @@
-var min_pos = 557, max_pos = 813, MOUSE_DOWN, $slider;
+var MOUSE_DOWN, $slider, min_pos, max_pos;
 
 $(document).ready(function() {
-  $(".slider#red").offset({left:min_pos});
-  $(".slider#green").offset({left:min_pos});
-  $(".slider#blue").offset({left:min_pos});
+  $(".slider").offset({left:$(".red").offset().left});
 });
 
 $(".save").click(function() {
@@ -27,6 +25,8 @@ $(document).on("click", "a.edit", function() {
 
 $(".red, .green, .blue").click(function(e) {
   var curr_pos = e.pageX;
+  min_pos = $(this).offset().left;
+  max_pos = min_pos + $(this).width();
   if (curr_pos >= min_pos && curr_pos < max_pos) {
     $(".slider#" + $(this).attr("class")).offset({left:curr_pos});
   }
