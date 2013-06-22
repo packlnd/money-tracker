@@ -9,21 +9,16 @@
     -year = ""
     -month = ""
     -@transactions.each do |t|
-      -if year == "" or t.timestamp.year != year
+      -if year != t.timestamp.year
         -year = t.timestamp.year
         %tr
           %td
-            %h3 #{"#{year.to_s} (#{Transaction.get_sum_year(year, @cat_ids, @from, @to, @user).to_s})"}
-      -if month == "" or t.timestamp.month != month
+            %h3 #{"#{year.to_s} (#{Transaction.get_sum_year(year, @cat_ids, @from, @to, @user)})"}
+      -if month != t.timestamp.month
         -month = t.timestamp.month
         %tr
           %td
-            %h4 #{"#{month_name(month).to_s} (#{Transaction.get_sum_month_year(year, month, @cat_ids, @from, @to, @user).to_s})"}
-        %tr.month
-          %td Kategori
-          %td Datum
-          %td Namn
-          %td Summa
+            %h4 #{"#{month_name month} (#{Transaction.get_sum_month_year(year, month, @cat_ids, @from, @to, @user)})"}
       %tr{id: "row#{t.id}", class: "#{t.determine_row}"}
         -@t = t
         =haml :'history/_display_row'
