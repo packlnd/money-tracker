@@ -2,14 +2,14 @@ $(document).ready(create_statistics());
 
 $(".charts").hide();
 
-$("#to").datepicker({
+$("#from").datepicker({
   dateFormat: "yy-mm-dd",
-  onClose: function(date){filter_history()}
+  onClose: function(date){create_statistics()}
 });
 
 $("#to").datepicker({
   dateFormat: "yy-mm-dd",
-  onClose: function(date){filter_history()}
+  onClose: function(date){create_statistics()}
 });
 
 $("input.text_filter").keyup(function(){create_statistics();});

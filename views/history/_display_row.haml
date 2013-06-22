@@ -1,8 +1,17 @@
 %td
   %a.category{id: "#{@t.id}"}
     -cat = Category.get_category(@t.category_id)
-    .increment{id: "cat_#{@t.id}"}
+    .row_category{id: "cat_#{@t.id}"}
       .span.cat_label{style: "background-color:#{cat.color};"} #{cat.name}
+  .category-list{id: "#{@t.id}"}
+    %ul
+      -Category.all.each do |category|
+        -if category.seq_id == 1 then next end
+        %li
+          %a.new_category{id: "#{category.seq_id} #{@t.id}"}
+            -@category = category
+            =haml :_new_label, :layout => false
+        %br
 %td #{@t.date_to_s}
 %td #{@t.name}
 %td{class: "#{@t.determine_sum}"} #{@t.sum}
