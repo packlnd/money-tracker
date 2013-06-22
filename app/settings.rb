@@ -17,8 +17,7 @@ module App
     end
 
     get '/format/:name/:color' do
-      @label_name = params[:name]
-      @label_color = "#" + params[:color]
+      @category = {"name" => params[:name], "color" => params[:color]}
       haml :_new_label, :layout => false
     end
 

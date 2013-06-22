@@ -33,9 +33,7 @@ module App
       new_category = (Transaction[id].category_id % Category.all.count) + 1
       if new_category == 1 then new_category = 2 end
       Transaction[id].update(category_id: new_category)
-      category = Category.get_category(new_category)
-      @label_color = category.color
-      @label_name = category.name
+      @category = Category.get_category(new_category)
       haml :_new_label, :layout => false
     end
 

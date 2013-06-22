@@ -8,10 +8,18 @@
   .small-box
     .pull-left
       %label.control-label Från
-      %input.input-small.text_filter{id: "from", type: 'text', value: "#{Transaction.first_transaction(@user).to_s}"}
+      .input-prepend
+        %span.add-on
+          %i.icon-calendar
+        %input.input-small.text_filter{id: "from", type: 'text', value: "#{Transaction.first_transaction(@user).to_s}"}
       %label.control-label till
-      %input.input-small.text_filter{id: "to", type: 'text', value: "#{Transaction.last_transaction(@user).to_s}"}
+      .input-prepend
+        %span.add-on
+          %i.icon-calendar
+        %input.input-small.text_filter{id: "to", type: 'text', value: "#{Transaction.last_transaction(@user).to_s}"}
     .pull-right
-      %label.control-label Söktext
-      %input.text_filter{type: 'text', id: 'query'}
+      .input-prepend
+        %span.add-on
+          %i.icon-search
+        %input.span2.text_filter{type: 'text', id: 'query'}
     .clearfix
