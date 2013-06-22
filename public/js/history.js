@@ -4,16 +4,16 @@ $("input.text_filter").keyup(function(){filter_history()});
 $("input.click_filter").click(function(){filter_history()});
 
 function filter_history() {
-  var from = $("#from").attr("value"),
-    to = $("#to").attr("value"),
+  var from = $("#from").val(),
+    to = $("#to").val(),
     categories = format_categories(),
-    text = $("#query").attr("value");
+    text = $("#query").val();
 
-    if (text == "") {
-      format_request("/history/update/" + from + "/" + to + "/" + categories, "#historytable");
-    } else {
-      format_request("history/update/" + from + "/" + to + "/" + categories + "/" + text, "#historytable");
-    }
+  if (text == "") {
+    format_request("/history/update/" + from + "/" + to + "/" + categories, "#historytable");
+  } else {
+    format_request("history/update/" + from + "/" + to + "/" + categories + "/" + text, "#historytable");
+  }
 }
 
 $(document).on("click", "a.delete", function() {
