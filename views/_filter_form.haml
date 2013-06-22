@@ -7,12 +7,11 @@
 .control-group
   .small-box
     .pull-left
-      %label.control-label Från
       .input-prepend
         %span.add-on
           %i.icon-calendar
         %input.input-small.text_filter{id: "from", type: 'text', value: "#{Transaction.first_transaction(@user).to_s}"}
-      %label.control-label till
+      %label.control-label -
       .input-prepend
         %span.add-on
           %i.icon-calendar

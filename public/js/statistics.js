@@ -5,8 +5,8 @@ $("input.text_filter").keyup(function(){create_statistics();});
 $("input.click_filter").click(function(){create_statistics();});
 
 function create_statistics() {
-  var from = $("#from").attr("value"),
-    to = $("#to").attr("value"),
+  var from = $("#from").val(),
+    to = $("#to").val(),
     categories = format_categories();
 
   create_pie_chart(from, to, categories);
