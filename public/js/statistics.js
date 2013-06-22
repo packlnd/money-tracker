@@ -1,5 +1,16 @@
 $(document).ready(create_statistics());
+
 $(".charts").hide();
+
+$("#to").datepicker({
+  dateFormat: "yy-mm-dd",
+  onClose: function(date){filter_history()}
+});
+
+$("#to").datepicker({
+  dateFormat: "yy-mm-dd",
+  onClose: function(date){filter_history()}
+});
 
 $("input.text_filter").keyup(function(){create_statistics();});
 $("input.click_filter").click(function(){create_statistics();});

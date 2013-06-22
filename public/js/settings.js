@@ -9,7 +9,7 @@ $(".save").click(function() {
   handle_category("add", "#setting_table");
 });
 
-$(".format").keyup(function() {
+$(".format").input(function() {
   handle_category("format", "#templabel");
 });
 

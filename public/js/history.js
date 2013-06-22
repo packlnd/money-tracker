@@ -1,3 +1,13 @@
+$("#to").datepicker({
+  dateFormat: "yy-mm-dd",
+  onClose: function(date){filter_history()}
+});
+
+$("#from").datepicker({
+  dateFormat: "yy-mm-dd",
+  onClose: function(date){filter_history()}
+});
+
 $(".forms").hide();
 
 $("input.text_filter").keyup(function(){filter_history()});
