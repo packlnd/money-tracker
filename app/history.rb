@@ -1,6 +1,5 @@
 # -*- encoding : utf-8 -*-
 module App
-  require 'pry'
   class History < Sinatra::Application
     before do
       env['warden'].authenticated?

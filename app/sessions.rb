@@ -1,6 +1,5 @@
 module App
   class Sessions < Sinatra::Application
-
     set :logging, true
 
     post '/register' do
