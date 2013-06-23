@@ -1,15 +1,21 @@
 var MOUSE_DOWN, $slider, min_pos, max_pos;
 
 $(document).ready(function() {
-  min_pos = $(".red").offset().left;
-  $(".slider").offset({left:min_pos});
+  set_sliders();
 });
 
-$(".save").click(function() {
+$(document).on("click", "input.save", function() {
   handle_category("add", "#setting_table");
 });
 
-$(".format").input(function() {
+$(document).on("click", "input.update", function() {
+  var id = $(this).attr("id"),
+    name = $("#name").val(),
+    color = hex_color();
+  format_request("settings/update/" + id + "/" + name + "/" + color, "#setting_table");
+});
+
+$(".format").keyup(function() {
   handle_category("format", "#templabel");
 });
 
@@ -21,15 +27,38 @@ $(document).on("click", "a.delete", function() {
 });
 
 $(document).on("click", "a.edit", function() {
-
+  var id = $(this).attr("id");
+  $.ajax({
+    url: "/settings/" + id + "/edit",
+    success: function(response) {
+      $("#edit_category").html(response);
+      set_sliders();
+    }
+  });
+  format_request("/settings/" + id + "/edit", "#edit_category");
+  handle_category("format", "#templabel");
 });
 
-$(".red, .green, .blue").click(function(e) {
+function set_sliders() {
+  min_pos = $(".red").offset().left;
+  var arr = ["red", "green", "blue"];
+  for (var i = 0; i < arr.length; i++) {
+    slider = $(".slider#" + arr[i]);
+    var new_pos = parseInt(min_pos) + parseInt(slider.html(), 16);
+    slider.offset({left:new_pos});
+  }
+  handle_category("format", "#templabel");
+}
+
+$(document).on("click", ".red, .green, .blue", function(e) {
   var curr_pos = e.pageX;
   min_pos = $(this).offset().left;
   max_pos = min_pos + $(this).width();
   if (curr_pos >= min_pos && curr_pos < max_pos) {
-    $(".slider#" + $(this).attr("class")).offset({left:curr_pos});
+    var color = $(this).attr("class");
+    var $s = $(".slider#" + color);
+    $s.offset({left:curr_pos});
+    $s.html(to_hex(read_color(color)).toUpperCase());
   }
   handle_category("format", "#templabel");
 });
@@ -65,6 +94,8 @@ $(document).mousemove(function(e) {
   var curr_pos = e.pageX;
   if (curr_pos >= min_pos && curr_pos < max_pos) {
     $slider.offset({left:curr_pos});
+    var color = $slider.attr("id");
+    $slider.html(to_hex(read_color(color)).toUpperCase());
   }
 });
 

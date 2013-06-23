@@ -5,13 +5,25 @@ module App
     end
 
     get "/" do
-
       @user = env['warden'].user.username
       haml :'settings/index'
     end
 
+    get '/:id/edit' do
+      @category = Category.get_category(params[:id])
+      @title = "Redigera kategori: #{@category.name}"
+      @button_title = "Spara"
+      @action = "update"
+      haml :'settings/_edit_label', :layout => false
+    end
+
+    get '/update/:id/:name/:color' do
+      Category.get_category(params[:id]).update(name: params[:name], color: "##{params[:color]}")
+      haml :'settings/_table', :layout => false
+    end
+
     get '/add/:name/:color' do
-      category = Category.new(name: params[:name], color: "#" + params[:color], seq_id: "#{Category.last.seq_id + 1}")
+      category = Category.new(name: params[:name], color: "##{params[:color]}", seq_id: "#{Category.last.seq_id + 1}")
       category.save
       haml :'settings/_table', :layout => false
     end
