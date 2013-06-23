@@ -1,0 +1,23 @@
+%h3 #{@title}
+.small-box
+  .pull-left
+    %input.input-small.format{type: "text", id: "name", value: "#{@category.name}"}
+    %br
+    .red
+    -if @category.color.length == 7
+      -r = @category.color[1..2]
+      -g = @category.color[3..4]
+      -b = @category.color[5..6]
+    -else
+      -r = @category.color[1] + @category.color[1]
+      -g = @category.color[2] + @category.color[2]
+      -b = @category.color[3] + @category.color[3]
+    .slider{id: 'red'}=r
+    .green
+    .slider{id: 'green'}=g
+    .blue
+    .slider{id: 'blue'}=b
+  #templabel.pull-right
+    =haml :_new_label, :layout => false
+  .clearfix
+  %input.btn{id: "#{@category.seq_id}", class: "#{@action}", type: "button", value: "#{@button_title}"}
