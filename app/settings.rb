@@ -5,7 +5,7 @@ module App
     end
 
     get "/" do
-      @user = env['warden'].user.username
+      @user = env['warden'].user
       haml :'settings/index'
     end
 
@@ -31,6 +31,12 @@ module App
     get '/format/:name/:color' do
       @category = Category.new(name: params[:name], color: "##{params[:color]}")
       haml :_new_label, :layout => false
+    end
+
+    get "/:boolean/radio" do |value|
+      user = env['warden'].user
+      user.set_all_categories = value
+      user.save
     end
 
     get "/:id/delete" do |id|

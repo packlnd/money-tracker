@@ -8,8 +8,21 @@
     -@category = Category.new(name: "NAMN", color: "#000000")
     -@button_title = "Lägg till"
     -@action = "save"
+    %br
     #edit_category
       =haml :'settings/_edit_label'
+    %br
+    %h3 Inställning för kategoribyte
+    -if @user.set_all_categories
+      %label.radio.inline
+        %input.radios{id: '1', type: 'radio', name: 'radios', checked: 'true'} Ändra kategori för alla med samma namn och kategori
+      %label.radio.inline
+        %input.radios{id: '2', type: 'radio', name: 'radios'} Ändra INTE kategori för alla med samma namn och kategori
+    -else
+      %label.radio.inline
+        %input.radios{id: '1', type: 'radio', name: 'radios'} Ändra kategori för alla med samma namn och kategori
+      %label.radio.inline
+        %input.radios{id: '2', type: 'radio', name: 'radios', checked: 'true'} Ändra INTE kategori för alla med samma namn och kategori
   %script{src: "http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"}
   %script{src: "/js/helpers.js"}
   %script{src: "/js/settings.js"}

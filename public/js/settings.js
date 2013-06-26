@@ -68,6 +68,13 @@ $(".slider").mousedown(function(e) {
   $slider = $(this);
 });
 
+$(".radios").click(function() {
+  var id = $(this).attr("id") == 1;
+  $.ajax({
+    url: "/settings/" + id + "/radio"
+  });
+});
+
 function read_color(color) {
   return parseInt($(".slider#" + color).offset().left) - min_pos;
 }
