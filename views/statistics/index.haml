@@ -12,6 +12,10 @@
     %h5.monthly
       %a.showhide{href: "#monthlychart"} Per månad och kategori
     #monthlychart.charts
+    %h5.table_stat
+      %a.showhide{href: "#stat"} Antal transaktioner per kategori
+    #stat.charts
+      =haml :'statistics/_table'
   %script{src: "http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"}
   %script{src: "http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"}
   %script{src: "/js/helpers.js"}

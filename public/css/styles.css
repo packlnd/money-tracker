@@ -48,7 +48,7 @@ input.smaller[type="text"] {
   border:none;
 }
 
-#piechart, #monthlychart, #resultchart {
+table.stats, #piechart, #monthlychart, #resultchart {
   width:600px;
   height:600px;
   margin:8px auto;

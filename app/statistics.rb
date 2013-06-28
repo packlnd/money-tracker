@@ -15,6 +15,8 @@ module App
 
     get "/" do
       @user = env['warden'].user.username
+      @from = Transaction.first_transaction @user
+      @to = Transaction.last_transaction @user
       haml :'statistics/index'
     end
 
