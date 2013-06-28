@@ -1,0 +1,15 @@
+.container
+  %h3 Antal transaktioner per kategori från #{@from} till #{@to}
+  %table.table-striped.stats
+    %thead
+      %th Kategori
+      %th Antal
+    %tbody
+    -Category.all.each do |category|
+      -if category.seq_id == 1 then next end
+      %tr
+        %td
+          -@category = category
+          =haml :_new_label
+        %td{style: 'text-align:right; font-weight:bold;'}
+          =Transaction.where(category_id: category.seq_id, owner: @user, timestamp: @from..@to).count
