@@ -1,6 +1,5 @@
-$(document).ready(create_statistics());
-
 $(".charts").hide();
+$(document).ready(create_statistics());
 
 $("#from").datepicker({
   dateFormat: "yy-mm-dd",
@@ -21,6 +20,12 @@ function create_statistics() {
     categories = format_categories();
 
   create_pie_chart(from, to, categories);
+  fill_table(from, to, categories);
+}
+
+function fill_table(from, to, categories) {
+  $("#category_table.charts").show();
+  format_request("/statistics/" + from + "/" + to + "/" + categories + "/get_table_data", "#category_table");
 }
 
 function create_pie_chart(from, to, categories) {
@@ -39,7 +44,6 @@ function create_pie_chart(from, to, categories) {
         pie_data.push({ data : sum, label : name.toString() });
       }
       display_piechart(pie_data, colors, "piechart");
-      $("a#piechart").text("Statistik per kategori från " + from + " till " + to);
       create_monthly_chart(to, categories);
     },
     div = "pieheader";
@@ -67,7 +71,6 @@ function create_monthly_chart(to, categories) {
       }
       display_monthlychart(chart_data, colors, "monthlychart");
       var year = to.split('-')[0].toString();
-      $("a#monthly").text("Statistik per månad och kategori för " + year);
       create_result_chart(json_categories, year)
     },
     div = "monthlyheader";
@@ -99,7 +102,6 @@ function create_result_chart(json_categories, year) {
   chart_data.push({data:pos_data, label:"POSITIVT"});
   chart_data.push({data:neg_data, label:"NEGATIVT"});
   display_monthlychart(chart_data, ['#468847', '#B84947'], "resultchart");
-  $("a#resultchart").text( "Resultat per månad för " + year);
 }
 
 function display_monthlychart(data, colors, div) {

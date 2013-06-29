@@ -15,9 +15,21 @@ module App
 
     get "/" do
       @user = env['warden'].user.username
-      @from = Transaction.first_transaction @user
-      @to = Transaction.last_transaction @user
       haml :'statistics/index'
+    end
+
+    get "/:from/:to/:categories/get_table_data" do
+      ids = params[:categories].split('.')
+      @user = env['warden'].user.username
+      @from = params[:from]
+      @to = params[:to]
+      @categories = []
+      Category.where(seq_id: ids).all.each do |category|
+        @categories << [Transaction.where(category_id: category.seq_id, timestamp: @from..@to, owner: @user).count, category.seq_id]
+      end
+      @categories.sort! {|x,y| y <=> x}
+      puts @categories
+      haml :'statistics/_table', :layout => false
     end
 
     get "/get_monthly_data/:to/:categories" do
