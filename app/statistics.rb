@@ -21,14 +21,13 @@ module App
     get "/:from/:to/:categories/get_table_data" do
       ids = params[:categories].split('.')
       @user = env['warden'].user.username
-      @from = params[:from]
-      @to = params[:to]
+      from = string_to_time(params[:from]) - 1
+      to = string_to_time(params[:to]) + 3600*24
       @categories = []
       Category.where(seq_id: ids).all.each do |category|
-        @categories << [Transaction.where(category_id: category.seq_id, timestamp: @from..@to, owner: @user).count, category.seq_id]
+        @categories << [Transaction.where(category_id: category.seq_id, timestamp: from..to, owner: env['warden'].user.username).count, category.seq_id]
       end
       @categories.sort! {|x,y| y <=> x}
-      puts @categories
       haml :'statistics/_table', :layout => false
     end
 
