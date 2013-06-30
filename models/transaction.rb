@@ -51,9 +51,7 @@ class Transaction < Sequel::Model
   end
 
   def self.get_sum_year_month(year, month, cat_ids, user)
-    unless month.to_s.length == 2
-      month = "0#{month}"
-    end
+    unless month.to_s.length == 2 then month = "0#{month}" end
     return get_sum(cat_ids, "#{year}-#{month}-01", "#{year}-#{month}-31", user)
   end
 end
