@@ -33,15 +33,15 @@ module App
 
     get "/get_monthly_data/:to/:categories" do
       year = params[:to].split('-')[0]
-      category_ids = params[:categories].split('.')
+      cat_ids = params[:categories].split('.')
       categories = Hash.new
-      category_ids.each do |cat_id|
+      cat_ids.each do |cat_id|
         category = Hash.new
         cat = Category.get_category(cat_id)
         category["color"] = cat.color
         month = Hash.new
         (1..12).each do |m|
-          month[m-1] = Transaction.get_sum_year_month(year, m, cat_ids, env['warden'].user.username)
+          month[m-1] = Transaction.get_sum_year_month(year, m, cat_id, env['warden'].user.username)
         end
         category["months"] = month.to_json
         categories[cat.name] = category.to_json
