@@ -18,7 +18,7 @@ module App
 
     get '/' do
       @user = env['warden'].user.username
-      @transactions = Transaction.order(Sequel.desc(:timestamp)).where(owner: env['warden'].user.username)
+     @transactions = Transaction.order(Sequel.desc(:timestamp)).where(owner: env['warden'].user.username)
       @cat_ids = Array.new()
       @from = string_to_time(Transaction.first_transaction(env['warden'].user.username)) - 1
       @to = string_to_time(Transaction.last_transaction(env['warden'].user.username)) + 3600*24

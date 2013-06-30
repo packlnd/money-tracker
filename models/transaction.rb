@@ -43,14 +43,14 @@ class Transaction < Sequel::Model
     Transaction.where(timestamp: from..to, category_id: cat_ids, owner: user).all.each do |t|
       sum += t.sum
     end
-    return sum
+    return sum.to_i
   end
 
-  def self.get_sum_year(year, cat_ids, user)#from, to, user)
+  def self.get_sum_year(year, cat_ids, user)
     return get_sum(cat_ids, "#{year}-01-01", "#{year}-12-31", user)
   end
 
-  def self.get_sum_month_year(year, month, cat_ids, user)#from, to, user)
+  def self.get_sum_year_month(year, month, cat_ids, user)
     unless month.to_s.length == 2
       month = "0#{month}"
     end

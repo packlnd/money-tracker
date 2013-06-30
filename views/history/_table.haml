@@ -18,7 +18,7 @@
         -month = t.timestamp.month
         %tr
           %td
-            %h4 #{month_name month} (#{Transaction.get_sum_month_year(year, month, @cat_ids, @user)})
+            %h4 #{month_name month} (#{Transaction.get_sum_year_month(year, month, @cat_ids, @user)})
       %tr{id: "row#{t.id}", class: "#{t.determine_row_css}"}
         -@t = t
         =haml :'history/_display_row'
