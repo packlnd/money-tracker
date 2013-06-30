@@ -37,7 +37,7 @@ module App
     end
 
     post '/upload' do
-      Transaction.handle_file(params['file'], env['warden'].user.username)
+      Import.handle_file(params['file'], env['warden'].user.username)
       redirect '/history'
     end
 
