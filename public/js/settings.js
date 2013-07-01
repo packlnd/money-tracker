@@ -76,11 +76,11 @@ $(".radios").click(function() {
 });
 
 function read_color(color) {
-  return parseInt($(".slider#" + color).offset().left) - min_pos;
+  return parseInt(parseInt($(".slider#" + color).offset().left) - min_pos);
 }
 
 function to_hex(n) {
-  var h = n.toString("16");
+  var h = (n.toString("16")).toUpperCase();
   if(h.length == 1) {
     return "0" + h;
   }
@@ -102,7 +102,7 @@ $(document).mousemove(function(e) {
   if (curr_pos >= min_pos && curr_pos < max_pos) {
     $slider.offset({left:curr_pos});
     var color = $slider.attr("id");
-    $slider.html(to_hex(read_color(color)).toUpperCase());
+    $slider.html(to_hex(read_color(color)));
   }
 });
 
