@@ -1,7 +1,5 @@
 require 'sequel'
 
-DB = Sequel.connect('sqlite://database.db')
-
 DB.create_table? :users do
   primary_key :id
   String :username, null: false, :unique=>true

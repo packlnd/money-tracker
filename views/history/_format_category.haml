@@ -3,9 +3,12 @@
   .row_category{id: "cat_#{@t.id}"}
     .span.cat_label{style: "background-color:#{cat.color};"} #{cat.name}
 .category-list{id: "#{@t.id}"}
+  -categories = Category.all.drop(1)
+  -category=Category.get_category(@t.category_id)
+  -categories.delete(category)
+  -categories.insert(0,category)
   %ul
-    -Category.all.each do |category|
-      -if category.seq_id == 1 then next end
+    -categories.each do |category|
       %li
         %a.new_category{id: "#{category.seq_id} #{@t.id}"}
           -@category = category
