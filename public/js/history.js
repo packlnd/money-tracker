@@ -54,6 +54,6 @@ $(document).on("click", "a.new_category", function() {
 
 $(document).on("click", "a.save", function() {
   var id = $(this).attr("id"),
-    name = $("input#edit_text.smaller").val();
+    name = $("input#edit_text.form-control").val();
   format_request("history/" + id + "/" + name + "/save", "#row" + id);
 });

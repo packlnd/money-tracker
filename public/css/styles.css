@@ -57,15 +57,15 @@ table.stats, #piechart, #monthlychart, #resultchart {
 }
 
 .cat_label {
+  display:table;
   cursor: pointer;
   vertical-align:middle;
   border-radius: 4px;
   font-size:x-small;
   font-family:"Verdana", Sans-serif;
   font-weight:bold;
-  width:auto;
   height:20px;
-  padding:2px 5px;
+  padding:5px;
   color:#FFF;
 }
 

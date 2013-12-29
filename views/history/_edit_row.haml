@@ -1,8 +1,8 @@
 %td #{haml :'history/_format_category'}
 %td #{@t.date_to_s}
 %td
-  %input.smaller{id: 'edit_text', type: 'text', value: "#{@t.name}"}
+  %input.form-control{id: 'edit_text', type: 'text', value: "#{@t.name}"}
 %td{class: "#{@t.determine_text_css}"} #{@t.sum}
 %td
   %a.btn.save{id: "#{@t.id}"}
-    %i.icon-ok
+    %i.glyphicon.glyphicon-ok

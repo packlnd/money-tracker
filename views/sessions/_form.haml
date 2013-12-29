@@ -1,5 +1,5 @@
 .container
-  %label.control-label{for: 'username'}Användarnamn
-  %input{type: 'text', id: 'username', name: 'user[username]'}
-  %label.control-label{for: 'password'}Lösenord
-  %input{type: 'password', id: 'password', name: 'user[password]'}
+  -#%label.control-label{for: 'username'}Användarnamn
+  %input.form-control{type: 'text', id: 'username', name: 'user[username]', placeholder: 'Användarnamn'}
+  -#%label.control-label{for: 'password'}Lösenord
+  %input.form-control{type: 'password', id: 'password', name: 'user[password]', placeholder: 'Lösenord'}

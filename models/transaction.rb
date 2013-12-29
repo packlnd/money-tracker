@@ -36,7 +36,7 @@ class Transaction < Sequel::Model
   end
 
   def determine_row_css
-    if self.sum >= 0 then "success" else "error" end
+    if self.sum >= 0 then "success" else "danger" end
   end
 
   def self.get_sum(cat_ids, from, to, user)
