@@ -1,6 +1,6 @@
 .container
   %h1 Login
-  %form{action: '/auth/login', method: 'post'}
+  %form.form-horizontal{role: 'form', action: '/auth/login', method: 'post'}
     = haml :'sessions/_form'
-    %input.btn{type: 'submit', value: 'Logga in'}
-    %a.btn.btn{:href => '/auth/register'}Nytt konto
+    %input.btn.btn-default{type: 'submit', value: 'Logga in'}
+    %a.btn.btn-default{:href => '/auth/register'}Nytt konto

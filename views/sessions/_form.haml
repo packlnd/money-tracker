@@ -1,5 +1,9 @@
-.container
-  -#%label.control-label{for: 'username'}Användarnamn
-  %input.form-control{type: 'text', id: 'username', name: 'user[username]', placeholder: 'Användarnamn'}
-  -#%label.control-label{for: 'password'}Lösenord
-  %input.form-control{type: 'password', id: 'password', name: 'user[password]', placeholder: 'Lösenord'}
+.form-group
+  .form-group
+    %label.col-sm-2.control-label{for: 'username'}Användarnamn
+    .col-xs-3
+      %input.form-control{type: 'text', id: 'username', name: 'user[username]', placeholder: 'Användarnamn'}
+  .form-group
+    %label.col-sm-2.control-label{for: 'password'}Lösenord
+    .col-xs-3
+      %input.form-control{type: 'password', id: 'password', name: 'user[password]', placeholder: 'Lösenord'}

@@ -10,7 +10,7 @@
             %a{:href => '/statistics', :tabindex => -1}Statistik
           %li
             %a{:href => '/settings', :tabindex => -1}Inställningar
-      %ul.nav.navbar-nav.pull-right
+      %ul.nav.navbar-nav.navbar-right
         -if env['warden'].authenticated?
           %li
             %a{:href => '/auth/logout', :tabindex => -1}Logga ut

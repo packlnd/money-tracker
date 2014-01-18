@@ -2,7 +2,7 @@
   %center
     %h1 Statistik
     %form.form-inline
-      =haml :_filter_form
+      =haml :'util/_filter_form'
 
     %h5.pie
       %a.showhide{href: "#piechart"} Utgift per kategori
@@ -15,10 +15,6 @@
     %h5.monthly
       %a.showhide{href: "#monthlychart"} Per månad och kategori
     #monthlychart.charts
-
-    %h5.table_stat
-      %a.showhide{href: "#category_table"} Antal transaktioner per kategori
-    #category_table.charts
 
   %script{src: "http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"}
   %script{src: "http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"}

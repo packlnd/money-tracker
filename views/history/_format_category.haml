@@ -12,5 +12,5 @@
       %li
         %a.new_category{id: "#{category.seq_id} #{@t.id}"}
           -@category = category
-          =haml :_new_label, :layout => false
+          =haml :'util/_new_label', :layout => false
       %br

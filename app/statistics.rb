@@ -18,19 +18,6 @@ module App
       haml :'statistics/index'
     end
 
-    get "/:from/:to/:categories/get_table_data" do
-      ids = params[:categories].split('.')
-      @user = env['warden'].user.username
-      from = string_to_time(params[:from]) - 1
-      to = string_to_time(params[:to]) + 3600*24
-      @categories = []
-      Category.where(seq_id: ids).all.each do |category|
-        @categories << [Transaction.where(category_id: category.seq_id, timestamp: from..to, owner: env['warden'].user.username).count, category.seq_id]
-      end
-      @categories.sort! {|x,y| y <=> x}
-      haml :'statistics/_table', :layout => false
-    end
-
     get "/get_monthly_data/:to/:categories" do
       year = params[:to].split('-')[0]
       cat_ids = params[:categories].split('.')

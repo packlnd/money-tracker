@@ -33,7 +33,7 @@ module App
       tid = params[:tid]
       Transaction[tid].update(category_id: cid)
       @category = Category.get_category(cid)
-      haml :_new_label, :layout => false
+      haml :'util/_new_label', :layout => false
     end
 
     post '/upload' do

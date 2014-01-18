@@ -30,7 +30,7 @@ module App
 
     get '/format/:name/:color' do
       @category = Category.new(name: params[:name], color: "##{params[:color]}")
-      haml :_new_label, :layout => false
+      haml :'util/_new_label', :layout => false
     end
 
     get "/:boolean/radio" do |value|

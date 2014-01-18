@@ -56,6 +56,10 @@ table.stats, #piechart, #monthlychart, #resultchart {
 
 }
 
+.navbar-header {
+  width:100%;
+}
+
 .cat_label {
   display:table;
   cursor: pointer;

@@ -20,12 +20,6 @@ function create_statistics() {
     categories = format_categories();
 
   create_pie_chart(from, to, categories);
-  fill_table(from, to, categories);
-}
-
-function fill_table(from, to, categories) {
-  $("#category_table.charts").show();
-  format_request("/statistics/" + from + "/" + to + "/" + categories + "/get_table_data", "#category_table");
 }
 
 function create_pie_chart(from, to, categories) {
@@ -45,8 +39,7 @@ function create_pie_chart(from, to, categories) {
       }
       display_piechart(pie_data, colors, "piechart");
       create_monthly_chart(to, categories);
-    },
-    div = "pieheader";
+    };
   handle_request(url, func);
 }
 
@@ -70,11 +63,13 @@ function create_monthly_chart(to, categories) {
         chart_data.push({ data : m_data, label : name });
       }
       display_monthlychart(chart_data, colors, "monthlychart");
-      var year = to.split('-')[0].toString();
-      create_result_chart(json_categories, year)
-    },
-    div = "monthlyheader";
+      create_result_chart(json_categories, date_to_year(to))
+    };
   handle_request(url, func);
+}
+
+function date_to_year(date) {
+  date.split('-')[0].toString();
 }
 
 function create_result_chart(json_categories, year) {
