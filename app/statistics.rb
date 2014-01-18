@@ -1,5 +1,4 @@
 module App
-  require 'json'
   class Statistics < Sinatra::Application
 
     before do
@@ -20,35 +19,15 @@ module App
 
     get "/get_monthly_data/:to/:categories" do
       year = params[:to].split('-')[0]
-      cat_ids = params[:categories].split('.')
-      categories = Hash.new
-      cat_ids.each do |cat_id|
-        category = Hash.new
-        cat = Category.get_category(cat_id)
-        category["color"] = cat.color
-        month = Hash.new
-        (1..12).each do |m|
-          month[m-1] = Transaction.get_sum_year_month(year, m, cat_id, env['warden'].user.username)
-        end
-        category["months"] = month.to_json
-        categories[cat.name] = category.to_json
-      end
-      categories.to_json
+      category_ids = params[:categories].split('.')
+      Graph.monthly_data(year, category_ids, env['warden'].user.username)
     end
 
     get "/get_pie_data/:from/:to/:categories" do
       from = string_to_time(params[:from]) - 1
       to = string_to_time(params[:to]) + 3600*24
       category_ids = params[:categories].split('.')
-      categories = Hash.new
-      category_ids.each do |cat_id|
-        cat = Category.get_category(cat_id)
-        category = Hash.new
-        category["sum"] = Transaction.get_sum(cat.seq_id, from, to, env['warden'].user.username).to_i.abs
-        category["color"] = cat.color
-        categories[cat.name] = category.to_json
-      end
-      categories.to_json
+      Graph.pie_data(from, to, category_ids, env['warden'].user.username)
     end
   end
 end
