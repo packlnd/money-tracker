@@ -33,6 +33,10 @@ td:first-child {
   padding-right:0;
 }
 
+.filter.input-group {
+  width:25%;
+}
+
 input.smaller[type="text"] {
   height: 10px;
 }
@@ -45,19 +49,10 @@ input.smaller[type="text"] {
   color:#AE0000;
 }
 
-.table th, .table td, .table thead, .table, .table tbody {
-  border:none;
-}
-
 table.stats, #piechart, #monthlychart, #resultchart {
   width:600px;
   height:600px;
   margin:8px auto;
-
-}
-
-.navbar-header {
-  width:100%;
 }
 
 .cat_label {

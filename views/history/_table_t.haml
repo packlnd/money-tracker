@@ -1,0 +1,28 @@
+-year = ""
+-month = ""
+-for i in 0..(@transactions.count-1)
+  -unless @transactions[i] == nil
+    =@transactions[i].name
+-#for i in 0..(@transactions.count-1)
+  -@t = @transactions[i]
+  -unless @t == nil
+    -if year != @t.timestamp.year
+      -year = @t.timestamp.year
+      %h3 #{"#{year.to_s} (#{Transaction.get_sum_year(year, @cat_ids, @user)})"}
+    -if month != @t.timestamp.month
+      -month = @t.timestamp.month
+      %h4 #{month_name month} (#{Transaction.get_sum_year_month(year, month, @cat_ids, @user)})
+    %table.table
+      %thead
+        %th
+        %th
+        %th
+        %th
+        %th
+      %tbody
+        -while i < @transactions.count && @t.timestamp.month == month
+          -@t = @transactions[i]
+          -i+=1
+          -unless @t == nil
+            %tr{id: "row#{@t.id}", class: "#{@t.determine_row_css}"}
+              =haml :'history/_display_row'
