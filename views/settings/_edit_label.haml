@@ -1,7 +1,7 @@
 %h3 #{@title}
 .small-box
   .pull-left
-    %input.input-small.format{type: "text", id: "name", value: "#{@category.name}"}
+    %input.input-small.form-control{type: "text", id: "name", value: "#{@category.name}"}
     %br
     .red
     -if @category.color.length == 7

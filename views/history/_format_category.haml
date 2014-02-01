@@ -4,13 +4,9 @@
     .span.category_label{style: "background-color:#{cat.color};"} #{cat.name}
 .category-list{id: "#{@t.id}"}
   -categories = Category.all.drop(1)
-  -category=Category.get_category(@t.category_id)
-  -categories.delete(category)
-  -categories.insert(0,category)
-  %ul
-    -categories.each do |category|
-      %li
-        %a.new_category{id: "#{category.seq_id} #{@t.id}"}
-          -@category = category
-          =haml :'util/_category_label', :layout => false
-      %br
+  -categories.delete(Category.get_category(@t.category_id))
+  -categories.each do |category|
+    %a.new_category{id: "#{category.seq_id} #{@t.id}"}
+      -@category = category
+      =haml :'util/_category_label', :layout => false
+    %br
