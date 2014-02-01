@@ -47,6 +47,19 @@ class Transaction < Sequel::Model
     return sum.to_i
   end
 
+  def self.get_transactions(year, month, categories, user)
+    enddays = days_in_month(year, month)
+    from = Time.new(year, month, 1)
+    to = Time.new(year,month, enddays)
+    return Transaction.order(Sequel.desc(:timestamp)).where(timestamp: from..to, category_id: categories, owner: user).all
+  end
+
+  def self.days_in_month(year, month)
+    common = [nil, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    return 29 if month == 2 && Date.gregorian_leap?(year)
+    common[month]
+  end
+
   def self.get_sum_year(year, cat_ids, user)
     return get_sum(cat_ids, "#{year}-01-01", "#{year}-12-31", user)
   end

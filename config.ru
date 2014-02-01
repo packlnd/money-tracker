@@ -2,6 +2,7 @@ require 'sinatra'
 require 'haml'
 require 'warden'
 require 'sequel'
+require 'pry'
 require File.dirname(__FILE__) + '/boot.rb'
 
 use Rack::Session::Cookie, secret: "mycookie"

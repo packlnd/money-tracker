@@ -49,22 +49,29 @@ input.smaller[type="text"] {
   color:#AE0000;
 }
 
+.showhide h4, .showhide h3 {
+  color:black;
+  text-decoration:none;
+}
+
 table.stats, #piechart, #monthlychart, #resultchart {
   width:600px;
   height:600px;
   margin:8px auto;
 }
 
-.cat_label {
-  display:table;
+.span.category_label {
+  display: inline-block;
+}
+
+.category_label {
+  padding:5px;
+  text-align:center;
   cursor: pointer;
-  vertical-align:middle;
   border-radius: 4px;
-  font-size:x-small;
+  font-size:80%;
   font-family:"Verdana", Sans-serif;
   font-weight:bold;
-  height:20px;
-  padding:5px;
   color:#FFF;
 }
 

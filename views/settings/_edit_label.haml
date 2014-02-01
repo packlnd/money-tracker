@@ -18,6 +18,6 @@
     .blue
     .slider{id: 'blue'}=b
   #templabel.pull-right
-    =haml :'util/_new_label', :layout => false
+    =haml :'util/_category_label', :layout => false
   .clearfix
   %input.btn{id: "#{@category.seq_id}", class: "#{@action}", type: "button", value: "#{@button_title}"}

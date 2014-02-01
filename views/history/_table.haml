@@ -1,24 +1,20 @@
-%table.table
-  %thead
-    %th
-    %th
-    %th
-    %th
-    %th
-  %tbody
-    -year = ""
-    -month = ""
-    -@transactions.each do |t|
-      -if year != t.timestamp.year
-        -year = t.timestamp.year
-        %tr
-          %td
-            %h3 #{"#{year.to_s} (#{Transaction.get_sum_year(year, @cat_ids, @user)})"}
-      -if month != t.timestamp.month
-        -month = t.timestamp.month
-        %tr
-          %td
-            %h4 #{month_name month} (#{Transaction.get_sum_year_month(year, month, @cat_ids, @user)})
-      %tr{id: "row#{t.id}", class: "#{t.determine_row_css}"}
-        -@t = t
-        =haml :'history/_display_row'
+-year = @last.year.to_i
+-while year >= @first.year
+  %a.showhide{href: "##{year}"}
+    %h3 #{"#{year.to_s} (#{Transaction.get_sum_year(year, @cat_ids, @user)})"}
+  %div{id: "#{year}"}
+    -for month in 12.downto(1) do
+      -@transactions = Transaction.get_transactions(year, month, @cat_ids, @user)
+      -unless @transactions.count == 0
+        %a.showhide{href: "##{year.to_s + month_name(month)}"}
+          %h4 #{month_name month} (#{Transaction.get_sum_year_month(year, month, @cat_ids, @user)})
+        %div{id: "#{year.to_s + month_name(month)}"}
+          %table.table
+            %tbody
+            -@transactions.each do |t|
+              -@t = t
+              %tr{id: "row#{@t.id}", class: "#{@t.determine_row_css}"}
+                =haml :'history/_display_row'
+  -year -= 1
+  %script{src: "/js/helpers.js"}
+  %script{src: "/js/history.js"}

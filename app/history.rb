@@ -1,5 +1,8 @@
 # -*- encoding : utf-8 -*-
 module App
+
+  require 'pry'
+
   class History < Sinatra::Application
     before do
       env['warden'].authenticated?
@@ -20,8 +23,8 @@ module App
       @user = env['warden'].user.username
       @transactions = Transaction.order(Sequel.desc(:timestamp)).where(owner: env['warden'].user.username)
       @cat_ids = Array.new()
-      @from = string_to_time(Transaction.first_transaction(env['warden'].user.username)) - 1
-      @to = string_to_time(Transaction.last_transaction(env['warden'].user.username)) + 3600*24
+      @first = string_to_time(Transaction.first_transaction(env['warden'].user.username))
+      @last = string_to_time(Transaction.last_transaction(env['warden'].user.username))
       (1..Category.count).each do |i|
         @cat_ids.push(i)
       end
@@ -33,7 +36,7 @@ module App
       tid = params[:tid]
       Transaction[tid].update(category_id: cid)
       @category = Category.get_category(cid)
-      haml :'util/_new_label', :layout => false
+      haml :'util/_category_label', :layout => false
     end
 
     post '/upload' do
@@ -43,19 +46,18 @@ module App
 
 get '/update/:from/:to/:categories' do
       @user = env['warden'].user.username
-      @from = string_to_time(params[:from]) - 1
-      @to = string_to_time(params[:to]) + 3600*24
+      @first = string_to_time(params[:from])
+      @last = string_to_time(params[:to])
       @cat_ids = params[:categories].split('.');
-      @transactions = Transaction.order(Sequel.desc(:timestamp)).where(timestamp: @from..@to, owner: env['warden'].user.username, category_id: @cat_ids)
       haml :'history/_table', :layout => false
     end
 
     get '/update/:from/:to/:categories/:text' do
       @user = env['warden'].user.username
-      @from = string_to_time(params[:from]) - 1
-      @to = string_to_time(params[:to]) + 3600*24
+      @first = string_to_time(params[:from])
+      @last = string_to_time(params[:to])
       @cat_ids = params[:categories].split('.');
-      @transactions = Transaction.order(Sequel.desc(:timestamp)).where(Sequel.ilike(:name, "%#{params[:text]}%"), timestamp: @from..@to, owner: env['warden'].user.username, category_id: @cat_ids)
+      @filter_text = params[:text]
       haml :'history/_table', :layout => false
     end
 

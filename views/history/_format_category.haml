@@ -1,7 +1,7 @@
 %a.category{id: "#{@t.id}"}
   -cat = Category.get_category(@t.category_id)
   .row_category{id: "cat_#{@t.id}"}
-    .span.cat_label{style: "background-color:#{cat.color};"} #{cat.name}
+    .span.category_label{style: "background-color:#{cat.color};"} #{cat.name}
 .category-list{id: "#{@t.id}"}
   -categories = Category.all.drop(1)
   -category=Category.get_category(@t.category_id)
@@ -12,5 +12,5 @@
       %li
         %a.new_category{id: "#{category.seq_id} #{@t.id}"}
           -@category = category
-          =haml :'util/_new_label', :layout => false
+          =haml :'util/_category_label', :layout => false
       %br
