@@ -1,7 +1,7 @@
 %td #{haml :'history/_format_category'}
 %td #{@t.date_to_s}
 %td #{@t.name}
-%td{class: "#{@t.determine_text_css}"} #{@t.sum}
+%td{class: "#{@t.determine_text_css}"} #{@t.sum.abs}
 %td
   %a.btn.edit{id: "#{@t.id}"}
     %span.glyphicon.glyphicon-pencil

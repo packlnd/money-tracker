@@ -2,7 +2,8 @@
 class Import
   def self.handle_file(file_from_user, user)
     if file_from_user
-      file = File.open(file_from_user[:tempfile]).each do |line|
+      File.open(file_from_user[:tempfile]).each do |line|
+        unless validate line then next end
         data = line.delete("\r").delete("\n").split("\t")
         t = Transaction.new
         t.timestamp = data[0].chomp()
@@ -13,6 +14,13 @@ class Import
         t.save
       end
     end
+  end
+
+  def self.validate(input)
+    bool = /^[1-9][0-9]{3}-[0-9]{2}-[0-9]{2}\t[A-Za-z0-9 åäö]+\t-?[0-9,]+.*$/.match(input) !=  nil
+    puts input
+    puts bool
+    return bool
   end
 
   def self.bayesian_filtering(name)

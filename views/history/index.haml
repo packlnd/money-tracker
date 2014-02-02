@@ -4,9 +4,11 @@
       %a.showhide{href: "#upload"} Ladda upp fil
     #upload.forms
       %form.form-inline{action: '/history/upload', method: 'post', enctype: 'multipart/form-data'}
-        %input{type: 'file', name: 'file'}
-        %input.btn.btn-success{type: 'submit', value: 'Ladda upp'}
+        .small-box.small.box
+          %input.pull-left{type: 'file', name: 'file'}
+          %input.btn.btn-success{type: 'submit', value: 'Ladda upp'}
     .clearfix
+    %br
     %h5.pull-right
       %a.showhide{href: "#filter"} Filtrera
     #filter.forms
