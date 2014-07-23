@@ -20,7 +20,8 @@ class Import
     bool = /^[1-9][0-9]{3}-[0-9]{2}-[0-9]{2}\t[A-Za-z0-9 åäö]+\t-?[0-9,]+.*$/.match(input) !=  nil
     puts input
     puts bool
-    return bool
+    #return bool
+    return true
   end
 
   def self.bayesian_filtering(name)

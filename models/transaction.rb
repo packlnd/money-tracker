@@ -1,6 +1,5 @@
 # -*- encoding : utf-8 -*-
 require 'sequel'
-DB = Sequel.connect('sqlite://database.db')
 DB.create_table? :transactions do
   primary_key :id
   Float :sum, null: false
